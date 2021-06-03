@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,12 +21,13 @@ public class ShowListDao {
 		List<Show> movieList = new ArrayList<>();
 		Connection connection = null;
 		PreparedStatement preparedSt = null;
+		ResultSet rs = null;
 		try {
 			connection = ConnectionUtil.getConnection();
 
-			String sql = "select * from categories ";
-			Statement st = connection.createStatement();
-			ResultSet rs = st.executeQuery(sql);
+			String sql =" select id,genre,name,year,language,category,membership,grade from shows ";
+			preparedSt = connection.prepareStatement(sql);
+			rs = preparedSt.executeQuery();
 			System.out.println(sql);
 
 			while (rs.next()) {

@@ -2,47 +2,75 @@ package in.venkat.util;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 public class ConnectionUtil {
-	private static final String DRIVER_CLASS_NAME = "org.postgresql.Driver";
-	private static final String DATABASE_NAME = "PrimeApp_db";
-	private static final String DB_USERNAME = "postgres";
-	private static final String DB_PASSWORD = "19111999";
-	private static final String HOST = "localhost";
-	private static final int PORT = 5432;
-	private static final String DB_URL = "jdbc:postgresql://" + HOST + ":" + PORT + "/" + DATABASE_NAME;
-
-	public static Connection getConnection() {
-
-		Connection connection = null;
-		try {
-			/**
-			 * Step 1: Load the database driver into memory ( ClassNotFoundException )
-			 */
-			Class.forName(DRIVER_CLASS_NAME);
-			/**
-			 * Step 2: Get the Database Connection (SQLException)
-			 */
-			connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
-			System.out.println(connection);
-		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
-			throw new RuntimeException("Unable to get the database connection");
-		}
-		return connection;
+	private ConnectionUtil() {
+		/**
+		 * Default constructor
+		 */
 	}
 
-	public static void close(PreparedStatement pst, Connection con) throws Exception {
-		/**
-		 * Null Check - to avoid Null Pointer Exception
-		 */
-		if (pst != null) {
-			pst.close();
+	private static String driverClass = System.getenv("spring.datasource.driver-class-name");
+	private static String url = System.getenv("spring.datasource.url");
+	private static String username = System.getenv("spring.datasource.username");
+	private static String password = System.getenv("spring.datasource.password");
+
+	/**
+	 * This method creates a database connection.
+	 * 
+	 * @return
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	public static Connection getConnection() throws ClassNotFoundException, SQLException {
+
+		Class.forName(driverClass);
+
+		return DriverManager.getConnection(url, username, password);
+
+	}
+
+	/**
+	 * This method is used to close the connection of ResultSet connection and
+	 * prepared statement Method overloading
+	 * 
+	 * @param con
+	 */
+	public static void close(ResultSet rs, Statement statement, Connection con) {
+		try {
+			if (rs != null) {
+				rs.close();
+			}
+			if (statement != null) {
+				statement.close();
+			}
+			if (con != null) {
+				con.close();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
-		if (con != null) {
-			con.close();
+	}
+
+	/**
+	 * This method closes the connections for statement and connection.
+	 * 
+	 * @param statement
+	 * @param con
+	 */
+	public static void close(Statement statement, Connection con) {
+		try {
+			if (statement != null) {
+				statement.close();
+			}
+			if (con != null) {
+				con.close();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
 	}
 }

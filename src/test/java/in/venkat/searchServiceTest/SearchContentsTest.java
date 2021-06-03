@@ -32,7 +32,7 @@ public class SearchContentsTest {
 		String language = "tamil";
 		boolean languageValid = ValidateSearchDetails.validateDetails(language);
 		if (languageValid) {
-			ShowService.printSearchMoviesByLanguage(language);
+			ShowService.searchMoviesByLanguage(language);
 		} else {
 			System.out.println("Invalid Language");
 		}
@@ -42,7 +42,7 @@ public class SearchContentsTest {
 		String membership = "prime";
 		boolean membershipValid = ValidateSearchDetails.validateDetails(membership);
 		if (membershipValid) {
-			ShowService.printSearchMoviesByMembership(membership);
+			ShowService.searchMoviesByMembership(membership);
 		} else {
 			System.out.println("Invalid membership");
 		}
@@ -51,7 +51,7 @@ public class SearchContentsTest {
 		 */
 		int year = 2019;
 		if (year > 1950 && year <= 2021) {
-			ShowService.searchByYear(year);
+			ShowService.searchMoviesByYear(year);
 		} else {
 			System.out.println("Invalid year");
 		}

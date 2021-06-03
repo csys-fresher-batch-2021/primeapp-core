@@ -12,17 +12,17 @@ public class ShowService {
 	/**
 	 * This method is used to search movies by giving genre and language details
 	 * 
-	 * @param flimGenre
-	 * @param flimLanguage
+	 * @param filmGenre
+	 * @param filmLanguage
 	 * @return
 	 * @throws SQLException
 	 * @throws Exception
 	 */
-	public static boolean searchContents(String flimGenre, String flimLanguage) throws SQLException, Exception {
-		boolean isvalid = ValidateSearchDetails.validateDetails(flimGenre, flimLanguage);
+	public static boolean searchContents(String filmGenre, String filmLanguage) throws SQLException, Exception {
+		boolean isValid = ValidateSearchDetails.validateDetails(filmGenre, filmLanguage);
 		boolean search = false;
-		if (isvalid) {
-			search = printSearchMovies(flimGenre, flimLanguage);
+		if (isValid) {
+			search = searchMoviesByLanguage(filmGenre, filmLanguage);
 
 		}
 		return search;
@@ -30,19 +30,19 @@ public class ShowService {
 
 	/**
 	 * 
-	 * @param flimGenre
-	 * @param flimLanguage
+	 * @param filmGenre
+	 * @param filmLanguage
 	 * @return
 	 * @throws SQLException
 	 * @throws Exception
 	 */
-	public static boolean printSearchMovies(String flimGenre, String flimLanguage) throws SQLException, Exception {
+	public static boolean searchMoviesByLanguage(String filmGenre, String filmLanguage) throws SQLException, Exception {
 		List<Show> primeMovieList = ShowListDao.getShowDetails();
 		boolean searchDone = false;
 		for (Show show : primeMovieList) {
-			if (show.getMovieGenre().equalsIgnoreCase(flimGenre.trim())
-					&& show.getMovieLanguage().equalsIgnoreCase(flimLanguage.trim())) {
-				System.out.println("GENRE : " + flimGenre + "LANGUAGE : " + flimLanguage);
+			if (show.getMovieGenre().equalsIgnoreCase(filmGenre.trim())
+					&& show.getMovieLanguage().equalsIgnoreCase(filmLanguage.trim())) {
+				System.out.println("GENRE : " + filmGenre + "LANGUAGE : " + filmLanguage);
 				System.out.println("MOVIE ID : " + show.getId() + " GENRE : " + show.getMovieGenre() + " MOVIE NAME : "
 						+ show.getMovieName() + " MOVIE YEAR : " + show.getMovieYear() + " MOVIE LANGUAGE :"
 						+ show.getMovieLanguage() + " CATEGORY : " + show.getMovieCategory() + " MEMBERSHIP : "
@@ -63,7 +63,7 @@ public class ShowService {
 	 * @throws SQLException
 	 * @throws Exception
 	 */
-	public static boolean printSearchMoviesByMembership(String membership) throws SQLException, Exception {
+	public static boolean searchMoviesByMembership(String membership) throws SQLException, Exception {
 		List<Show> primeMovieList = ShowListDao.getShowDetails();
 		boolean searchDone = false;
 		for (Show show : primeMovieList) {
@@ -88,7 +88,7 @@ public class ShowService {
 	 * @throws SQLException
 	 * @throws Exception
 	 */
-	public static boolean searchByYear(int year) throws SQLException, Exception {
+	public static boolean searchMoviesByYear(int year) throws SQLException, Exception {
 		List<Show> primeMovieList = ShowListDao.getShowDetails();
 		boolean searchByYear = false;
 		for (Show show : primeMovieList) {
@@ -108,17 +108,17 @@ public class ShowService {
 	/**
 	 * This method is used to search movies by language
 	 * 
-	 * @param flimLanguage
+	 * @param filmLanguage
 	 * @return
 	 * @throws SQLException
 	 * @throws Exception
 	 */
-	public static boolean printSearchMoviesByLanguage(String flimLanguage) throws SQLException, Exception {
+	public static boolean searchMoviesByLanguage(String filmLanguage) throws SQLException, Exception {
 		List<Show> primeMovieList = ShowListDao.getShowDetails();
 		boolean searchDone = false;
 		for (Show show : primeMovieList) {
-			if (show.getMovieLanguage().equalsIgnoreCase(flimLanguage.trim())) {
-				System.out.println("LANGUAGE : " + flimLanguage);
+			if (show.getMovieLanguage().equalsIgnoreCase(filmLanguage.trim())) {
+				System.out.println("LANGUAGE : " + filmLanguage);
 				System.out.println("MOVIE ID : " + show.getId() + " GENRE : " + show.getMovieGenre() + " MOVIE NAME : "
 						+ show.getMovieName() + " MOVIE YEAR : " + show.getMovieYear() + " MOVIE LANGUAGE :"
 						+ show.getMovieLanguage() + " CATEGORY : " + show.getMovieCategory() + " MEMBERSHIP : "
@@ -133,17 +133,17 @@ public class ShowService {
 	/**
 	 * This method is used to display all movies
 	 * 
-	 * @param flimCategory
+	 * @param filmCategory
 	 * @return
 	 * @throws SQLException
 	 * @throws Exception
 	 */
-	public static boolean displayAllMovies(String flimCategory) throws SQLException, Exception {
+	public static boolean displayAllMovies(String filmCategory) throws SQLException, Exception {
 		List<Show> primeMovieList = ShowListDao.getShowDetails();
 		boolean searchDone = false;
 		for (Show show : primeMovieList) {
-			if (show.getMovieCategory().equalsIgnoreCase(flimCategory.trim())) {
-				System.out.println("CATEGORY : " + flimCategory);
+			if (show.getMovieCategory().equalsIgnoreCase(filmCategory.trim())) {
+				System.out.println("CATEGORY : " + filmCategory);
 				System.out.println("MOVIE ID : " + show.getId() + " GENRE : " + show.getMovieGenre() + " MOVIE NAME : "
 						+ show.getMovieName() + " MOVIE YEAR : " + show.getMovieYear() + " MOVIE LANGUAGE :"
 						+ show.getMovieLanguage() + " CATEGORY : " + show.getMovieCategory() + " MEMBERSHIP : "

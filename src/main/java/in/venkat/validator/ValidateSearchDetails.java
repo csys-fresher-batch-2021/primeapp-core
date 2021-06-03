@@ -7,10 +7,10 @@ import in.venkat.util.NameValidationUtil;
 
 public class ValidateSearchDetails {
 
-	public static boolean validateDetails(String flimGenre, String flimLanguage)
+	public static boolean validateDetails(String filmGenre, String filmLanguage)
 			throws EmptyFieldException, InvalidNameException, InvalidDetailsException {
 		boolean valid = false;
-		if (NameValidationUtil.validateName(flimGenre) && NameValidationUtil.validateName(flimLanguage)) {
+		if (NameValidationUtil.validateName(filmGenre) && NameValidationUtil.validateName(filmLanguage)) {
 			valid = true;
 
 		} else {

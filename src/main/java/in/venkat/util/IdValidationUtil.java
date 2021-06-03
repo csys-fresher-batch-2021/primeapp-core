@@ -5,7 +5,7 @@ import in.venkat.exceptions.InvalidMovieIdException;
 
 public class IdValidationUtil {
 	/**
-	 * This method validates the id 
+	 * This method validates the id
 	 * 
 	 * @param id
 	 * @return
@@ -25,7 +25,7 @@ public class IdValidationUtil {
 
 	private static boolean checkId(String id) throws InvalidMovieIdException {
 		boolean valid = false;
-		String regex = "^[0-9]{1}$";
+		String regex = "^[0-9]{1,2,3}$";
 		if (id.matches(regex)) {
 
 			valid = true;
