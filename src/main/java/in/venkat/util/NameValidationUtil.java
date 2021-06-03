@@ -4,6 +4,14 @@ import in.venkat.exceptions.EmptyFieldException;
 import in.venkat.exceptions.InvalidNameException;
 
 public class NameValidationUtil {
+	/**
+	 * This method validates the given name
+	 * 
+	 * @param Name
+	 * @return
+	 * @throws EmptyFieldException
+	 * @throws InvalidNameException
+	 */
 	public static boolean validateName(String Name) throws EmptyFieldException, InvalidNameException {
 		boolean isValid = false;
 		if (!Name.trim().isEmpty()) {

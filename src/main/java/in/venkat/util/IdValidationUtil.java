@@ -4,6 +4,14 @@ import in.venkat.exceptions.EmptyFieldException;
 import in.venkat.exceptions.InvalidMovieIdException;
 
 public class IdValidationUtil {
+	/**
+	 * This method validates the id 
+	 * 
+	 * @param id
+	 * @return
+	 * @throws EmptyFieldException
+	 * @throws InvalidMovieIdException
+	 */
 	public static boolean validateName(String id) throws EmptyFieldException, InvalidMovieIdException {
 		boolean isValid = false;
 		if (!id.trim().isEmpty()) {
@@ -17,16 +25,14 @@ public class IdValidationUtil {
 
 	private static boolean checkId(String id) throws InvalidMovieIdException {
 		boolean valid = false;
-		String regex = "[a-zA-Z0-9]+\\.?";
-		if (id.matches(regex) && id.length() <= 3) {
+		String regex = "^[0-9]{1}$";
+		if (id.matches(regex)) {
 
 			valid = true;
-		}
-		else {
+		} else {
 			throw new InvalidMovieIdException("invalidMovieId");
 		}
 		return valid;
-		
 
 	}
 

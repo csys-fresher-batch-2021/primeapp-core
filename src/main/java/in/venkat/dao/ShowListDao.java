@@ -12,7 +12,12 @@ import in.venkat.model.Show;
 import in.venkat.util.ConnectionUtil;
 
 public class ShowListDao {
-
+	/**
+	 * This method is used to get the details from the table
+	 * @return
+	 * @throws Exception
+	 * @throws SQLException
+	 */
 	public static List<Show> getShowDetails() throws Exception, SQLException {
 		List<Show> movieList = new ArrayList<>();
 		Connection connection = null;
@@ -34,8 +39,8 @@ public class ShowListDao {
 				String movieCategory = rs.getString("category");
 				String membership = rs.getString("membership");
 				String movieGrade = rs.getString("grade");
-				movieList.add(new Show(movieId, movieGenre, movieName, movieYear, movieLanguage,
-						movieCategory, membership, movieGrade));
+				movieList.add(new Show(movieId, movieGenre, movieName, movieYear, movieLanguage, movieCategory,
+						membership, movieGrade));
 			}
 
 		} catch (SQLException e) {
