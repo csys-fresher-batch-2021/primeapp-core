@@ -25,7 +25,7 @@ public class ConnectionUtil {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	public static Connection getConnection() throws Exception {
+	public static Connection getConnection() throws SQLException, ClassNotFoundException {
 
 		Class.forName(driverClass);
 
