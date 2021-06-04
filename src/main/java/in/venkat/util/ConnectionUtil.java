@@ -25,7 +25,7 @@ public class ConnectionUtil {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	public static Connection getConnection() throws ClassNotFoundException, SQLException {
+	public static Connection getConnection() throws ClassNotFoundException, Exception {
 
 		Class.forName(driverClass);
 
@@ -50,7 +50,7 @@ public class ConnectionUtil {
 			if (con != null) {
 				con.close();
 			}
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -69,7 +69,7 @@ public class ConnectionUtil {
 			if (con != null) {
 				con.close();
 			}
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}

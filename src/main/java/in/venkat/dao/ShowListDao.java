@@ -11,13 +11,18 @@ import in.venkat.model.Show;
 import in.venkat.util.ConnectionUtil;
 
 public class ShowListDao {
+	private ShowListDao() {
+		/**
+		 *Adding private constructor
+		 */
+	}
 	/**
 	 * This method is used to get the details from the  table shows
 	 * @return
 	 * @throws Exception
 	 * @throws SQLException
 	 */
-	public static List<Show> getShowDetails() throws Exception, SQLException {
+	public static List<Show> getShowDetails() throws Exception  {
 		List<Show> movieList = new ArrayList<>();
 		Connection connection = null;
 		PreparedStatement preparedSt = null;
@@ -28,7 +33,6 @@ public class ShowListDao {
 			String sql =" select id,genre,name,year,language,category,membership,grade from shows ";
 			preparedSt = connection.prepareStatement(sql);
 			rs = preparedSt.executeQuery();
-			System.out.println(sql);
 
 			while (rs.next()) {
 				String movieId = rs.getString("id");
@@ -43,9 +47,8 @@ public class ShowListDao {
 						membership, movieGrade));
 			}
 
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-			throw new RuntimeException("unable to search");
 
 		} finally {
 			ConnectionUtil.close(preparedSt, connection);

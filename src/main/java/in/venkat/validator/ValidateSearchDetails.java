@@ -6,6 +6,11 @@ import in.venkat.exceptions.InvalidNameException;
 import in.venkat.util.NameValidationUtil;
 
 public class ValidateSearchDetails {
+	private ValidateSearchDetails() {
+		/**
+		 * Adding private constructor
+		 */
+	}
 
 	public static boolean validateDetails(String filmGenre, String filmLanguage)
 			throws EmptyFieldException, InvalidNameException, InvalidDetailsException {
@@ -19,9 +24,10 @@ public class ValidateSearchDetails {
 		return valid;
 	}
 
-	public static boolean validateDetails(String flimLanguage)throws EmptyFieldException, InvalidNameException, InvalidDetailsException {
+	public static boolean validateDetails(String flimLanguage)
+			throws EmptyFieldException, InvalidNameException, InvalidDetailsException {
 		boolean valid = false;
-		if ( NameValidationUtil.validateName(flimLanguage)) {
+		if (NameValidationUtil.validateName(flimLanguage)) {
 			valid = true;
 
 		} else {
