@@ -21,8 +21,9 @@ public class ShowListDao {
 	 * @return
 	 * @throws Exception
 	 * @throws SQLException
+	 * @throws ClassNotFoundException 
 	 */
-	public static List<Show> getShowDetails() throws Exception  {
+	public static List<Show> getShowDetails() throws SQLException, Exception  {
 		List<Show> movieList = new ArrayList<>();
 		Connection connection = null;
 		PreparedStatement preparedSt = null;
@@ -47,7 +48,7 @@ public class ShowListDao {
 						membership, movieGrade));
 			}
 
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 
 		} finally {
