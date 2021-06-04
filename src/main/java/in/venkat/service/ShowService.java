@@ -75,10 +75,11 @@ public class ShowService {
 	 * 
 	 * @param membership
 	 * @return
+	 * @throws ClassNotFoundException 
 	 * @throws SQLException
 	 * @throws Exception
 	 */
-	public static boolean searchMoviesByMembership(String membership) throws Exception {
+	public static boolean searchMoviesByMembership(String membership) throws ClassNotFoundException, SQLException  {
 		List<Show> primeMovieList = ShowListDao.getShowDetails();
 		boolean searchDone = false;
 		for (Show show : primeMovieList) {
@@ -100,10 +101,11 @@ public class ShowService {
 	 * 
 	 * @param year
 	 * @return
+	 * @throws ClassNotFoundException 
 	 * @throws SQLException
 	 * @throws Exception
 	 */
-	public static boolean searchMoviesByYear(int year) throws Exception {
+	public static boolean searchMoviesByYear(int year) throws ClassNotFoundException, SQLException  {
 		List<Show> primeMovieList = ShowListDao.getShowDetails();
 		boolean searchByYear = false;
 		for (Show show : primeMovieList) {
@@ -125,10 +127,11 @@ public class ShowService {
 	 * 
 	 * @param filmLanguage
 	 * @return
+	 * @throws ClassNotFoundException 
 	 * @throws SQLException
 	 * @throws Exception
 	 */
-	public static boolean searchMoviesByLanguage(String filmLanguage) throws Exception {
+	public static boolean searchMoviesByLanguage(String filmLanguage) throws ClassNotFoundException, SQLException  {
 		List<Show> primeMovieList = ShowListDao.getShowDetails();
 		boolean searchDone = false;
 		for (Show show : primeMovieList) {
@@ -150,10 +153,11 @@ public class ShowService {
 	 * 
 	 * @param filmCategory
 	 * @return
+	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 * @throws Exception
 	 */
-	public static boolean displayAllMovies(String filmCategory) throws Exception {
+	public static boolean displayAllMovies(String filmCategory) throws ClassNotFoundException, SQLException  {
 		List<Show> primeMovieList = ShowListDao.getShowDetails();
 		boolean searchDone = false;
 		for (Show show : primeMovieList) {
