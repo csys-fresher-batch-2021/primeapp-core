@@ -48,7 +48,7 @@ public class ShowService {
 	 * @throws SQLException
 	 * @throws Exception
 	 */
-	public static boolean searchMoviesByLanguage(String filmGenre, String filmLanguage) throws Exception {
+	public static boolean searchMoviesByLanguage(String filmGenre, String filmLanguage) throws SQLException {
 		List<Show> primeMovieList = ShowListDao.getShowDetails();
 		boolean searchDone = false;
 		for (Show show : primeMovieList) {

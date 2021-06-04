@@ -13,17 +13,19 @@ import in.venkat.util.ConnectionUtil;
 public class ShowListDao {
 	private ShowListDao() {
 		/**
-		 *Adding private constructor
+		 * Adding private constructor
 		 */
 	}
+
 	/**
-	 * This method is used to get the details from the  table shows
+	 * This method is used to get the details from the table shows
+	 * 
 	 * @return
 	 * @throws Exception
 	 * @throws SQLException
-	 * @throws ClassNotFoundException 
+	 * @throws ClassNotFoundException
 	 */
-	public static List<Show> getShowDetails() throws SQLException, ClassNotFoundException  {
+	public static List<Show> getShowDetails() throws SQLException {
 		List<Show> movieList = new ArrayList<>();
 		Connection connection = null;
 		PreparedStatement preparedSt = null;
@@ -31,7 +33,7 @@ public class ShowListDao {
 		try {
 			connection = ConnectionUtil.getConnection();
 
-			String sql =" select id,genre,name,year,language,category,membership,grade from shows ";
+			String sql = " select id,genre,name,year,language,category,membership,grade from shows ";
 			preparedSt = connection.prepareStatement(sql);
 			rs = preparedSt.executeQuery();
 
