@@ -5,6 +5,7 @@ import java.util.List;
 
 import in.venkat.dao.ShowListDao;
 import in.venkat.model.Show;
+import in.venkat.util.Logger;
 import in.venkat.validator.ValidateSearchDetails;
 
 public class ShowService {
@@ -56,8 +57,8 @@ public class ShowService {
 		for (Show show : primeMovieList) {
 			if (show.getMovieGenre().equalsIgnoreCase(filmGenre.trim())
 					&& show.getMovieLanguage().equalsIgnoreCase(filmLanguage.trim())) {
-				System.out.println(MOVIE_GENRE + filmGenre + MOVIE_LANGUAGE + filmLanguage);
-				System.out.println(MOVIE_ID + show.getId() + MOVIE_GENRE + show.getMovieGenre() + MOVIE_NAME
+				Logger.log(MOVIE_GENRE + filmGenre + MOVIE_LANGUAGE + filmLanguage);
+				Logger.log(MOVIE_ID + show.getId() + MOVIE_GENRE + show.getMovieGenre() + MOVIE_NAME
 						+ show.getMovieName() + MOVIE_YEAR + show.getMovieYear() + MOVIE_LANGUAGE
 						+ show.getMovieLanguage() + CATEGORY + show.getMovieCategory() + MEMBERSHIP
 						+ show.getMembership() + MOVIE_GRADE + show.getMovieGrade());
@@ -82,8 +83,8 @@ public class ShowService {
 		boolean searchDone = false;
 		for (Show show : primeMovieList) {
 			if (show.getMembership().equalsIgnoreCase(membership.trim())) {
-				System.out.println(MEMBERSHIP + membership);
-				System.out.println(MOVIE_ID + show.getId() + MOVIE_GENRE + show.getMovieGenre() + MOVIE_NAME
+				Logger.log(MEMBERSHIP + membership);
+				Logger.log(MOVIE_ID + show.getId() + MOVIE_GENRE + show.getMovieGenre() + MOVIE_NAME
 						+ show.getMovieName() + MOVIE_YEAR + show.getMovieYear() + MOVIE_LANGUAGE
 						+ show.getMovieLanguage() + CATEGORY + show.getMovieCategory() + MEMBERSHIP
 						+ show.getMembership() + MOVIE_GRADE + show.getMovieGrade());
@@ -107,8 +108,8 @@ public class ShowService {
 		boolean searchByYear = false;
 		for (Show show : primeMovieList) {
 			if (show.getMovieYear() == year) {
-				System.out.println(MOVIE_YEAR + year);
-				System.out.println(MOVIE_ID + show.getId() + MOVIE_GENRE + show.getMovieGenre() + MOVIE_NAME
+				Logger.log(MOVIE_YEAR + year);
+				Logger.log(MOVIE_ID + show.getId() + MOVIE_GENRE + show.getMovieGenre() + MOVIE_NAME
 						+ show.getMovieName() + MOVIE_YEAR + show.getMovieYear() + MOVIE_LANGUAGE
 						+ show.getMovieLanguage() + CATEGORY + show.getMovieCategory() + MEMBERSHIP
 						+ show.getMembership() + MOVIE_GRADE + show.getMovieGrade());
@@ -132,8 +133,8 @@ public class ShowService {
 		boolean searchDone = false;
 		for (Show show : primeMovieList) {
 			if (show.getMovieLanguage().equalsIgnoreCase(filmLanguage.trim())) {
-				System.out.println(MOVIE_LANGUAGE + filmLanguage);
-				System.out.println(MOVIE_ID + show.getId() + MOVIE_GENRE + show.getMovieGenre() + MOVIE_NAME
+				Logger.log(MOVIE_LANGUAGE + filmLanguage);
+				Logger.log(MOVIE_ID + show.getId() + MOVIE_GENRE + show.getMovieGenre() + MOVIE_NAME
 						+ show.getMovieName() + MOVIE_YEAR + show.getMovieYear() + MOVIE_LANGUAGE
 						+ show.getMovieLanguage() + CATEGORY + show.getMovieCategory() + MEMBERSHIP
 						+ show.getMembership() + MOVIE_GRADE + show.getMovieGrade());
@@ -157,8 +158,8 @@ public class ShowService {
 		boolean searchDone = false;
 		for (Show show : primeMovieList) {
 			if (show.getMovieCategory().equalsIgnoreCase(filmCategory.trim())) {
-				System.out.println(CATEGORY + filmCategory);
-				System.out.println(MOVIE_ID + show.getId() + MOVIE_GENRE + show.getMovieGenre() + MOVIE_NAME
+				Logger.log(CATEGORY + filmCategory);
+				Logger.log(MOVIE_ID + show.getId() + MOVIE_GENRE + show.getMovieGenre() + MOVIE_NAME
 						+ show.getMovieName() + MOVIE_YEAR + show.getMovieYear() + MOVIE_LANGUAGE
 						+ show.getMovieLanguage() + CATEGORY + show.getMovieCategory() + MEMBERSHIP
 						+ show.getMembership() + MOVIE_GRADE + show.getMovieGrade());

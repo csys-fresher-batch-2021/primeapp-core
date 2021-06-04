@@ -3,13 +3,13 @@ package in.venkat.searchServiceTest;
 import java.sql.SQLException;
 
 import in.venkat.service.ShowService;
+import in.venkat.util.Logger;
 import in.venkat.validator.ValidateSearchDetails;
 
 public class SearchContentsTest {
 
 	public static void main(String[] args) throws SQLException, Exception {
-		
-		
+
 		/**
 		 * Display all movies
 		 */
@@ -18,14 +18,14 @@ public class SearchContentsTest {
 		if (categoryValid) {
 			ShowService.displayAllMovies(category);
 		} else {
-			System.out.println("Category does not exists");
+			Logger.log("Category does not exists");
 		}
 
 		/**
 		 * Searching movies by Genre and Language
 		 */
 		boolean search = ShowService.searchContents("action", "english");
-		System.out.println(search);
+		Logger.log(search);
 		/**
 		 * Searching movies by Language
 		 */
@@ -34,7 +34,7 @@ public class SearchContentsTest {
 		if (languageValid) {
 			ShowService.searchMoviesByLanguage(language);
 		} else {
-			System.out.println("Invalid Language");
+			Logger.log("Invalid Language");
 		}
 		/**
 		 * Searching movies by membership
@@ -44,7 +44,7 @@ public class SearchContentsTest {
 		if (membershipValid) {
 			ShowService.searchMoviesByMembership(membership);
 		} else {
-			System.out.println("Invalid membership");
+			Logger.log("Invalid membership");
 		}
 		/**
 		 * Searching movies by year
@@ -53,9 +53,8 @@ public class SearchContentsTest {
 		if (year > 1950 && year <= 2021) {
 			ShowService.searchMoviesByYear(year);
 		} else {
-			System.out.println("Invalid year");
+			Logger.log("Invalid year or no shows available in year");
 		}
 
-		
 	}
 }

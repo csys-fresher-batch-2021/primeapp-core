@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import in.venkat.exceptions.ConnectionException;
+
 public class ConnectionUtil {
 	private ConnectionUtil() {
 		/**
@@ -25,7 +27,7 @@ public class ConnectionUtil {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	public static Connection getConnection() throws Exception {
+	public static Connection getConnection() throws ConnectionException, Exception {
 
 		Class.forName(driverClass);
 
@@ -60,6 +62,7 @@ public class ConnectionUtil {
 	 * 
 	 * @param statement
 	 * @param con
+	 * @throws ConnectionException
 	 */
 	public static void close(Statement statement, Connection con) {
 		try {
