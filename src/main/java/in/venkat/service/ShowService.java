@@ -15,14 +15,11 @@ public class ShowService {
 		 */
 	}
 
-	private static final String MOVIE_ID = " MOVIE ID :";
 	private static final String MOVIE_GENRE = " MOVIE GENRE :";
-	private static final String MOVIE_NAME = " MOVIE NAME :";
 	private static final String MOVIE_YEAR = " MOVIE YEAR :";
 	private static final String MOVIE_LANGUAGE = " MOVIE LANGUAGE :";
 	private static final String CATEGORY = " CATEGORY :";
 	private static final String MEMBERSHIP = " MEMBERSHIP :";
-	private static final String MOVIE_GRADE = " GRADE :";
 
 	/**
 	 * This method is used to search movies by giving genre and language details
@@ -58,10 +55,7 @@ public class ShowService {
 			if (show.getMovieGenre().equalsIgnoreCase(filmGenre.trim())
 					&& show.getMovieLanguage().equalsIgnoreCase(filmLanguage.trim())) {
 				Logger.log(MOVIE_GENRE + filmGenre + MOVIE_LANGUAGE + filmLanguage);
-				Logger.log(MOVIE_ID + show.getId() + MOVIE_GENRE + show.getMovieGenre() + MOVIE_NAME
-						+ show.getMovieName() + MOVIE_YEAR + show.getMovieYear() + MOVIE_LANGUAGE
-						+ show.getMovieLanguage() + CATEGORY + show.getMovieCategory() + MEMBERSHIP
-						+ show.getMembership() + MOVIE_GRADE + show.getMovieGrade());
+				Logger.log(show);
 				searchDone = true;
 
 			}
@@ -75,20 +69,17 @@ public class ShowService {
 	 * 
 	 * @param membership
 	 * @return
-	 * @throws ClassNotFoundException 
+	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 * @throws Exception
 	 */
-	public static boolean searchMoviesByMembership(String membership) throws ClassNotFoundException, SQLException  {
+	public static boolean searchMoviesByMembership(String membership) throws ClassNotFoundException, SQLException {
 		List<Show> primeMovieList = ShowListDao.getShowDetails();
 		boolean searchDone = false;
 		for (Show show : primeMovieList) {
 			if (show.getMembership().equalsIgnoreCase(membership.trim())) {
 				Logger.log(MEMBERSHIP + membership);
-				Logger.log(MOVIE_ID + show.getId() + MOVIE_GENRE + show.getMovieGenre() + MOVIE_NAME
-						+ show.getMovieName() + MOVIE_YEAR + show.getMovieYear() + MOVIE_LANGUAGE
-						+ show.getMovieLanguage() + CATEGORY + show.getMovieCategory() + MEMBERSHIP
-						+ show.getMembership() + MOVIE_GRADE + show.getMovieGrade());
+				Logger.log(show);
 				searchDone = true;
 
 			}
@@ -101,20 +92,17 @@ public class ShowService {
 	 * 
 	 * @param year
 	 * @return
-	 * @throws ClassNotFoundException 
+	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 * @throws Exception
 	 */
-	public static boolean searchMoviesByYear(int year) throws ClassNotFoundException, SQLException  {
+	public static boolean searchMoviesByYear(int year) throws ClassNotFoundException, SQLException {
 		List<Show> primeMovieList = ShowListDao.getShowDetails();
 		boolean searchByYear = false;
 		for (Show show : primeMovieList) {
 			if (show.getMovieYear() == year) {
 				Logger.log(MOVIE_YEAR + year);
-				Logger.log(MOVIE_ID + show.getId() + MOVIE_GENRE + show.getMovieGenre() + MOVIE_NAME
-						+ show.getMovieName() + MOVIE_YEAR + show.getMovieYear() + MOVIE_LANGUAGE
-						+ show.getMovieLanguage() + CATEGORY + show.getMovieCategory() + MEMBERSHIP
-						+ show.getMembership() + MOVIE_GRADE + show.getMovieGrade());
+				Logger.log(show);
 				searchByYear = true;
 
 			}
@@ -127,20 +115,17 @@ public class ShowService {
 	 * 
 	 * @param filmLanguage
 	 * @return
-	 * @throws ClassNotFoundException 
+	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 * @throws Exception
 	 */
-	public static boolean searchMoviesByLanguage(String filmLanguage) throws ClassNotFoundException, SQLException  {
+	public static boolean searchMoviesByLanguage(String filmLanguage) throws ClassNotFoundException, SQLException {
 		List<Show> primeMovieList = ShowListDao.getShowDetails();
 		boolean searchDone = false;
 		for (Show show : primeMovieList) {
 			if (show.getMovieLanguage().equalsIgnoreCase(filmLanguage.trim())) {
 				Logger.log(MOVIE_LANGUAGE + filmLanguage);
-				Logger.log(MOVIE_ID + show.getId() + MOVIE_GENRE + show.getMovieGenre() + MOVIE_NAME
-						+ show.getMovieName() + MOVIE_YEAR + show.getMovieYear() + MOVIE_LANGUAGE
-						+ show.getMovieLanguage() + CATEGORY + show.getMovieCategory() + MEMBERSHIP
-						+ show.getMembership() + MOVIE_GRADE + show.getMovieGrade());
+				Logger.log(show);
 				searchDone = true;
 
 			}
@@ -157,16 +142,13 @@ public class ShowService {
 	 * @throws SQLException
 	 * @throws Exception
 	 */
-	public static boolean displayAllMovies(String filmCategory) throws ClassNotFoundException, SQLException  {
+	public static boolean displayAllMovies(String filmCategory) throws ClassNotFoundException, SQLException {
 		List<Show> primeMovieList = ShowListDao.getShowDetails();
 		boolean searchDone = false;
 		for (Show show : primeMovieList) {
 			if (show.getMovieCategory().equalsIgnoreCase(filmCategory.trim())) {
 				Logger.log(CATEGORY + filmCategory);
-				Logger.log(MOVIE_ID + show.getId() + MOVIE_GENRE + show.getMovieGenre() + MOVIE_NAME
-						+ show.getMovieName() + MOVIE_YEAR + show.getMovieYear() + MOVIE_LANGUAGE
-						+ show.getMovieLanguage() + CATEGORY + show.getMovieCategory() + MEMBERSHIP
-						+ show.getMembership() + MOVIE_GRADE + show.getMovieGrade());
+				Logger.log(show);
 				searchDone = true;
 
 			}

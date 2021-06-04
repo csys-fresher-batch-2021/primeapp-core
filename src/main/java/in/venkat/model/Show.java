@@ -2,7 +2,7 @@ package in.venkat.model;
 
 public class Show {
 
-	private String id;
+	private int id;
 	private String movieGenre;
 	private String movieName;
 	private int movieYear;
@@ -11,11 +11,11 @@ public class Show {
 	private String membership;
 	private String movieGrade;
 
-	public String getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
@@ -75,8 +75,8 @@ public class Show {
 		this.movieGrade = movieGrade;
 	}
 
-	public Show(String id, String movieGenre, String movieName, int movieYear, String movieLanguage,
-			String movieCategory, String membership, String movieGrade) {
+	public Show(int id, String movieGenre, String movieName, int movieYear, String movieLanguage, String movieCategory,
+			String membership, String movieGrade) {
 		super();
 		this.id = id;
 		this.movieGenre = movieGenre;
@@ -90,9 +90,9 @@ public class Show {
 
 	@Override
 	public String toString() {
-		return "PrimeMoviesCategory [id=" + id + ", movieGenre=" + movieGenre + ", movieName=" + movieName
-				+ ", movieYear=" + movieYear + ", movieLanguage=" + movieLanguage + ", movieCategory=" + movieCategory
-				+ ", membership=" + membership + ", movieGrade=" + movieGrade + "]";
+		return "Show [id=" + id + ", movieGenre=" + movieGenre + ", movieName=" + movieName + ", movieYear=" + movieYear
+				+ ", movieLanguage=" + movieLanguage + ", movieCategory=" + movieCategory + ", membership=" + membership
+				+ ", movieGrade=" + movieGrade + "]";
 	}
 
 }

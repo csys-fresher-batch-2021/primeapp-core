@@ -24,10 +24,10 @@ public class ValidateSearchDetails {
 		return valid;
 	}
 
-	public static boolean validateDetails(String flimLanguage)
+	public static boolean validateDetails(String filmLanguage)
 			throws EmptyFieldException, InvalidNameException, InvalidDetailsException {
 		boolean valid = false;
-		if (NameValidationUtil.validateName(flimLanguage)) {
+		if (NameValidationUtil.validateName(filmLanguage)) {
 			valid = true;
 
 		} else {

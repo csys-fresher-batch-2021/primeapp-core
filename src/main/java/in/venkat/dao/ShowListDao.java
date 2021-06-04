@@ -36,7 +36,7 @@ public class ShowListDao {
 			rs = preparedSt.executeQuery();
 
 			while (rs.next()) {
-				String movieId = rs.getString("id");
+				int movieId = rs.getInt("id");
 				String movieGenre = rs.getString("genre");
 				String movieName = rs.getString("name");
 				int movieYear = rs.getInt("year");
