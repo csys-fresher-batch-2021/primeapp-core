@@ -23,7 +23,7 @@ public class ShowListDao {
 	 * @throws SQLException
 	 * @throws ClassNotFoundException 
 	 */
-	public static List<Show> getShowDetails() throws SQLException, Exception  {
+	public static List<Show> getShowDetails() throws SQLException, ClassNotFoundException  {
 		List<Show> movieList = new ArrayList<>();
 		Connection connection = null;
 		PreparedStatement preparedSt = null;
