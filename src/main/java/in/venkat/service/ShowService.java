@@ -4,6 +4,9 @@ import java.sql.SQLException;
 import java.util.List;
 
 import in.venkat.dao.ShowListDao;
+import in.venkat.exceptions.EmptyFieldException;
+import in.venkat.exceptions.InvalidDetailsException;
+import in.venkat.exceptions.InvalidNameException;
 import in.venkat.model.Show;
 import in.venkat.util.Logger;
 import in.venkat.validator.ValidateSearchDetails;
@@ -28,9 +31,12 @@ public class ShowService {
 	 * @param filmLanguage
 	 * @return
 	 * @throws SQLException
+	 * @throws InvalidDetailsException 
+	 * @throws InvalidNameException 
+	 * @throws EmptyFieldException 
 	 * @throws Exception
 	 */
-	public static boolean searchContents(String filmGenre, String filmLanguage) throws Exception {
+	public static boolean searchContents(String filmGenre, String filmLanguage) throws SQLException, EmptyFieldException, InvalidNameException, InvalidDetailsException {
 		boolean isValid = ValidateSearchDetails.validateDetails(filmGenre, filmLanguage);
 		boolean search = false;
 		if (isValid) {
@@ -73,7 +79,7 @@ public class ShowService {
 	 * @throws SQLException
 	 * @throws Exception
 	 */
-	public static boolean searchMoviesByMembership(String membership) throws ClassNotFoundException, SQLException {
+	public static boolean searchMoviesByMembership(String membership) throws SQLException {
 		List<Show> primeMovieList = ShowListDao.getShowDetails();
 		boolean searchDone = false;
 		for (Show show : primeMovieList) {
@@ -96,7 +102,7 @@ public class ShowService {
 	 * @throws SQLException
 	 * @throws Exception
 	 */
-	public static boolean searchMoviesByYear(int year) throws ClassNotFoundException, SQLException {
+	public static boolean searchMoviesByYear(int year) throws SQLException {
 		List<Show> primeMovieList = ShowListDao.getShowDetails();
 		boolean searchByYear = false;
 		for (Show show : primeMovieList) {
@@ -119,7 +125,7 @@ public class ShowService {
 	 * @throws SQLException
 	 * @throws Exception
 	 */
-	public static boolean searchMoviesByLanguage(String filmLanguage) throws ClassNotFoundException, SQLException {
+	public static boolean searchMoviesByLanguage(String filmLanguage) throws SQLException {
 		List<Show> primeMovieList = ShowListDao.getShowDetails();
 		boolean searchDone = false;
 		for (Show show : primeMovieList) {
@@ -142,7 +148,7 @@ public class ShowService {
 	 * @throws SQLException
 	 * @throws Exception
 	 */
-	public static boolean displayAllMovies(String filmCategory) throws ClassNotFoundException, SQLException {
+	public static boolean displayAllMovies(String filmCategory) throws SQLException {
 		List<Show> primeMovieList = ShowListDao.getShowDetails();
 		boolean searchDone = false;
 		for (Show show : primeMovieList) {
