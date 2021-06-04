@@ -7,6 +7,7 @@ create table shows (
 	language varchar (50) not null,
 	category varchar(50) not null,
 	membership varchar(50) not null,
+	check (membership in ('prime','non prime'))
 	grade varchar(2) not null,
 	check (grade in ('u','v','a'))
 );

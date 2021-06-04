@@ -12,7 +12,7 @@ import in.venkat.util.ConnectionUtil;
 
 public class ShowListDao {
 	/**
-	 * This method is used to get the details from the table
+	 * This method is used to get the details from the  table shows
 	 * @return
 	 * @throws Exception
 	 * @throws SQLException
