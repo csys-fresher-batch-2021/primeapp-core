@@ -30,7 +30,7 @@ public class ConnectionUtil {
 		try {
 			Class.forName(driverClass);
 		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
+			Logger.log(e.getMessage());
 		}
 
 		return DriverManager.getConnection(url, username, password);
@@ -56,6 +56,7 @@ public class ConnectionUtil {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+			
 		}
 	}
 

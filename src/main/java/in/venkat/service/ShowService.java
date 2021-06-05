@@ -44,7 +44,6 @@ public class ShowService {
 			}
 		} catch (EmptyFieldException | InvalidNameException | InvalidDetailsException e1) {
 			Logger.log(e1.getMessage());
-			e1.printStackTrace();
 		}
 
 		return search;
@@ -75,7 +74,6 @@ public class ShowService {
 
 		catch (DbException e) {
 			Logger.log(e.getMessage());
-			e.printStackTrace();
 		}
 
 		return filteredMovieList;
@@ -106,7 +104,6 @@ public class ShowService {
 			}
 		} catch (DbException e) {
 			Logger.log(e.getMessage());
-			e.printStackTrace();
 		}
 
 		return filteredMovieList;
@@ -140,7 +137,6 @@ public class ShowService {
 			}
 		} catch (DbException e) {
 			Logger.log(e.getMessage());
-			e.printStackTrace();
 		}
 
 		return filteredMovieList;
@@ -171,7 +167,6 @@ public class ShowService {
 			}
 		} catch (DbException e) {
 			Logger.log(e.getMessage());
-			e.printStackTrace();
 		}
 
 		return filteredMovieList;
@@ -202,7 +197,6 @@ public class ShowService {
 			}
 		} catch (DbException e) {
 			Logger.log(e.getMessage());
-			e.printStackTrace();
 		}
 
 		return filteredMovieList;
