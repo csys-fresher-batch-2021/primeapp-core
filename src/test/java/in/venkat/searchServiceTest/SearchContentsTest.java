@@ -106,7 +106,7 @@ public class SearchContentsTest {
 	}
 
 	/**
-	 * This method is used to filter movie by year
+	 * This method is used to filter movie by released year
 	 * 
 	 * @param year
 	 */

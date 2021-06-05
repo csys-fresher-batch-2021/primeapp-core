@@ -3,7 +3,7 @@ package in.venkat.util;
 public class Logger {
 	private Logger() {
 		/**
-		 * Adding private Constructor
+		 * Adding a  private Constructor
 		 */
 	}
 

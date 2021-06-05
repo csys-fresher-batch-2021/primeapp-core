@@ -24,3 +24,4 @@ values ('action','fast and furious',2009,'english','movie','prime','U');
 
 
 select *from shows
+select id,genre,name,year,language,category,membership,grade from shows

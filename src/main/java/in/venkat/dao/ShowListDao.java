@@ -54,7 +54,7 @@ public class ShowListDao {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new DbException(e, "unable to connect");
+			throw new DbException(e, "unable to connect to dataBase");
 
 		} finally {
 			ConnectionUtil.close(rs, preparedSt, connection);

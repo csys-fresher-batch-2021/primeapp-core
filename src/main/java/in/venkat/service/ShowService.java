@@ -19,7 +19,7 @@ public class ShowService {
 	}
 
 	/**
-	 * This method is used to search movies by giving genre and language details
+	 * This method is used to search movies by giving genre and language 
 	 * 
 	 * @param filmGenre
 	 * @param filmLanguage
