@@ -49,16 +49,15 @@ public class ShowListDao {
 				String movieGrade = rs.getString("grade");
 				movieList.add(new Show(movieId, movieGenre, movieName, movieYear, movieLanguage, movieCategory,
 						membership, movieGrade));
-				
-				
+
 			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new DbException(e, "unable ro connect");
+			throw new DbException(e, "unable to connect");
 
 		} finally {
-			ConnectionUtil.close(preparedSt, connection);
+			ConnectionUtil.close(rs, preparedSt, connection);
 
 		}
 		return movieList;

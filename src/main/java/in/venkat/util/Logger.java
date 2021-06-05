@@ -10,4 +10,9 @@ public class Logger {
 	public static void log(Object obj) {
 		System.out.println(obj);
 	}
+
+	public static void exception(Exception e) {
+		System.out.println(e.getMessage());
+
+	}
 }

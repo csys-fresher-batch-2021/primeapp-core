@@ -1,62 +1,122 @@
 package in.venkat.searchServiceTest;
 
-import java.sql.SQLException;
 import java.util.List;
 
+import in.venkat.exceptions.DbException;
+import in.venkat.exceptions.EmptyFieldException;
+import in.venkat.exceptions.InvalidDetailsException;
+import in.venkat.exceptions.InvalidNameException;
 import in.venkat.model.Show;
 import in.venkat.service.ShowService;
 import in.venkat.util.Logger;
-import in.venkat.validator.ValidateSearchDetails;
 
 public class SearchContentsTest {
 
-	public static void main(String[] args) throws SQLException, Exception {
-
+	public static void main(String[] args) {
 		/**
-		 * Display all movies
+		 * To display all movies
 		 */
 		String category = "movie";
-		boolean categoryValid = ValidateSearchDetails.validateDetails(category);
-		if (categoryValid) {
-			ShowService.displayAllMovies(category);
-		} else {
-			Logger.log("Category does not exists");
-		}
-
+		displayAllMoviesTest(category);
 		/**
-		 * Searching movies by Genre and Language
+		 * To filter by genre and language
 		 */
-		List<Show> search = ShowService.searchContents("action", "english");
-		Logger.log(search);
+		String genre = "action";
+		String language1 = "english";
+		searchMoviesByGenreAndLanguageTest(genre, language1);
 		/**
-		 * Searching movies by Language
+		 * To filter by language
 		 */
 		String language = "english";
-		boolean languageValid = ValidateSearchDetails.validateDetails(language);
-		if (languageValid) {
-			ShowService.searchMoviesByLanguage(language);
-		} else {
-			Logger.log("Invalid Language");
-		}
+		searchMoviesByLanguageTest(language);
 		/**
-		 * Searching movies by membership
+		 * To filter by membership
 		 */
-		String membership = "non prime";
-		boolean membershipValid = ValidateSearchDetails.validateDetails(membership);
-		if (membershipValid) {
-			ShowService.searchMoviesByMembership(membership);
-		} else {
-			Logger.log("Invalid membership");
-		}
+		String membership = "prime";
+		searchMoviesByMembershipTest(membership);
 		/**
-		 * Searching movies by year // non prime
+		 * To filter by year
 		 */
 		int year = 2019;
-		if (year > 1950 && year <= 2021) {
-			ShowService.searchMoviesByYear(year);
-		} else {
-			Logger.log("Invalid year or no shows available in year");
-		}
+		searchMoviesByYearTest(year);
 
+	}
+
+	/**
+	 * This method is used to display all movies
+	 * 
+	 * @param category
+	 */
+	public static void displayAllMoviesTest(String category) {
+
+		try {
+
+			ShowService.displayAllMovies(category);
+
+		} catch (Exception e) {
+			Logger.exception(e);
+		}
+	}
+
+	/**
+	 * This method is used to filter movie by genre and language
+	 * 
+	 * @param genre
+	 * @param language
+	 */
+	public static void searchMoviesByGenreAndLanguageTest(String genre, String language) {
+		try {
+			List<Show> search = ShowService.searchContents(genre, language);
+			Logger.log(search);
+		} catch (Exception e) {
+			Logger.exception(e);
+		}
+	}
+
+	/**
+	 * This method is used to filter movie by language
+	 * 
+	 * @param language
+	 */
+	public static void searchMoviesByLanguageTest(String language) {
+		try {
+
+			ShowService.searchMoviesByLanguage(language);
+
+		} catch (EmptyFieldException | InvalidNameException | InvalidDetailsException | DbException e) {
+			Logger.exception(e);
+		}
+	}
+
+	/**
+	 * This method is used to filter movie by membership
+	 * 
+	 * @param membership
+	 */
+
+	public static void searchMoviesByMembershipTest(String membership) {
+		try
+
+		{
+			ShowService.searchMoviesByMembership(membership);
+
+		} catch (EmptyFieldException | InvalidNameException | InvalidDetailsException | DbException e) {
+			Logger.exception(e);
+		}
+	}
+
+	/**
+	 * This method is used to filter movie by year
+	 * 
+	 * @param year
+	 */
+	public static void searchMoviesByYearTest(int year) {
+
+		try {
+			ShowService.searchMoviesByYear(year);
+
+		} catch (Exception e) {
+			Logger.exception(e);
+		}
 	}
 }
