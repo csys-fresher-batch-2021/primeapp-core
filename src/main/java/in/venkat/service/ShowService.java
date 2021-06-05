@@ -1,9 +1,11 @@
 package in.venkat.service;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import in.venkat.dao.ShowListDao;
+import in.venkat.exceptions.DbException;
 import in.venkat.exceptions.EmptyFieldException;
 import in.venkat.exceptions.InvalidDetailsException;
 import in.venkat.exceptions.InvalidNameException;
@@ -31,16 +33,18 @@ public class ShowService {
 	 * @param filmLanguage
 	 * @return
 	 * @throws SQLException
-	 * @throws InvalidDetailsException 
-	 * @throws InvalidNameException 
-	 * @throws EmptyFieldException 
+	 * @throws InvalidDetailsException
+	 * @throws InvalidNameException
+	 * @throws EmptyFieldException
+	 * @throws DbException
 	 * @throws Exception
 	 */
-	public static boolean searchContents(String filmGenre, String filmLanguage) throws SQLException, EmptyFieldException, InvalidNameException, InvalidDetailsException {
+	public static List<Show> searchContents(String filmGenre, String filmLanguage)
+			throws SQLException, EmptyFieldException, InvalidNameException, InvalidDetailsException, DbException {
 		boolean isValid = ValidateSearchDetails.validateDetails(filmGenre, filmLanguage);
-		boolean search = false;
+		List<Show> search = null;
 		if (isValid) {
-			search = searchMoviesByLanguage(filmGenre, filmLanguage);
+			search = searchMoviesByLanguageAndGenre(filmGenre, filmLanguage);
 
 		}
 		return search;
@@ -52,22 +56,25 @@ public class ShowService {
 	 * @param filmLanguage
 	 * @return
 	 * @throws SQLException
+	 * @throws DbException
 	 * @throws Exception
 	 */
-	public static boolean searchMoviesByLanguage(String filmGenre, String filmLanguage) throws SQLException {
+	public static List<Show> searchMoviesByLanguageAndGenre(String filmGenre, String filmLanguage)
+			throws SQLException, DbException {
 		List<Show> primeMovieList = ShowListDao.getShowDetails();
-		boolean searchDone = false;
+		List<Show> filteredMovieList = new ArrayList<>();
+		filteredMovieList.removeAll(filteredMovieList);
 		for (Show show : primeMovieList) {
 			if (show.getMovieGenre().equalsIgnoreCase(filmGenre.trim())
-					&& show.getMovieLanguage().equalsIgnoreCase(filmLanguage.trim())) {
-				Logger.log(MOVIE_GENRE + filmGenre + MOVIE_LANGUAGE + filmLanguage);
-				Logger.log(show);
-				searchDone = true;
-
-			}
+					&& show.getMovieLanguage().equalsIgnoreCase(filmLanguage.trim()))
+				filteredMovieList.add(show);
+//				Logger.log(MOVIE_GENRE + filmGenre + MOVIE_LANGUAGE + filmLanguage);
+//				Logger.log(show);
+//				searchDone = true;
 
 		}
-		return searchDone;
+		return filteredMovieList;
+
 	}
 
 	/**
@@ -77,20 +84,20 @@ public class ShowService {
 	 * @return
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
+	 * @throws DbException
 	 * @throws Exception
 	 */
-	public static boolean searchMoviesByMembership(String membership) throws SQLException {
+	public static List<Show> searchMoviesByMembership(String membership) throws SQLException, DbException {
 		List<Show> primeMovieList = ShowListDao.getShowDetails();
-		boolean searchDone = false;
+		List<Show> filteredMovieList = new ArrayList<>();
+		filteredMovieList.removeAll(filteredMovieList);
 		for (Show show : primeMovieList) {
 			if (show.getMembership().equalsIgnoreCase(membership.trim())) {
-				Logger.log(MEMBERSHIP + membership);
+				filteredMovieList.add(show);
 				Logger.log(show);
-				searchDone = true;
-
 			}
 		}
-		return searchDone;
+		return filteredMovieList;
 	}
 
 	/**
@@ -100,20 +107,21 @@ public class ShowService {
 	 * @return
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
+	 * @throws DbException
 	 * @throws Exception
 	 */
-	public static boolean searchMoviesByYear(int year) throws SQLException {
+	public static List<Show> searchMoviesByYear(int year) throws SQLException, DbException {
 		List<Show> primeMovieList = ShowListDao.getShowDetails();
-		boolean searchByYear = false;
+		List<Show> filteredMovieList = new ArrayList<>();
+		filteredMovieList.removeAll(filteredMovieList);
 		for (Show show : primeMovieList) {
 			if (show.getMovieYear() == year) {
-				Logger.log(MOVIE_YEAR + year);
+				filteredMovieList.add(show);
 				Logger.log(show);
-				searchByYear = true;
 
 			}
 		}
-		return searchByYear;
+		return filteredMovieList;
 	}
 
 	/**
@@ -123,20 +131,21 @@ public class ShowService {
 	 * @return
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
+	 * @throws DbException
 	 * @throws Exception
 	 */
-	public static boolean searchMoviesByLanguage(String filmLanguage) throws SQLException {
+	public static List<Show> searchMoviesByLanguage(String filmLanguage) throws SQLException, DbException {
 		List<Show> primeMovieList = ShowListDao.getShowDetails();
-		boolean searchDone = false;
+		List<Show> filteredMovieList = new ArrayList<>();
+		filteredMovieList.removeAll(filteredMovieList);
 		for (Show show : primeMovieList) {
 			if (show.getMovieLanguage().equalsIgnoreCase(filmLanguage.trim())) {
-				Logger.log(MOVIE_LANGUAGE + filmLanguage);
+				filteredMovieList.add(show);
 				Logger.log(show);
-				searchDone = true;
 
 			}
 		}
-		return searchDone;
+		return filteredMovieList;
 	}
 
 	/**
@@ -146,19 +155,19 @@ public class ShowService {
 	 * @return
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
+	 * @throws DbException
 	 * @throws Exception
 	 */
-	public static boolean displayAllMovies(String filmCategory) throws SQLException {
+	public static List<Show> displayAllMovies(String filmCategory) throws SQLException, DbException {
 		List<Show> primeMovieList = ShowListDao.getShowDetails();
-		boolean searchDone = false;
+		List<Show> filteredMovieList = new ArrayList<>();
+		filteredMovieList.removeAll(filteredMovieList);
 		for (Show show : primeMovieList) {
 			if (show.getMovieCategory().equalsIgnoreCase(filmCategory.trim())) {
-				Logger.log(CATEGORY + filmCategory);
+				filteredMovieList.add(show);
 				Logger.log(show);
-				searchDone = true;
-
 			}
 		}
-		return searchDone;
+		return filteredMovieList;
 	}
 }

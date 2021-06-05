@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import in.venkat.exceptions.DbException;
 import in.venkat.model.Show;
 import in.venkat.util.ConnectionUtil;
 
@@ -25,7 +26,7 @@ public class ShowListDao {
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
 	 */
-	public static List<Show> getShowDetails() throws SQLException {
+	public static List<Show> getShowDetails() throws DbException {
 		List<Show> movieList = new ArrayList<>();
 		Connection connection = null;
 		PreparedStatement preparedSt = null;
@@ -33,7 +34,7 @@ public class ShowListDao {
 		try {
 			connection = ConnectionUtil.getConnection();
 
-			String sql = " select id,genre,name,year,language,category,membership,grade from shows ";
+			String sql = "select id,genre,name,year,language,category,membership,grade from shows";
 			preparedSt = connection.prepareStatement(sql);
 			rs = preparedSt.executeQuery();
 
@@ -48,10 +49,13 @@ public class ShowListDao {
 				String movieGrade = rs.getString("grade");
 				movieList.add(new Show(movieId, movieGenre, movieName, movieYear, movieLanguage, movieCategory,
 						membership, movieGrade));
+				
+				
 			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
+			throw new DbException(e, "unable ro connect");
 
 		} finally {
 			ConnectionUtil.close(preparedSt, connection);
