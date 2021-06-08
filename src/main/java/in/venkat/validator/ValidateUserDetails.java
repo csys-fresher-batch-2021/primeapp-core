@@ -34,7 +34,7 @@ public class ValidateUserDetails {
 			String reEnteredPasscode) throws EmptyFieldException, InvalidNameException, InvalidNumberException,
 			InvalidPasswordException, PasswordMismatchException {
 		boolean isAllValid = false;
-		boolean isEqual = isEqual(userPasscode, reEnteredPasscode);
+		boolean isEqual = isPassEqual(userPasscode, reEnteredPasscode);
 		boolean isNameValid = NameValidationUtil.validateName(name);
 		boolean isMobileNumValid = MobileNumberValidationUtil.validateMobileNumber(mobileNumber);
 		boolean isUserPasscodeValid = PasswordValidationUtil.validatePassword(userPasscode);
@@ -54,15 +54,15 @@ public class ValidateUserDetails {
 	 * @return
 	 * @throws PasswordMismatchException
 	 */
-	private static boolean isEqual(String userPasscode, String reEnteredPasscode) throws PasswordMismatchException {
-		boolean isEqual = false;
+	private static boolean isPassEqual(String userPasscode, String reEnteredPasscode) throws PasswordMismatchException {
+		boolean isPassEqual = false;
 		if (userPasscode.trim().equals(reEnteredPasscode.trim())) {
-			isEqual = true;
+			isPassEqual = true;
 
 		} else {
 			throw new PasswordMismatchException("the re-entered password is not matching");
 		}
-		return isEqual;
+		return isPassEqual;
 
 	}
 

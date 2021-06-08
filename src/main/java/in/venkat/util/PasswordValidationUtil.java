@@ -7,6 +7,12 @@ import in.venkat.exceptions.EmptyFieldException;
 import in.venkat.exceptions.InvalidPasswordException;
 
 public class PasswordValidationUtil {
+	private PasswordValidationUtil() {
+		/**
+		 * Adding private constructor
+		 */
+	}
+
 	/**
 	 * This method validates the password
 	 * 
@@ -34,11 +40,9 @@ public class PasswordValidationUtil {
 
 			valid = match.matches();
 		} else {
-			System.out.println(valid);
 
 			throw new InvalidPasswordException("password has low security level");
 		}
-		System.out.println(valid);
 		return valid;
 
 	}

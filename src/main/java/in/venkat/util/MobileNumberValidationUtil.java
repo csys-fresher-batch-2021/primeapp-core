@@ -4,6 +4,13 @@ import in.venkat.exceptions.EmptyFieldException;
 import in.venkat.exceptions.InvalidNumberException;
 
 public class MobileNumberValidationUtil {
+	private MobileNumberValidationUtil() {
+		/**
+		 * adding a private constructor
+		 */
+
+	}
+
 	/**
 	 * This method validates the mobile number
 	 * 

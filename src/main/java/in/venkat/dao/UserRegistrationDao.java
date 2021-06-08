@@ -8,6 +8,13 @@ import in.venkat.model.UserRegistration;
 import in.venkat.util.ConnectionUtil;
 
 public class UserRegistrationDao {
+	private UserRegistrationDao() {
+		/**
+		 * adding a private constructor
+		 */
+
+	}
+
 	/**
 	 * This method is used to store the registered user's details
 	 * 
@@ -16,7 +23,7 @@ public class UserRegistrationDao {
 	 * @throws SQLException
 	 * @throws DbException
 	 */
-	public static void register(UserRegistration register) throws ClassNotFoundException, SQLException, DbException {
+	public static void register(UserRegistration register) throws SQLException, DbException {
 		Connection connection = null;
 		PreparedStatement pst = null;
 		try {
