@@ -34,11 +34,10 @@ public class ValidateUserDetails {
 			String reEnteredPasscode) throws EmptyFieldException, InvalidNameException, InvalidNumberException,
 			InvalidPasswordException, PasswordMismatchException {
 		boolean isAllValid = false;
-		boolean isEqual = isPassEqual(userPasscode, reEnteredPasscode);
 		boolean isNameValid = NameValidationUtil.validateName(name);
 		boolean isMobileNumValid = MobileNumberValidationUtil.validateMobileNumber(mobileNumber);
 		boolean isUserPasscodeValid = PasswordValidationUtil.validatePassword(userPasscode);
-		if (isEqual && isNameValid && isMobileNumValid && isUserPasscodeValid) {
+		if (isPassEqual(userPasscode, reEnteredPasscode) && isNameValid && isMobileNumValid && isUserPasscodeValid) {
 			isAllValid = true;
 
 		}

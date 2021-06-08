@@ -44,7 +44,7 @@ public class UserRegistrationService {
 	 */
 	public static boolean registerUser(String name, long mobileNumber, String userPasscode, String reEnteredPasscode)
 			throws EmptyFieldException, InvalidNameException, InvalidNumberException, InvalidPasswordException,
-			PasswordMismatchException, ClassNotFoundException, SQLException, DbException {
+			PasswordMismatchException, SQLException, DbException {
 
 		boolean isValid = ValidateUserDetails.validateUserDetails(name, mobileNumber, userPasscode, reEnteredPasscode);
 		if (isValid) {
