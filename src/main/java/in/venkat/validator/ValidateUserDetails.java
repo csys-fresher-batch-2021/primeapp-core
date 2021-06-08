@@ -30,14 +30,13 @@ public class ValidateUserDetails {
 	 * @throws InvalidPasswordException
 	 * @throws PasswordMismatchException
 	 */
-	public static boolean validateUserDetails(String name, long mobileNumber, String userPasscode,
-			String reEnteredPasscode) throws EmptyFieldException, InvalidNameException, InvalidNumberException,
+	public static boolean validateUserDetails(String name, long mobileNumber, String userPasscode) throws EmptyFieldException, InvalidNameException, InvalidNumberException,
 			InvalidPasswordException, PasswordMismatchException {
 		boolean isAllValid = false;
 		boolean isNameValid = NameValidationUtil.validateName(name);
 		boolean isMobileNumValid = MobileNumberValidationUtil.validateMobileNumber(mobileNumber);
 		boolean isUserPasscodeValid = PasswordValidationUtil.validatePassword(userPasscode);
-		if (isPassEqual(userPasscode, reEnteredPasscode) && isNameValid && isMobileNumValid && isUserPasscodeValid) {
+		if (isNameValid && isMobileNumValid && isUserPasscodeValid) {
 			isAllValid = true;
 
 		}
@@ -53,7 +52,7 @@ public class ValidateUserDetails {
 	 * @return
 	 * @throws PasswordMismatchException
 	 */
-	private static boolean isPassEqual(String userPasscode, String reEnteredPasscode) throws PasswordMismatchException {
+	public static boolean isPassEqual(String userPasscode, String reEnteredPasscode) throws PasswordMismatchException {
 		boolean isPassEqual = false;
 		if (userPasscode.trim().equals(reEnteredPasscode.trim())) {
 			isPassEqual = true;

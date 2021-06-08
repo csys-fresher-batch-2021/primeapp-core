@@ -46,8 +46,8 @@ public class UserRegistrationService {
 			throws EmptyFieldException, InvalidNameException, InvalidNumberException, InvalidPasswordException,
 			PasswordMismatchException, SQLException, DbException {
 
-		boolean isValid = ValidateUserDetails.validateUserDetails(name, mobileNumber, userPasscode, reEnteredPasscode);
-		if (isValid) {
+		boolean isValid = ValidateUserDetails.validateUserDetails(name, mobileNumber, userPasscode);
+		if (isValid && ValidateUserDetails.isPassEqual(userPasscode, reEnteredPasscode)) {
 			String mobNum = Long.toString(mobileNumber);
 			String userId = name.concat(mobNum);
 			UserRegistration register = new UserRegistration(userId, name, mobileNumber, userPasscode);
