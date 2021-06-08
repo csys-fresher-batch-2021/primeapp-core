@@ -30,8 +30,8 @@ public class ValidateUserDetails {
 	 * @throws InvalidPasswordException
 	 * @throws PasswordMismatchException
 	 */
-	public static boolean validateUserDetails(String name, long mobileNumber, String userPasscode) throws EmptyFieldException, InvalidNameException, InvalidNumberException,
-			InvalidPasswordException, PasswordMismatchException {
+	public static boolean validateUserDetails(String name, long mobileNumber, String userPasscode)
+			throws EmptyFieldException, InvalidNameException, InvalidNumberException, InvalidPasswordException {
 		boolean isAllValid = false;
 		boolean isNameValid = NameValidationUtil.validateName(name);
 		boolean isMobileNumValid = MobileNumberValidationUtil.validateMobileNumber(mobileNumber);
