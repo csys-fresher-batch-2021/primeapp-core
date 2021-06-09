@@ -42,7 +42,7 @@ public class UserRegistrationDao {
 			pst.executeUpdate();
 
 		} catch (SQLException e) {
-			Logger.log(e);
+			Logger.exception(e);
 			throw new DbException("unable to add user");
 
 		} finally {
