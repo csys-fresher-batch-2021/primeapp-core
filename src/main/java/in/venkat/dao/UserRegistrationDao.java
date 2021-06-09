@@ -16,7 +16,7 @@ public class UserRegistrationDao {
 	}
 
 	/**
-	 * This method is used to store the registered user's details
+	 * This method is used to store the registered user details
 	 * 
 	 * @param register
 	 * @throws ClassNotFoundException
