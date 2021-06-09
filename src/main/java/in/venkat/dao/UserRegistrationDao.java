@@ -30,7 +30,7 @@ public class UserRegistrationDao {
 
 			connection = ConnectionUtil.getConnection();
 
-			String sql = "insert into register (user_id,name,phone_number,password)  values(?,?,?,?);";
+			String sql = "insert into users (user_id,name,phone_number,password,joined_on)  values(?,?,?,?,now());";
 
 			pst = connection.prepareStatement(sql);
 			pst.setString(1, register.getUserId());
