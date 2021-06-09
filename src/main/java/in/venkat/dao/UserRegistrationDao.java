@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import in.venkat.exceptions.DbException;
 import in.venkat.model.UserRegistration;
 import in.venkat.util.ConnectionUtil;
+import in.venkat.util.Logger;
 
 public class UserRegistrationDao {
 	private UserRegistrationDao() {
@@ -41,7 +42,7 @@ public class UserRegistrationDao {
 			pst.executeUpdate();
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Logger.log(e);
 			throw new DbException("unable to add user");
 
 		} finally {
