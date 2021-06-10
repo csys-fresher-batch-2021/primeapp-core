@@ -1,6 +1,6 @@
 package in.venkat.model;
 
-public class UserRegistration {
+public class User {
 	private String userId;
 	private String userName;
 	private long phoneNumber;
@@ -38,12 +38,24 @@ public class UserRegistration {
 		this.password = password;
 	}
 
-	public UserRegistration(String userId, String userName, long phoneNumber, String password) {
+	public User(String userId, String userName, long phoneNumber, String password) {
 		super();
 		this.userId = userId;
 		this.userName = userName;
 		this.phoneNumber = phoneNumber;
 		this.password = password;
+	}
+
+	public User(String userId, String userPassword) {
+		super();
+		this.userId = userId;
+		this.password = userPassword;
+	}
+
+	public User(long phoneNumber, String userPassword) {
+		super();
+		this.phoneNumber = phoneNumber;
+		this.password = userPassword;
 	}
 
 	@Override
