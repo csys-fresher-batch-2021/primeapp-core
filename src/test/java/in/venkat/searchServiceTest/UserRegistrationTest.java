@@ -7,7 +7,7 @@ public class UserRegistrationTest {
 
 	public static void main(String[] args) {
 		String name = "radha";
-		long phoneNumber = 8767898790L;
+		long phoneNumber = 9767898790L;
 		/**
 		 * password must contain at least one upper case letter ,one lower case
 		 * letter,one number and one special character
