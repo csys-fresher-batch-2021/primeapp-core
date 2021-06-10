@@ -4,6 +4,7 @@ import in.venkat.exceptions.EmptyFieldException;
 import in.venkat.exceptions.InvalidNameException;
 import in.venkat.exceptions.InvalidNumberException;
 import in.venkat.exceptions.InvalidPasswordException;
+import in.venkat.exceptions.InvalidPhoneNumberException;
 import in.venkat.exceptions.PasswordMismatchException;
 import in.venkat.util.MobileNumberValidationUtil;
 import in.venkat.util.NameValidationUtil;
@@ -61,6 +62,21 @@ public class ValidateUserDetails {
 			throw new PasswordMismatchException("the re-entered password is not matching");
 		}
 		return isPassEqual;
+
+	}
+	/**
+	 * This method checks the phone number and parse it 
+	 * @param userId
+	 * @return
+	 * @throws InvalidPhoneNumberException
+	 */
+	public static long checkPhoneNumber(String userId) throws InvalidPhoneNumberException {
+
+		try {
+			return Long.parseLong(userId);
+		} catch (Exception e) {
+			throw new InvalidPhoneNumberException("phone number is inValid");
+		}
 
 	}
 
