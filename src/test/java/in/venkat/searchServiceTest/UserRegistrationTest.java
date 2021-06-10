@@ -6,8 +6,8 @@ import in.venkat.util.Logger;
 public class UserRegistrationTest {
 
 	public static void main(String[] args) {
-		String name = "rathika";
-		long phoneNumber = 8767898767L;
+		String name = "radha";
+		long phoneNumber = 8767898790L;
 		/**
 		 * password must contain at least one upper case letter ,one lower case
 		 * letter,one number and one special character

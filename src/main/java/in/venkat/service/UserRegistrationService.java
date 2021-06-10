@@ -10,6 +10,7 @@ import in.venkat.exceptions.InvalidNumberException;
 import in.venkat.exceptions.InvalidPasswordException;
 import in.venkat.exceptions.PasswordMismatchException;
 import in.venkat.model.UserRegistration;
+import in.venkat.util.Logger;
 import in.venkat.validator.ValidateUserDetails;
 
 public class UserRegistrationService {
@@ -52,6 +53,7 @@ public class UserRegistrationService {
 			String userId = name.concat(mobNum);
 			UserRegistration register = new UserRegistration(userId, name, mobileNumber, userPasscode);
 			UserRegistrationDao.register(register);
+			Logger.log("your user id is :" +userId);
 
 		}
 		return isValid;
