@@ -1,6 +1,6 @@
 package in.venkat.searchServiceTest;
 
-import in.venkat.service.UserRegistrationService;
+import in.venkat.service.UserService;
 import in.venkat.util.Logger;
 
 public class UserRegistrationTest {
@@ -22,7 +22,7 @@ public class UserRegistrationTest {
 	public static void userRegistrationTest(String name, long mobileNumber, String userPasscode,
 			String reEnteredPasscode) {
 		try {
-			UserRegistrationService.registerUser(name, mobileNumber, userPasscode, reEnteredPasscode);
+			UserService.registerUser(name, mobileNumber, userPasscode, reEnteredPasscode);
 
 		} catch (Exception e) {
 			Logger.exception(e);
