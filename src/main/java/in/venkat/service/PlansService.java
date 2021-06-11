@@ -14,6 +14,12 @@ public class PlansService {
 		 */
 	}
 
+	/**
+	 * This method is used to display the plan details
+	 * 
+	 * @return
+	 * @throws DbException
+	 */
 	public static List<Plans> getPlans() throws DbException {
 		List<Plans> plans = PlansDao.getPrimePlans();
 		Logger.log(plans);

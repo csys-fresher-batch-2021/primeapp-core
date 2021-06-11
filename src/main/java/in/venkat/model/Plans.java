@@ -2,12 +2,12 @@ package in.venkat.model;
 
 public class Plans {
 	private int id;
-	private int plans;
+	private int primePlans;
 	private String liveShows;
 	private String multiplexScreens;
-	private String Dubbed;
+	private String dubbedMovies;
 	private String advertisement;
-	private int Screens;
+	private int movieScreens;
 	private String videoQuality;
 	private String audioQuality;
 
@@ -15,12 +15,12 @@ public class Plans {
 			int screens, String videoQuality, String audioQuality) {
 		super();
 		this.id = id;
-		this.plans = plans;
+		this.primePlans = plans;
 		this.liveShows = liveShows;
 		this.multiplexScreens = multiplexScreens;
-		Dubbed = dubbed;
+		dubbedMovies = dubbed;
 		this.advertisement = advertisement;
-		Screens = screens;
+		movieScreens = screens;
 		this.videoQuality = videoQuality;
 		this.audioQuality = audioQuality;
 	}
@@ -34,11 +34,11 @@ public class Plans {
 	}
 
 	public int getPlans() {
-		return plans;
+		return primePlans;
 	}
 
 	public void setPlans(int plans) {
-		this.plans = plans;
+		this.primePlans = plans;
 	}
 
 	public String getLiveShows() {
@@ -58,11 +58,11 @@ public class Plans {
 	}
 
 	public String getDubbed() {
-		return Dubbed;
+		return dubbedMovies;
 	}
 
 	public void setDubbed(String dubbed) {
-		Dubbed = dubbed;
+		dubbedMovies = dubbed;
 	}
 
 	public String getAdvertisement() {
@@ -74,11 +74,11 @@ public class Plans {
 	}
 
 	public int getScreens() {
-		return Screens;
+		return movieScreens;
 	}
 
 	public void setScreens(int screens) {
-		Screens = screens;
+		movieScreens = screens;
 	}
 
 	public String getVideoQuality() {
@@ -99,8 +99,8 @@ public class Plans {
 
 	@Override
 	public String toString() {
-		return "PrimePlans [id=" + id + ", plans=" + plans + ", liveShows=" + liveShows + ", multiplexScreens="
-				+ multiplexScreens + ", Dubbed=" + Dubbed + ", advertisement=" + advertisement + ", Screens=" + Screens
+		return "PrimePlans [id=" + id + ", plans=" + primePlans + ", liveShows=" + liveShows + ", multiplexScreens="
+				+ multiplexScreens + ", Dubbed=" + dubbedMovies + ", advertisement=" + advertisement + ", Screens=" + movieScreens
 				+ ", videoQuality=" + videoQuality + ", audioQuality=" + audioQuality + "]";
 	}
 
