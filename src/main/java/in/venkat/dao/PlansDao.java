@@ -8,7 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import in.venkat.exceptions.DbException;
+import in.venkat.exceptions.InvalidUserIdException;
 import in.venkat.model.Plans;
+import in.venkat.model.PrimeTopup;
 import in.venkat.util.ConnectionUtil;
 import in.venkat.util.Logger;
 
@@ -19,6 +21,12 @@ public class PlansDao {
 		 */
 	}
 
+	/**
+	 * This method is used to get the prime plan details
+	 * 
+	 * @return
+	 * @throws DbException
+	 */
 	public static List<Plans> getPrimePlans() throws DbException {
 		List<Plans> plans = new ArrayList<>();
 		Connection connection = null;
@@ -55,6 +63,35 @@ public class PlansDao {
 
 		}
 		return plans;
+	}
+	/**
+	 * This method is used to get the registered users details
+	 * @return
+	 * @throws DbException
+	 * @throws InvalidUserIdException
+	 */
+	public static List<PrimeTopup> getPrimeUserIdDetails() throws DbException, InvalidUserIdException {
+		List<PrimeTopup> primeUser = new ArrayList<>();
+		Connection connection = null;
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+		try {
+			connection = ConnectionUtil.getConnection();
+			String sql = "select user_id from users";
+			pst = connection.prepareStatement(sql);
+			rs = pst.executeQuery();
+			while (rs.next()) {
+				String userId = rs.getString("user_id");
+				primeUser.add(new PrimeTopup(userId));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+
+		} finally {
+			ConnectionUtil.close(rs, pst, connection);
+
+		}
+		return primeUser;
 	}
 
 }
