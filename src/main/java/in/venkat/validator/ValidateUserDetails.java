@@ -96,12 +96,13 @@ public class ValidateUserDetails {
 	 * @throws DbException
 	 * @throws InvalidUserIdException
 	 */
-	public static boolean checkUserId(String userId) throws DbException, InvalidUserIdException {
+	public static boolean checkUserId(String userId) throws DbException {
 		boolean isExist = false;
 		List<PrimeTopup> userIdList = PlansDao.getPrimeUserIdDetails();
 		for (PrimeTopup primeTopup : userIdList) {
 			if (primeTopup.getUserId().equals(userId)) {
 				isExist = true;
+
 				break;
 			}
 

@@ -37,7 +37,8 @@ public class PrimeTopupService {
 		LocalDate expireDate = null;
 		boolean validUserId = ValidateUserDetails.checkUserId(userId);
 		boolean validTopup = PrimeTopupService.checkValidTopup(userId);
-		if (validUserId && isConfirm && validTopup) {
+
+		if ((validUserId || validTopup) && isConfirm) {
 
 			switch (choice) {
 			case 1: {

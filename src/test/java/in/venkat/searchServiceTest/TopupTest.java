@@ -11,8 +11,8 @@ public class TopupTest {
 	public static void main(String[] args) {
 
 		try {
-			String userId = "venkat9790430272";
-			int choice = 1;
+			String userId = "venkat8767898760";
+			int choice = 2;
 			boolean isConfirm = true;
 			PrimeTopupService.primeTopup(choice, isConfirm, userId);
 
