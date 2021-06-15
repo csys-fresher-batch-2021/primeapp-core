@@ -1,14 +1,12 @@
 package in.venkat.dao;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
 import in.venkat.exceptions.DbException;
 import in.venkat.model.PrimeTopup;
 import in.venkat.util.ConnectionUtil;
@@ -20,6 +18,7 @@ public class PrimeTopupDao {
 		 * Adding a private constructor
 		 */
 	}
+
 	/**
 	 * This method is used to store the topup details
 	 * 
@@ -44,7 +43,7 @@ public class PrimeTopupDao {
 			pst.executeUpdate();
 
 		} catch (SQLException e) {
-			Logger.log(e);
+			Logger.exception(e);
 			throw new DbException(e, "unable to connect to dataBase");
 
 		} finally {
@@ -77,9 +76,13 @@ public class PrimeTopupDao {
 			}
 
 		} catch (SQLException e) {
-			Logger.log(e);
+			Logger.exception(e);
 			throw new DbException(e, "unable to connect to database");
+		} finally {
+			ConnectionUtil.close(rs, pst, connection);
+
 		}
+
 		return validTopupDate;
 
 	}

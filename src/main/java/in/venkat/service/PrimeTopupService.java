@@ -126,11 +126,11 @@ public class PrimeTopupService {
 	 * @return
 	 * @throws DbException
 	 */
-	public static boolean isNewTopup(String UserId) throws DbException {
+	public static boolean isNewTopup(String userId) throws DbException {
 		boolean checkUser = false;
 		List<PrimeTopup> newTopup = PrimeTopupDao.getExpiryDate();
 		for (PrimeTopup userIdCheck : newTopup) {
-			if (userIdCheck.getUserId().equals(UserId)) {
+			if (userIdCheck.getUserId().equals(userId)) {
 				checkUser = true;
 			}
 

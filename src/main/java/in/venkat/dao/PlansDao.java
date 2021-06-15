@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
 import in.venkat.exceptions.DbException;
 import in.venkat.exceptions.InvalidUserIdException;
 import in.venkat.model.Plans;
@@ -55,7 +54,7 @@ public class PlansDao {
 			}
 
 		} catch (SQLException e) {
-			Logger.log(e);
+			Logger.exception(e);
 			throw new DbException(e, "unable to connect to dataBase");
 
 		} finally {
@@ -64,13 +63,15 @@ public class PlansDao {
 		}
 		return plans;
 	}
+
 	/**
 	 * This method is used to get the registered users details
+	 * 
 	 * @return
 	 * @throws DbException
 	 * @throws InvalidUserIdException
 	 */
-	public static List<PrimeTopup> getPrimeUserIdDetails() throws DbException, InvalidUserIdException {
+	public static List<PrimeTopup> getPrimeUserIdDetails() throws DbException {
 		List<PrimeTopup> primeUser = new ArrayList<>();
 		Connection connection = null;
 		PreparedStatement pst = null;
@@ -85,7 +86,8 @@ public class PlansDao {
 				primeUser.add(new PrimeTopup(userId));
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Logger.exception(e);
+			throw new DbException(e, "unable to connect to dataBase");
 
 		} finally {
 			ConnectionUtil.close(rs, pst, connection);
