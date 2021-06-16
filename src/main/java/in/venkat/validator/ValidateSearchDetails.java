@@ -12,6 +12,16 @@ public class ValidateSearchDetails {
 		 */
 	}
 
+	/**
+	 * This method validates the film genre and language
+	 * 
+	 * @param filmGenre
+	 * @param filmLanguage
+	 * @return
+	 * @throws EmptyFieldException
+	 * @throws InvalidNameException
+	 * @throws InvalidDetailsException
+	 */
 	public static boolean validateDetails(String filmGenre, String filmLanguage)
 			throws EmptyFieldException, InvalidNameException, InvalidDetailsException {
 		boolean valid = false;
@@ -24,6 +34,15 @@ public class ValidateSearchDetails {
 		return valid;
 	}
 
+	/**
+	 * This method validates the film language and check
+	 * 
+	 * @param filmLanguage
+	 * @return
+	 * @throws EmptyFieldException
+	 * @throws InvalidNameException
+	 * @throws InvalidDetailsException
+	 */
 	public static boolean validateDetails(String filmLanguage)
 			throws EmptyFieldException, InvalidNameException, InvalidDetailsException {
 		boolean valid = false;

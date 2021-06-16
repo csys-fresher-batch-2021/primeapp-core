@@ -1,12 +1,16 @@
 package in.venkat.service;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
 
+import in.venkat.dao.PlansDao;
 import in.venkat.dao.PrimeTopupDao;
 import in.venkat.exceptions.DbException;
+import in.venkat.exceptions.InvalidChoiceException;
 import in.venkat.exceptions.InvalidUserIdException;
 import in.venkat.exceptions.PlanNotExpiredException;
+import in.venkat.model.Plans;
 import in.venkat.model.PrimeTopup;
 import in.venkat.util.Logger;
 import in.venkat.validator.TopupValidation;
@@ -28,55 +32,28 @@ public class PrimeTopupService {
 	 * @throws DbException
 	 * @throws InvalidUserIdException
 	 * @throws PlanNotExpiredException
+	 * @throws InvalidChoiceException
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
 	 */
 	public static void primeTopup(int choice, boolean isConfirm, String userId)
-			throws DbException, InvalidUserIdException, PlanNotExpiredException {
+			throws DbException, InvalidUserIdException, PlanNotExpiredException, ClassNotFoundException, SQLException,
+			InvalidChoiceException {
+		boolean validTopup = PrimeTopupService.checkValidTopup(userId);
+		boolean validUserId = ValidateUserDetails.checkUserId(userId);
+		boolean isChoiceValid = TopupValidation.choiceValidation(choice);
+		List<Plans> plans = PlansDao.getPrimePlans();
 		int plan = 0;
 		int validity = 0;
-		LocalDate today = LocalDate.now();
-		LocalDate expireDate = null;
-		boolean validUserId = ValidateUserDetails.checkUserId(userId);
-		boolean validTopup = PrimeTopupService.checkValidTopup(userId);
-
-		if ((validUserId || validTopup) && isConfirm) {
-
-			switch (choice) {
-			case 1: {
-				plan = 399;
-				Logger.log("PLAN :  " + plan);
-				validity = 30;
-				Logger.log("VALIDITY : " + validity + " DAYS ");
-				Logger.log("TODAY DATE : " + today);
-				expireDate = today.plusDays(validity);
-				Logger.log("EXPIRY DATE : " + expireDate);
-				PrimeTopup plans = new PrimeTopup(userId, plan, today, validity, expireDate);
-				PrimeTopupDao.saveTopupDetails(plans);
-
-				break;
-
+		for (Plans primePlans : plans) {
+			if (choice == primePlans.getPlanId() && validTopup && validUserId && isChoiceValid) {
+				plan = primePlans.getPrimePlans();
+				validity = primePlans.getPlanValidity();
+				LocalDate today = LocalDate.now();
+				LocalDate expiryDate = today.plusDays(validity);
+				PrimeTopup primePlan = new PrimeTopup(userId, plan, today, validity, expiryDate);
+				PrimeTopupDao.saveTopupDetails(primePlan);
 			}
-
-			case 2: {
-				plan = 699;
-				Logger.log("PLAN : " + plan);
-				validity = 60;
-				Logger.log("VALIDITY : " + validity + " DAYS ");
-				Logger.log("TODAY DATE : " + today);
-				expireDate = today.plusDays(validity);
-				Logger.log("EXPIRY DATE : " + expireDate);
-				PrimeTopup plans = new PrimeTopup(userId, plan, today, validity, expireDate);
-				PrimeTopupDao.saveTopupDetails(plans);
-
-				break;
-
-			}
-			default: {
-				Logger.log("invalid plan details");
-			}
-
-			}
-		} else {
-			throw new InvalidUserIdException("invalid user id ");
 		}
 	}
 
@@ -91,14 +68,16 @@ public class PrimeTopupService {
 	 */
 	private static boolean checkValidTopup(String userId) throws DbException, PlanNotExpiredException {
 		boolean checkNewTopup = isNewTopup(userId);
-		boolean isExpired = false;
+		boolean isValid = false;
 		if (checkNewTopup) {
 			LocalDate expiryDateCheck = getExpiryDate(userId);
-			isExpired = TopupValidation.isDateValid(expiryDateCheck);
+			isValid = TopupValidation.isDateValid(expiryDateCheck);
 
+		} else {
+			isValid = true;
 		}
 
-		return isExpired;
+		return isValid;
 	}
 
 	/**

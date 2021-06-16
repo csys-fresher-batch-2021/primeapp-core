@@ -3,6 +3,7 @@ package in.venkat.validator;
 import java.util.List;
 
 import in.venkat.dao.PlansDao;
+import in.venkat.dao.UserDao;
 import in.venkat.exceptions.DbException;
 import in.venkat.exceptions.EmptyFieldException;
 import in.venkat.exceptions.InvalidNameException;
@@ -12,6 +13,8 @@ import in.venkat.exceptions.InvalidPhoneNumberException;
 import in.venkat.exceptions.InvalidUserIdException;
 import in.venkat.exceptions.PasswordMismatchException;
 import in.venkat.model.PrimeTopup;
+import in.venkat.model.User;
+import in.venkat.util.Logger;
 import in.venkat.util.MobileNumberValidationUtil;
 import in.venkat.util.NameValidationUtil;
 import in.venkat.util.PasswordValidationUtil;
@@ -96,16 +99,19 @@ public class ValidateUserDetails {
 	 * @throws DbException
 	 * @throws InvalidUserIdException
 	 */
-	public static boolean checkUserId(String userId) throws DbException {
+	public static boolean checkUserId(String userId) throws DbException, InvalidUserIdException {
 		boolean isExist = false;
-		List<PrimeTopup> userIdList = PlansDao.getPrimeUserIdDetails();
-		for (PrimeTopup primeTopup : userIdList) {
+		List<User> userIdList = UserDao.getAllRegisteredUserId();
+		for (User primeTopup : userIdList) {
 			if (primeTopup.getUserId().equals(userId)) {
 				isExist = true;
 
 				break;
 			}
 
+		}
+		if (!isExist) {
+			throw new InvalidUserIdException("user Id is invalid");
 		}
 
 		return isExist;

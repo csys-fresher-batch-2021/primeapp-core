@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import in.venkat.exceptions.DbException;
+import in.venkat.exceptions.InvalidUserIdException;
+import in.venkat.model.PrimeTopup;
 import in.venkat.model.User;
 import in.venkat.util.ConnectionUtil;
 import in.venkat.util.Logger;
@@ -62,7 +64,7 @@ public class UserDao {
 	 * @return
 	 * @throws DbException
 	 */
-	public static List<User> getUserDetailsByUserId() throws DbException {
+	public static List<User> getAllRegisteredUserId() throws DbException {
 		List<User> userLogin = new ArrayList<>();
 
 		Connection connection = null;
@@ -98,7 +100,7 @@ public class UserDao {
 	 * @return
 	 * @throws DbException
 	 */
-	public static List<User> getUserDetailsByPhoneNumber() throws DbException {
+	public static List<User> getAllUserPhoneNumber() throws DbException {
 		List<User> userLogin = new ArrayList<>();
 		Connection connection = null;
 		PreparedStatement pst = null;
@@ -126,4 +128,5 @@ public class UserDao {
 		}
 		return userLogin;
 	}
+
 }

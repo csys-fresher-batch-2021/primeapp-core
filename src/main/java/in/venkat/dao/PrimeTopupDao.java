@@ -40,7 +40,12 @@ public class PrimeTopupDao {
 			pst.setInt(4, primeTopup.getValidity());
 			pst.setObject(5, primeTopup.getExpiryDate());
 
-			pst.executeUpdate();
+			int row = pst.executeUpdate();
+			if (row == 1) {
+				Logger.log("succesfully recharged");
+			} else {
+				Logger.log("can't recharge ,try again");
+			}
 
 		} catch (SQLException e) {
 			Logger.exception(e);
@@ -86,5 +91,7 @@ public class PrimeTopupDao {
 		return validTopupDate;
 
 	}
+	
+	
 
 }

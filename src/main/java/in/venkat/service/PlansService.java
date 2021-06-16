@@ -29,6 +29,13 @@ public class PlansService {
 
 	}
 
+	/**
+	 * This method is used to check the userId and then displays the plan
+	 * 
+	 * @param userId
+	 * @throws DbException
+	 * @throws InvalidUserIdException
+	 */
 	public static void displayPlans(String userId) throws DbException, InvalidUserIdException {
 
 		boolean isExists = ValidateUserDetails.checkUserId(userId);

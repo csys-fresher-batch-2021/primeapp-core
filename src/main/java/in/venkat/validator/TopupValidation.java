@@ -1,7 +1,10 @@
 package in.venkat.validator;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
 
+import in.venkat.dao.PlansDao;
+import in.venkat.exceptions.InvalidChoiceException;
 import in.venkat.exceptions.PlanNotExpiredException;
 
 public class TopupValidation {
@@ -26,5 +29,17 @@ public class TopupValidation {
 			throw new PlanNotExpiredException("plan not expired");
 		}
 		return valid;
+	}
+
+	public static boolean choiceValidation(int choice)
+			throws ClassNotFoundException, SQLException, InvalidChoiceException {
+		int totalCount = PlansDao.totalPlans();
+		boolean isChoiceValid = false;
+		if (totalCount >= choice) {
+			isChoiceValid = true;
+		} else {
+			throw new InvalidChoiceException("there is no plans existing in this choice");
+		}
+		return isChoiceValid;
 	}
 }

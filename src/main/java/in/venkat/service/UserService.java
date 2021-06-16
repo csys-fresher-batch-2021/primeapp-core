@@ -98,7 +98,7 @@ public class UserService {
 	private static boolean loginByPhoneNumber(long phoneNumber, String password)
 			throws DbException, UserIdPasswordMismatchException {
 		boolean isLoggedIn = false;
-		List<User> userDetails = UserDao.getUserDetailsByPhoneNumber();
+		List<User> userDetails = UserDao.getAllUserPhoneNumber();
 		for (User user : userDetails) {
 			if (user.getPhoneNumber() == phoneNumber) {
 				if (user.getPassword().equals(password)) {
@@ -127,7 +127,7 @@ public class UserService {
 	public static boolean loginByUserId(String userId, String password)
 			throws DbException, UserIdPasswordMismatchException {
 		boolean isLoggedIn = false;
-		List<User> userDetails = UserDao.getUserDetailsByUserId();
+		List<User> userDetails = UserDao.getAllRegisteredUserId();
 		for (User user : userDetails) {
 			if (user.getUserId().equals(userId)) {
 				if (user.getPassword().equals(password)) {
