@@ -1,15 +1,13 @@
 package in.venkat.searchServiceTest;
 
-import org.junit.Test;
-
 import in.venkat.service.UserService;
 import in.venkat.util.Logger;
 
 public class UserRegistrationTest {
-	@Test
+
 	public static void main(String[] args) {
-		String name = "radha";
-		long phoneNumber = 8767898776L;
+		String name = "karthika";
+		long phoneNumber = 9898989894L;
 		/**
 		 * password must contain at least one upper case letter ,one lower case
 		 * letter,one number and one special character

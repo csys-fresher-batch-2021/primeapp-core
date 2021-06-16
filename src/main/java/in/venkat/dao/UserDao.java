@@ -62,7 +62,7 @@ public class UserDao {
 	 * @return
 	 * @throws DbException
 	 */
-	public static List<User> getUserDetailsByUserId() throws DbException {
+	public static List<User> getAllRegisteredUserId() throws DbException {
 		List<User> userLogin = new ArrayList<>();
 
 		Connection connection = null;
@@ -98,7 +98,7 @@ public class UserDao {
 	 * @return
 	 * @throws DbException
 	 */
-	public static List<User> getUserDetailsByPhoneNumber() throws DbException {
+	public static List<User> getAllUserPhoneNumber() throws DbException {
 		List<User> userLogin = new ArrayList<>();
 		Connection connection = null;
 		PreparedStatement pst = null;
@@ -126,4 +126,5 @@ public class UserDao {
 		}
 		return userLogin;
 	}
+
 }

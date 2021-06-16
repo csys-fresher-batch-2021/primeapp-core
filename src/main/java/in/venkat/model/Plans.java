@@ -1,8 +1,9 @@
 package in.venkat.model;
 
 public class Plans {
-	private int id;
+	private int planId;
 	private int primePlans;
+	private int planValidity;
 	private String liveShows;
 	private String multiplexScreens;
 	private String dubbedMovies;
@@ -11,34 +12,28 @@ public class Plans {
 	private String videoQuality;
 	private String audioQuality;
 
-	public Plans(int id, int plans, String liveShows, String multiplexScreens, String dubbed, String advertisement,
-			int screens, String videoQuality, String audioQuality) {
-		super();
-		this.id = id;
-		this.primePlans = plans;
-		this.liveShows = liveShows;
-		this.multiplexScreens = multiplexScreens;
-		dubbedMovies = dubbed;
-		this.advertisement = advertisement;
-		movieScreens = screens;
-		this.videoQuality = videoQuality;
-		this.audioQuality = audioQuality;
+	public int getPlanId() {
+		return planId;
 	}
 
-	public int getId() {
-		return id;
+	public void setPlanId(int id) {
+		this.planId = id;
 	}
 
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public int getPlans() {
+	public int getPrimePlans() {
 		return primePlans;
 	}
 
-	public void setPlans(int plans) {
-		this.primePlans = plans;
+	public void setPrimePlans(int primePlans) {
+		this.primePlans = primePlans;
+	}
+
+	public int getPlanValidity() {
+		return planValidity;
+	}
+
+	public void setPlanValidity(int planValidity) {
+		this.planValidity = planValidity;
 	}
 
 	public String getLiveShows() {
@@ -57,12 +52,12 @@ public class Plans {
 		this.multiplexScreens = multiplexScreens;
 	}
 
-	public String getDubbed() {
+	public String getDubbedMovies() {
 		return dubbedMovies;
 	}
 
-	public void setDubbed(String dubbed) {
-		dubbedMovies = dubbed;
+	public void setDubbedMovies(String dubbedMovies) {
+		this.dubbedMovies = dubbedMovies;
 	}
 
 	public String getAdvertisement() {
@@ -73,12 +68,12 @@ public class Plans {
 		this.advertisement = advertisement;
 	}
 
-	public int getScreens() {
+	public int getMovieScreens() {
 		return movieScreens;
 	}
 
-	public void setScreens(int screens) {
-		movieScreens = screens;
+	public void setMovieScreens(int movieScreens) {
+		this.movieScreens = movieScreens;
 	}
 
 	public String getVideoQuality() {
@@ -97,10 +92,26 @@ public class Plans {
 		this.audioQuality = audioQuality;
 	}
 
+	public Plans(int id, int primePlans, int planValidity, String liveShows, String multiplexScreens,
+			String dubbedMovies, String advertisement, int movieScreens, String videoQuality, String audioQuality) {
+		super();
+		this.planId = id;
+		this.primePlans = primePlans;
+		this.planValidity = planValidity;
+		this.liveShows = liveShows;
+		this.multiplexScreens = multiplexScreens;
+		this.dubbedMovies = dubbedMovies;
+		this.advertisement = advertisement;
+		this.movieScreens = movieScreens;
+		this.videoQuality = videoQuality;
+		this.audioQuality = audioQuality;
+	}
+
 	@Override
 	public String toString() {
-		return "PrimePlans [id=" + id + ", plans=" + primePlans + ", liveShows=" + liveShows + ", multiplexScreens="
-				+ multiplexScreens + ", Dubbed=" + dubbedMovies + ", advertisement=" + advertisement + ", Screens=" + movieScreens
+		return "Plans [planId=" + planId + ", primePlans=" + primePlans + ", planValidity=" + planValidity
+				+ ", liveShows=" + liveShows + ", multiplexScreens=" + multiplexScreens + ", dubbedMovies="
+				+ dubbedMovies + ", advertisement=" + advertisement + ", movieScreens=" + movieScreens
 				+ ", videoQuality=" + videoQuality + ", audioQuality=" + audioQuality + "]";
 	}
 
