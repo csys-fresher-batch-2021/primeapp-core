@@ -36,7 +36,7 @@ public class PrimeTopupService {
 	 * @throws ClassNotFoundException
 	 */
 	public static void primeTopup(int choice, String userId)
-			throws DbException, InvalidUserIdException, PlanNotExpiredException, SQLException, InvalidChoiceException {
+			throws DbException, PlanNotExpiredException, InvalidUserIdException, SQLException, InvalidChoiceException {
 		boolean validTopup = PrimeTopupService.checkValidTopup(userId);
 		boolean validUserId = ValidateUserDetails.checkUserId(userId);
 		boolean isChoiceValid = TopupValidation.choiceValidation(choice);

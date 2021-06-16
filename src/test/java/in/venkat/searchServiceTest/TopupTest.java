@@ -17,7 +17,7 @@ public class TopupTest {
 			String userId = "kumar8767898770";
 			int choice = 2;
 			PrimeTopupService.primeTopup(choice, userId);
-		} catch (ClassNotFoundException | DbException | InvalidUserIdException | PlanNotExpiredException | SQLException
+		} catch (DbException | InvalidUserIdException | PlanNotExpiredException | SQLException
 				| InvalidChoiceException e) {
 			Logger.exception(e);
 		}
