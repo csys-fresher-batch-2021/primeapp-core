@@ -16,9 +16,8 @@ public class TopupTest {
 		try {
 
 			String userId = "kumar8767898770";
-			int choice = 5;
-			boolean isConfirm = false;
-			PrimeTopupService.primeTopup(choice, isConfirm, userId);
+			int choice = 2;
+			PrimeTopupService.primeTopup(choice, userId);
 
 		} catch (DbException | InvalidUserIdException | PlanNotExpiredException | ClassNotFoundException | SQLException
 				| InvalidChoiceException e) {

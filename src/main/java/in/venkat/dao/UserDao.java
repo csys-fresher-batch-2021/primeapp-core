@@ -8,8 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import in.venkat.exceptions.DbException;
-import in.venkat.exceptions.InvalidUserIdException;
-import in.venkat.model.PrimeTopup;
 import in.venkat.model.User;
 import in.venkat.util.ConnectionUtil;
 import in.venkat.util.Logger;

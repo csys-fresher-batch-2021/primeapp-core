@@ -30,7 +30,14 @@ public class TopupValidation {
 		}
 		return valid;
 	}
-
+	/**
+	 * This method is used to validate the choice whether the given choice have plans
+	 * @param choice
+	 * @return
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 * @throws InvalidChoiceException
+	 */
 	public static boolean choiceValidation(int choice)
 			throws ClassNotFoundException, SQLException, InvalidChoiceException {
 		int totalCount = PlansDao.totalPlans();

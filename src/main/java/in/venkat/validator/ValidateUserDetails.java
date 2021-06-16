@@ -2,7 +2,6 @@ package in.venkat.validator;
 
 import java.util.List;
 
-import in.venkat.dao.PlansDao;
 import in.venkat.dao.UserDao;
 import in.venkat.exceptions.DbException;
 import in.venkat.exceptions.EmptyFieldException;
@@ -12,9 +11,7 @@ import in.venkat.exceptions.InvalidPasswordException;
 import in.venkat.exceptions.InvalidPhoneNumberException;
 import in.venkat.exceptions.InvalidUserIdException;
 import in.venkat.exceptions.PasswordMismatchException;
-import in.venkat.model.PrimeTopup;
 import in.venkat.model.User;
-import in.venkat.util.Logger;
 import in.venkat.util.MobileNumberValidationUtil;
 import in.venkat.util.NameValidationUtil;
 import in.venkat.util.PasswordValidationUtil;

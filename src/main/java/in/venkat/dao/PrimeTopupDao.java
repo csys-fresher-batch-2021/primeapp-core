@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
 import in.venkat.exceptions.DbException;
 import in.venkat.model.PrimeTopup;
 import in.venkat.util.ConnectionUtil;
@@ -91,7 +92,5 @@ public class PrimeTopupDao {
 		return validTopupDate;
 
 	}
-	
-	
 
 }

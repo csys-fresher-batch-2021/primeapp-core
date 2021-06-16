@@ -6,10 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
 import in.venkat.exceptions.DbException;
-import in.venkat.exceptions.InvalidUserIdException;
 import in.venkat.model.Plans;
-import in.venkat.model.PrimeTopup;
 import in.venkat.util.ConnectionUtil;
 import in.venkat.util.Logger;
 
@@ -64,13 +63,15 @@ public class PlansDao {
 		}
 		return plans;
 	}
+
 	/**
-	 * This method is used to count the number of plans 
+	 * This method is used to count the number of plans
+	 * 
 	 * @return
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	public static int totalPlans() throws ClassNotFoundException, SQLException {
+	public static int totalPlans() throws SQLException {
 
 		Connection connection = null;
 		PreparedStatement pst = null;

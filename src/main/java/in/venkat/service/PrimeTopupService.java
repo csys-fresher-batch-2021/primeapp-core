@@ -12,7 +12,6 @@ import in.venkat.exceptions.InvalidUserIdException;
 import in.venkat.exceptions.PlanNotExpiredException;
 import in.venkat.model.Plans;
 import in.venkat.model.PrimeTopup;
-import in.venkat.util.Logger;
 import in.venkat.validator.TopupValidation;
 import in.venkat.validator.ValidateUserDetails;
 
@@ -36,7 +35,7 @@ public class PrimeTopupService {
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
 	 */
-	public static void primeTopup(int choice, boolean isConfirm, String userId)
+	public static void primeTopup(int choice, String userId)
 			throws DbException, InvalidUserIdException, PlanNotExpiredException, ClassNotFoundException, SQLException,
 			InvalidChoiceException {
 		boolean validTopup = PrimeTopupService.checkValidTopup(userId);
