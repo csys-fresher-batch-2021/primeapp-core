@@ -13,6 +13,12 @@ import in.venkat.util.NameValidationUtil;
 import in.venkat.util.PasswordValidationUtil;
 
 public class AdminService {
+	private AdminService() {
+		/**
+		 * Adding a private constructor
+		 */
+	}
+
 	/**
 	 * This method is used to validate the admin name and password
 	 * 
