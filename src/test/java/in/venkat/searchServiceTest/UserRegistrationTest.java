@@ -6,14 +6,14 @@ import in.venkat.util.Logger;
 public class UserRegistrationTest {
 
 	public static void main(String[] args) {
-		String name = "karthika";
-		long phoneNumber = 9898989894L;
+		String name = "venkatesh";
+		long phoneNumber = 7092621018L;
 		/**
 		 * password must contain at least one upper case letter ,one lower case
 		 * letter,one number and one special character
 		 */
-		String userPasscode = "Ragul@19";
-		String reEnteredPasscode = "Ragul@19";
+		String userPasscode = "Venkatesh#1";
+		String reEnteredPasscode = "Venkatesh#1";
 
 		userRegistrationTest(name, phoneNumber, userPasscode, reEnteredPasscode);
 	}
