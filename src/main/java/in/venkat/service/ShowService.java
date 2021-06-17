@@ -186,8 +186,8 @@ public class ShowService {
 	 * @throws MovieAlreadyExistsException
 	 */
 	public static boolean addShows(String genre, String name, int year, String language, String category,
-			String membership, String grade) throws EmptyFieldException, InvalidNameException, InvalidDetailsException,
-			DbException, MovieAlreadyExistsException {
+			String membership, String grade, String status) throws EmptyFieldException, InvalidNameException,
+			InvalidDetailsException, DbException, MovieAlreadyExistsException {
 		boolean added = false;
 		boolean genreValid = NameValidationUtil.validateName(genre);
 		boolean nameValid = NameValidationUtil.validateName(name);
@@ -196,10 +196,11 @@ public class ShowService {
 		boolean categoryValid = NameValidationUtil.validateName(category);
 		boolean memberShipValid = ShowDetailsValidationUtil.validateMembership(membership);
 		boolean gradeValid = ShowDetailsValidationUtil.gradeValidation(grade);
+		boolean statusValid = ShowDetailsValidationUtil.statusValidation(status);
 		boolean isMoviePresent = isMoviePresent(name, year, language);
 		if (genreValid && nameValid && yearValid && languagevalid && categoryValid && memberShipValid && gradeValid
-				&& !isMoviePresent) {
-			Show show = new Show(genre, name, year, language, category, membership, grade);
+				&& statusValid && !isMoviePresent) {
+			Show show = new Show(genre, name, year, language, category, membership, grade, status);
 			ShowListDao.addMovies(show);
 			added = true;
 		} else {
@@ -227,6 +228,32 @@ public class ShowService {
 
 		return present;
 
+	}
+
+	/**
+	 * This method delete the movie from shows
+	 * 
+	 * @param movieName
+	 * @param year
+	 * @param language
+	 * @return
+	 * @throws EmptyFieldException
+	 * @throws InvalidNameException
+	 * @throws InvalidDetailsException
+	 * @throws DbException
+	 */
+	public static boolean deleteMovie(String movieName, int year, String language)
+			throws EmptyFieldException, InvalidNameException, InvalidDetailsException, DbException {
+		boolean deleted = false;
+		boolean nameValid = NameValidationUtil.validateName(movieName);
+		boolean yearValid = ShowDetailsValidationUtil.isYearValid(year);
+		boolean languageValid = NameValidationUtil.validateName(language);
+
+		if (nameValid && yearValid && languageValid) {
+			deleted = ShowListDao.deleteMovies(movieName, year, language);
+
+		}
+		return deleted;
 	}
 
 }

@@ -10,6 +10,7 @@ public class Show {
 	private String movieCategory;
 	private String membership;
 	private String movieGrade;
+	private String status;
 
 	public int getId() {
 		return id;
@@ -75,10 +76,18 @@ public class Show {
 		this.movieGrade = movieGrade;
 	}
 
-	public Show(int id, String movieGenre, String movieName, int movieYear, String movieLanguage, String movieCategory,
-			String membership, String movieGrade) {
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public Show(String movieGenre, String movieName, int movieYear, String movieLanguage, String movieCategory,
+			String membership, String movieGrade, String status) {
 		super();
-		this.id = id;
+
 		this.movieGenre = movieGenre;
 		this.movieName = movieName;
 		this.movieYear = movieYear;
@@ -86,24 +95,29 @@ public class Show {
 		this.movieCategory = movieCategory;
 		this.membership = membership;
 		this.movieGrade = movieGrade;
+		this.status = status;
 	}
 
-	public Show(String genre, String name, int year, String language, String category, String membership,
-			String grade) {
-		this.movieGenre = genre;
-		this.movieName = name;
-		this.movieYear = year;
-		this.movieLanguage = language;
-		this.movieCategory = category;
+	public Show(int movieId, String movieGenre, String movieName, int movieYear, String movieLanguage,
+			String movieCategory, String membership, String movieGrade, String movieStatus) {
+		super();
+		this.id = movieId;
+		this.movieGenre = movieGenre;
+		this.movieName = movieName;
+		this.movieYear = movieYear;
+		this.movieLanguage = movieLanguage;
+		this.movieCategory = movieCategory;
 		this.membership = membership;
-		this.movieGrade = grade;
+		this.movieGrade = movieGrade;
+		this.status = movieStatus;
+
 	}
 
 	@Override
 	public String toString() {
 		return "Show [id=" + id + ", movieGenre=" + movieGenre + ", movieName=" + movieName + ", movieYear=" + movieYear
 				+ ", movieLanguage=" + movieLanguage + ", movieCategory=" + movieCategory + ", membership=" + membership
-				+ ", movieGrade=" + movieGrade + "]";
+				+ ", movieGrade=" + movieGrade + ", status=" + status + "]";
 	}
 
 }
