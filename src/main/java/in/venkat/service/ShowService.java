@@ -217,11 +217,11 @@ public class ShowService {
 		boolean present = false;
 		List<Show> showDetails = ShowListDao.getShowDetails();
 		for (Show show : showDetails) {
-			if (show.getMovieName().equals(name)) {
-				if (show.getMovieYear() == year && show.getMovieLanguage().equalsIgnoreCase(language.trim())) {
-					present = true;
+			if (show.getMovieName().equals(name) && show.getMovieYear() == year
+					&& show.getMovieLanguage().equalsIgnoreCase(language.trim())) {
 
-				}
+				present = true;
+
 			}
 		}
 
