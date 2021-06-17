@@ -62,4 +62,22 @@ public class ShowDetailsValidationUtil {
 		return valid;
 	}
 
+	/**
+	 * This method is used to valid the status
+	 * 
+	 * @param status
+	 * @return
+	 * @throws InvalidDetailsException
+	 */
+	public static boolean statusValidation(String status) throws InvalidDetailsException {
+		boolean valid = false;
+		if (status.trim().equals("active") || status.trim().equalsIgnoreCase("inactive")) {
+			valid = true;
+		} else {
+			throw new InvalidDetailsException("status  should be ('active','inactive')");
+		}
+
+		return valid;
+	}
+
 }

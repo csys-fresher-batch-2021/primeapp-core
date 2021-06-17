@@ -12,20 +12,21 @@ public class AddMoviesTest {
 
 	public static void main(String[] args) {
 		String genre = "action";
-		String name = "room";
+		String name = "ted";
 		int year = 2016;
 		String language = "english";
 		String category = "movie";
 		String membership = "prime";
 		String grade = "A";
+		String status = "inactive";
 
-		addMovies(genre, name, year, language, category, membership, grade);
+		addMovies(genre, name, year, language, category, membership, grade, status);
 	}
 
 	private static void addMovies(String genre, String name, int year, String language, String category,
-			String membership, String grade) {
+			String membership, String grade, String status) {
 		try {
-			boolean added = ShowService.addShows(genre, name, year, language, category, membership, grade);
+			boolean added = ShowService.addShows(genre, name, year, language, category, membership, grade, status);
 			if (added) {
 				Logger.log("succesfully added");
 			}
