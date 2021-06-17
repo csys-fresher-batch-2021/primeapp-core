@@ -8,8 +8,11 @@ import in.venkat.exceptions.DbException;
 import in.venkat.exceptions.EmptyFieldException;
 import in.venkat.exceptions.InvalidDetailsException;
 import in.venkat.exceptions.InvalidNameException;
+import in.venkat.exceptions.MovieAlreadyExistsException;
 import in.venkat.model.Show;
 import in.venkat.util.Logger;
+import in.venkat.util.NameValidationUtil;
+import in.venkat.util.ShowDetailsValidationUtil;
 import in.venkat.validator.ValidateSearchDetails;
 
 public class ShowService {
@@ -20,7 +23,7 @@ public class ShowService {
 	}
 
 	/**
-	 * This method is used to search movies by giving genre and language 
+	 * This method is used to search movies by giving genre and language
 	 * 
 	 * @param filmGenre
 	 * @param filmLanguage
@@ -30,7 +33,6 @@ public class ShowService {
 	 * @throws EmptyFieldException
 	 * @throws DbException
 	 */
-
 	public static List<Show> searchContents(String filmGenre, String filmLanguage)
 			throws EmptyFieldException, InvalidNameException, InvalidDetailsException, DbException {
 		boolean isValid;
@@ -165,4 +167,66 @@ public class ShowService {
 
 		return filteredMovieList;
 	}
+
+	/**
+	 * This method is used to add movies or shows
+	 * 
+	 * @param genre
+	 * @param name
+	 * @param year
+	 * @param language
+	 * @param category
+	 * @param membership
+	 * @param grade
+	 * @return
+	 * @throws EmptyFieldException
+	 * @throws InvalidNameException
+	 * @throws InvalidDetailsException
+	 * @throws DbException
+	 * @throws MovieAlreadyExistsException
+	 */
+	public static boolean addShows(String genre, String name, int year, String language, String category,
+			String membership, String grade) throws EmptyFieldException, InvalidNameException, InvalidDetailsException,
+			DbException, MovieAlreadyExistsException {
+		boolean added = false;
+		boolean genreValid = NameValidationUtil.validateName(genre);
+		boolean nameValid = NameValidationUtil.validateName(name);
+		boolean yearValid = ShowDetailsValidationUtil.isYearValid(year);
+		boolean languagevalid = NameValidationUtil.validateName(language);
+		boolean categoryValid = NameValidationUtil.validateName(category);
+		boolean memberShipValid = ShowDetailsValidationUtil.validateMembership(membership);
+		boolean gradeValid = ShowDetailsValidationUtil.gradeValidation(grade);
+		boolean isMoviePresent = isMoviePresent(name, year, language);
+		if (genreValid && nameValid && yearValid && languagevalid && categoryValid && memberShipValid && gradeValid
+				&& !isMoviePresent) {
+			Show show = new Show(genre, name, year, language, category, membership, grade);
+			ShowListDao.addMovies(show);
+			added = true;
+		} else {
+			throw new MovieAlreadyExistsException("movie already exists");
+		}
+
+		return added;
+
+	}
+
+	/**
+	 * This method checks whether the movie is already present
+	 */
+	public static boolean isMoviePresent(String name, int year, String language) throws DbException {
+		boolean present = false;
+		List<Show> showDetails = ShowListDao.getShowDetails();
+		for (Show show : showDetails) {
+			if (show.getMovieName().equals(name)) {
+				if (show.getMovieYear() == year && show.getMovieLanguage().equalsIgnoreCase(language.trim())) {
+					present = true;
+
+				}
+			}
+		}
+
+		return present;
+
+	}
+
 }

@@ -88,6 +88,17 @@ public class Show {
 		this.movieGrade = movieGrade;
 	}
 
+	public Show(String genre, String name, int year, String language, String category, String membership,
+			String grade) {
+		this.movieGenre = genre;
+		this.movieName = name;
+		this.movieYear = year;
+		this.movieLanguage = language;
+		this.movieCategory = category;
+		this.membership = membership;
+		this.movieGrade = grade;
+	}
+
 	@Override
 	public String toString() {
 		return "Show [id=" + id + ", movieGenre=" + movieGenre + ", movieName=" + movieName + ", movieYear=" + movieYear

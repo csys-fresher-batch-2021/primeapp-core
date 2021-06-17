@@ -1,0 +1,39 @@
+package in.venkat.searchServiceTest;
+
+import in.venkat.exceptions.DbException;
+import in.venkat.exceptions.EmptyFieldException;
+import in.venkat.exceptions.InvalidDetailsException;
+import in.venkat.exceptions.InvalidNameException;
+import in.venkat.exceptions.MovieAlreadyExistsException;
+import in.venkat.service.ShowService;
+import in.venkat.util.Logger;
+
+public class AddMoviesTest {
+
+	public static void main(String[] args) {
+		String genre = "action";
+		String name = "room";
+		int year = 2015;
+		String language = "english";
+		String category = "movie";
+		String membership = "prime";
+		String grade = "A";
+
+		addMovies(genre, name, year, language, category, membership, grade);
+	}
+
+	private static void addMovies(String genre, String name, int year, String language, String category,
+			String membership, String grade) {
+		try {
+			boolean added = ShowService.addShows(genre, name, year, language, category, membership, grade);
+			if (added) {
+				Logger.log("succesfully added");
+			}
+		} catch (EmptyFieldException | InvalidNameException | InvalidDetailsException | DbException
+				| MovieAlreadyExistsException e) {
+			Logger.exception(e);
+		}
+
+	}
+
+}
