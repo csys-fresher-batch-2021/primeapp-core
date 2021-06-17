@@ -10,6 +10,7 @@ import java.util.List;
 import in.venkat.exceptions.DbException;
 import in.venkat.model.Show;
 import in.venkat.util.ConnectionUtil;
+import in.venkat.util.Logger;
 
 public class ShowListDao {
 	private ShowListDao() {
@@ -61,6 +62,39 @@ public class ShowListDao {
 
 		}
 		return movieList;
+	}
+
+	/**
+	 * This method is used to add movies
+	 * 
+	 * @param show
+	 * @throws DbException
+	 */
+	public static void addMovies(Show show) throws DbException {
+		Connection connection = null;
+		PreparedStatement pst = null;
+
+		try {
+			connection = ConnectionUtil.getConnection();
+			String sql = "INSERT INTO shows (genre,name,year,language,category,membership,grade ) values (?,?,?,?,?,?,?)";
+			pst = connection.prepareStatement(sql);
+			pst.setString(1, show.getMovieGenre());
+			pst.setString(2, show.getMovieName());
+			pst.setInt(3, show.getMovieYear());
+			pst.setString(4, show.getMovieLanguage());
+			pst.setString(5, show.getMovieCategory());
+			pst.setString(6, show.getMembership());
+			pst.setString(7, show.getMovieGrade());
+
+			pst.executeUpdate();
+		} catch (SQLException e) {
+			Logger.exception(e);
+			throw new DbException(e, "unable to connect to database");
+		} finally {
+			ConnectionUtil.close(pst, connection);
+
+		}
+
 	}
 
 }
