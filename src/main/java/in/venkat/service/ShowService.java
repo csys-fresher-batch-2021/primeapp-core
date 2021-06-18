@@ -7,9 +7,11 @@ import in.venkat.dao.ShowListDao;
 import in.venkat.exceptions.DbException;
 import in.venkat.exceptions.EmptyFieldException;
 import in.venkat.exceptions.InvalidDetailsException;
+import in.venkat.exceptions.InvalidMovieIdException;
 import in.venkat.exceptions.InvalidNameException;
 import in.venkat.exceptions.MovieAlreadyExistsException;
 import in.venkat.model.Show;
+import in.venkat.util.IdValidationUtil;
 import in.venkat.util.Logger;
 import in.venkat.util.NameValidationUtil;
 import in.venkat.util.ShowDetailsValidationUtil;
@@ -231,29 +233,105 @@ public class ShowService {
 	}
 
 	/**
-	 * This method delete the movie from shows
+	 * This method delete the movie from shows from id
 	 * 
-	 * @param movieName
-	 * @param year
-	 * @param language
+	 * @param movieId
 	 * @return
 	 * @throws EmptyFieldException
 	 * @throws InvalidNameException
 	 * @throws InvalidDetailsException
 	 * @throws DbException
+	 * @throws InvalidMovieIdException
 	 */
-	public static boolean deleteMovie(String movieName, int year, String language)
-			throws EmptyFieldException, InvalidNameException, InvalidDetailsException, DbException {
+	public static boolean deleteMovie(int movieId) throws DbException, EmptyFieldException, InvalidMovieIdException {
 		boolean deleted = false;
-		boolean nameValid = NameValidationUtil.validateName(movieName);
-		boolean yearValid = ShowDetailsValidationUtil.isYearValid(year);
-		boolean languageValid = NameValidationUtil.validateName(language);
+		List<Show> show = ShowListDao.getShowDetails();
 
-		if (nameValid && yearValid && languageValid) {
-			deleted = ShowListDao.deleteMovies(movieName, year, language);
+		for (Show showId : show) {
+			if (showId.getId() == movieId && IdValidationUtil.validateId(movieId)) {
+				ShowListDao.deleteMovies(movieId);
+				deleted = true;
+				break;
+			}
 
 		}
+		if (!deleted) {
+			throw new InvalidMovieIdException("movie id does not exists");
+		}
+
 		return deleted;
 	}
 
+	/**
+	 * This method is used to update the movie status to prime and non prime
+	 * 
+	 * @param movieId
+	 * @return
+	 * @throws DbException
+	 * @throws InvalidMovieIdException
+	 */
+	public static boolean primeStatusUpdate(int movieId) throws DbException, InvalidMovieIdException {
+		boolean updated = false;
+		boolean present = isMovieIdPresent(movieId);
+		if (present) {
+			String status = getMovieStatus(movieId);
+			if (status.equalsIgnoreCase("prime")) {
+				ShowListDao.updatePrimeStatus(movieId, "non prime");
+				updated = true;
+			} else if (status.equalsIgnoreCase("non prime")) {
+				ShowListDao.updatePrimeStatus(movieId, "prime");
+				updated = true;
+			}
+
+		} else {
+			throw new InvalidMovieIdException("movie id does no exists");
+		}
+
+		return updated;
+
+	}
+
+	/**
+	 * This method is used to check the movie id id present or not
+	 * 
+	 * @param movieId
+	 * @return
+	 * @throws DbException
+	 */
+	public static boolean isMovieIdPresent(int movieId) throws DbException {
+		boolean present = false;
+
+		List<Show> show = ShowListDao.getShowDetails();
+		for (Show showId : show) {
+			if (showId.getId() == movieId) {
+				present = true;
+			}
+		}
+		return present;
+	}
+
+	/**
+	 * This method is used to get the movie status
+	 * 
+	 * @param movieId
+	 * @return
+	 * @throws DbException
+	 */
+	public static String getMovieStatus(int movieId) throws DbException {
+		String status = null;
+		boolean present = false;
+		List<Show> show = ShowListDao.getShowDetails();
+		for (Show showId : show) {
+			if (showId.getId() == movieId) {
+				status = showId.getMembership();
+				present = true;
+			}
+		}
+		if (!present) {
+			throw new NullPointerException("Id does not exists");
+		}
+
+		return status;
+
+	}
 }

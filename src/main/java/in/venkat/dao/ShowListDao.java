@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import in.venkat.exceptions.DbException;
+import in.venkat.exceptions.InvalidDetailsException;
+import in.venkat.exceptions.InvalidMovieIdException;
 import in.venkat.model.Show;
 import in.venkat.util.ConnectionUtil;
 import in.venkat.util.Logger;
@@ -102,31 +104,23 @@ public class ShowListDao {
 	}
 
 	/**
-	 * This method is used to delete movies/shows
+	 * This method is used to delete the movie by movie Id
 	 * 
-	 * @param name
-	 * @param year
-	 * @param language
-	 * @return
+	 * @param movieId
 	 * @throws DbException
+	 * @throws InvalidDetailsException
+	 * @throws InvalidMovieIdException
 	 */
-	public static boolean deleteMovies(String name, int year, String language) throws DbException {
+	public static void deleteMovies(int movieId) throws DbException {
 		Connection connection = null;
 		PreparedStatement pst = null;
-		boolean deleted = false;
 		try {
 			connection = ConnectionUtil.getConnection();
-			String sql = "DELETE FROM shows WHERE name=? and year=? and language = ? ";
+			String sql = "DELETE FROM shows WHERE id=?";
 			pst = connection.prepareStatement(sql);
-			pst.setString(1, name);
-			pst.setInt(2, year);
-			pst.setString(3, language);
-			int row = pst.executeUpdate();
-			if (row == 1) {
-				deleted = true;
-			} else {
-				Logger.log("unable to delete ");
-			}
+			pst.setInt(1, movieId);
+
+			pst.executeUpdate();
 
 		} catch (SQLException e) {
 			Logger.exception(e);
@@ -134,7 +128,35 @@ public class ShowListDao {
 		} finally {
 			ConnectionUtil.close(pst, connection);
 		}
-		return deleted;
+
+	}
+
+	/**
+	 * This method id used to update the movie to prime and non prime
+	 * 
+	 * @param movieId
+	 * @param membership
+	 * @throws InvalidMovieIdException
+	 * @throws DbException
+	 */
+	public static void updatePrimeStatus(int movieId, String membership) throws DbException {
+		Connection connection = null;
+		PreparedStatement pst = null;
+		try {
+			connection = ConnectionUtil.getConnection();
+			String sql = "update shows set membership = ? where id = ? ";
+			pst = connection.prepareStatement(sql);
+			pst.setString(1, membership);
+			pst.setInt(2, movieId);
+
+			pst.executeUpdate();
+
+		} catch (SQLException e) {
+			Logger.exception(e);
+			throw new DbException(e, DB_ERROR_STATUS);
+		} finally {
+			ConnectionUtil.close(pst, connection);
+		}
 
 	}
 
