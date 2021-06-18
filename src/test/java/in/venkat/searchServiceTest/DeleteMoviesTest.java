@@ -21,7 +21,7 @@ public class DeleteMoviesTest {
 			if (isDeleted) {
 				Logger.log("succesfully deleted");
 			}
-		} catch (DbException | InvalidMovieIdException | InvalidDetailsException | EmptyFieldException e) {
+		} catch (DbException | InvalidMovieIdException | EmptyFieldException e) {
 			Logger.exception(e);
 		}
 
