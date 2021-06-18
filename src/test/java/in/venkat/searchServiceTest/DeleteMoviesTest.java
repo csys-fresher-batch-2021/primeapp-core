@@ -3,28 +3,25 @@ package in.venkat.searchServiceTest;
 import in.venkat.exceptions.DbException;
 import in.venkat.exceptions.EmptyFieldException;
 import in.venkat.exceptions.InvalidDetailsException;
-import in.venkat.exceptions.InvalidNameException;
+import in.venkat.exceptions.InvalidMovieIdException;
 import in.venkat.service.ShowService;
 import in.venkat.util.Logger;
 
 public class DeleteMoviesTest {
 
 	public static void main(String[] args) {
-		String movieName = "sivaji";
-		int year = 2012;
-		String language = "tamil";
+		int movieId = 64;
 
-		deleteMoviesTest(movieName, year, language);
+		deleteMoviesTest(movieId);
 	}
 
-	private static void deleteMoviesTest(String movieName, int year, String language) {
+	private static void deleteMoviesTest(int movieId) {
 		try {
-			boolean isDeleted = ShowService.deleteMovie(movieName, year, language);
+			boolean isDeleted = ShowService.deleteMovie(movieId);
 			if (isDeleted) {
 				Logger.log("succesfully deleted");
 			}
-		} catch (EmptyFieldException | InvalidNameException | InvalidDetailsException | DbException e) {
-			Logger.log("failed to delete");
+		} catch (DbException | InvalidMovieIdException | InvalidDetailsException | EmptyFieldException e) {
 			Logger.exception(e);
 		}
 
