@@ -111,7 +111,7 @@ public class ShowListDao {
 	 * @throws InvalidDetailsException
 	 * @throws InvalidMovieIdException
 	 */
-	public static void deleteMovies(int movieId) throws DbException, InvalidDetailsException, InvalidMovieIdException {
+	public static void deleteMovies(int movieId) throws DbException, InvalidMovieIdException {
 		Connection connection = null;
 		PreparedStatement pst = null;
 		try {
@@ -120,11 +120,7 @@ public class ShowListDao {
 			pst = connection.prepareStatement(sql);
 			pst.setInt(1, movieId);
 
-			int row = pst.executeUpdate();
-			if (row == 1) {
-			} else {
-				throw new InvalidMovieIdException("movie Id does not exists");
-			}
+			pst.executeUpdate();
 
 		} catch (SQLException e) {
 			Logger.exception(e);
@@ -143,7 +139,7 @@ public class ShowListDao {
 	 * @throws InvalidMovieIdException
 	 * @throws DbException
 	 */
-	public static void updatePrimeStatus(int movieId, String membership) throws InvalidMovieIdException, DbException {
+	public static void updatePrimeStatus(int movieId, String membership) throws DbException {
 		Connection connection = null;
 		PreparedStatement pst = null;
 		try {
@@ -158,7 +154,10 @@ public class ShowListDao {
 		} catch (SQLException e) {
 			Logger.exception(e);
 			throw new DbException(e, DB_ERROR_STATUS);
+		} finally {
+			ConnectionUtil.close(pst, connection);
 		}
+
 	}
 
 }

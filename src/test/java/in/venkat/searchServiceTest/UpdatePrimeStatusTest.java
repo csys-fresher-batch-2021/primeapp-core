@@ -8,7 +8,7 @@ import in.venkat.util.Logger;
 public class UpdatePrimeStatusTest {
 
 	public static void main(String[] args) {
-		int movieId = 49;
+		int movieId = 100;
 
 		primeStatusUpdate(movieId);
 
@@ -21,7 +21,7 @@ public class UpdatePrimeStatusTest {
 				Logger.log("succesfully updated");
 
 			}
-		} catch (DbException | InvalidMovieIdException e) {
+		} catch (DbException | InvalidMovieIdException | NullPointerException e) {
 			Logger.exception(e);
 		}
 

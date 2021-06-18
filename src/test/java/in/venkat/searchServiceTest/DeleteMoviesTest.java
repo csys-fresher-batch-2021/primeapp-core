@@ -10,7 +10,7 @@ import in.venkat.util.Logger;
 public class DeleteMoviesTest {
 
 	public static void main(String[] args) {
-		int movieId = 64;
+		int movieId = 65;
 
 		deleteMoviesTest(movieId);
 	}

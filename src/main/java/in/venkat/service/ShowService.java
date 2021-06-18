@@ -274,22 +274,16 @@ public class ShowService {
 	public static boolean primeStatusUpdate(int movieId) throws DbException, InvalidMovieIdException {
 		boolean updated = false;
 		boolean present = isMovieIdPresent(movieId);
-		String status = null;
 		if (present) {
-			List<Show> show = ShowListDao.getShowDetails();
-			for (Show showId : show) {
-				if (showId.getId() == movieId) {
-					status = showId.getMembership();
-					present = true;
-				}
-			}
+			String status = getMovieStatus(movieId);
 			if (status.equalsIgnoreCase("prime")) {
 				ShowListDao.updatePrimeStatus(movieId, "non prime");
 				updated = true;
-			} else {
+			} else if (status.equalsIgnoreCase("non prime")) {
 				ShowListDao.updatePrimeStatus(movieId, "prime");
 				updated = true;
 			}
+
 		} else {
 			throw new InvalidMovieIdException("movie id does no exists");
 		}
@@ -315,5 +309,30 @@ public class ShowService {
 			}
 		}
 		return present;
+	}
+
+	/**
+	 * This method is used to get the movie status
+	 * 
+	 * @param movieId
+	 * @return
+	 * @throws DbException
+	 */
+	public static String getMovieStatus(int movieId) throws DbException {
+		String status = null;
+		boolean present = false;
+		List<Show> show = ShowListDao.getShowDetails();
+		for (Show showId : show) {
+			if (showId.getId() == movieId) {
+				status = showId.getMembership();
+				present = true;
+			}
+		}
+		if (!present) {
+			throw new NullPointerException("Id does not exists");
+		}
+
+		return status;
+
 	}
 }
