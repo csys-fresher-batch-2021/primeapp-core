@@ -111,7 +111,7 @@ public class ShowListDao {
 	 * @throws InvalidDetailsException
 	 * @throws InvalidMovieIdException
 	 */
-	public static void deleteMovies(int movieId) throws DbException, InvalidMovieIdException {
+	public static void deleteMovies(int movieId) throws DbException {
 		Connection connection = null;
 		PreparedStatement pst = null;
 		try {

@@ -243,8 +243,7 @@ public class ShowService {
 	 * @throws DbException
 	 * @throws InvalidMovieIdException
 	 */
-	public static boolean deleteMovie(int movieId)
-			throws DbException, InvalidDetailsException, EmptyFieldException, InvalidMovieIdException {
+	public static boolean deleteMovie(int movieId) throws DbException, EmptyFieldException, InvalidMovieIdException {
 		boolean deleted = false;
 		List<Show> show = ShowListDao.getShowDetails();
 
