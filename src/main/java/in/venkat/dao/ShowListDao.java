@@ -160,4 +160,87 @@ public class ShowListDao {
 
 	}
 
+	/**
+	 * This method is used to get favorite movie list
+	 * 
+	 * @param userId
+	 * @return
+	 * @throws DbException
+	 */
+	public static List<Show> getFavoriteMovie(String userId) throws DbException {
+		List<Show> favorite = new ArrayList<>();
+		Connection connection = null;
+		PreparedStatement preparedSt = null;
+		ResultSet rs = null;
+		try {
+			connection = ConnectionUtil.getConnection();
+
+			String sql = "select user_id,movie_id,genre,name,year,language,category,membership,grade,status from favorites where user_id=? ";
+			preparedSt = connection.prepareStatement(sql);
+			preparedSt.setString(1, userId);
+			rs = preparedSt.executeQuery();
+
+			while (rs.next()) {
+				String id = rs.getString("user_id");
+				int movieId = rs.getInt("movie_id");
+				String movieGenre = rs.getString("genre");
+				String movieName = rs.getString("name");
+				int movieYear = rs.getInt("year");
+				String movieLanguage = rs.getString("language");
+				String movieCategory = rs.getString("category");
+				String membership = rs.getString("membership");
+				String movieGrade = rs.getString("grade");
+				String movieStatus = rs.getString("status");
+				favorite.add(new Show(id, movieId, movieGenre, movieName, movieYear, movieLanguage, movieCategory,
+						membership, movieGrade, movieStatus));
+
+			}
+
+		} catch (SQLException e) {
+			Logger.exception(e);
+			throw new DbException(e, DB_ERROR_STATUS);
+
+		} finally {
+			ConnectionUtil.close(rs, preparedSt, connection);
+
+		}
+		return favorite;
+	}
+
+	/**
+	 * This method is used to add favorite movies
+	 * 
+	 * @param show
+	 * @throws DbException
+	 */
+	public static void addFavoriteMovies(Show show) throws DbException {
+		Connection connection = null;
+		PreparedStatement pst = null;
+
+		try {
+			connection = ConnectionUtil.getConnection();
+			String sql = "INSERT INTO favorites (user_id,movie_id,genre,name,year,language,category,membership,grade,status) values (?,?,?,?,?,?,?,?,?,?)";
+			pst = connection.prepareStatement(sql);
+			pst.setString(1, show.getUserId());
+			pst.setInt(2, show.getId());
+			pst.setString(3, show.getMovieGenre());
+			pst.setString(4, show.getMovieName());
+			pst.setInt(5, show.getMovieYear());
+			pst.setString(6, show.getMovieLanguage());
+			pst.setString(7, show.getMovieCategory());
+			pst.setString(8, show.getMembership());
+			pst.setString(9, show.getMovieGrade());
+			pst.setString(10, show.getStatus());
+
+			pst.executeUpdate();
+		} catch (SQLException e) {
+			Logger.exception(e);
+			throw new DbException(e, DB_ERROR_STATUS);
+		} finally {
+			ConnectionUtil.close(pst, connection);
+
+		}
+
+	}
+
 }

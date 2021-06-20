@@ -1,7 +1,7 @@
 package in.venkat.model;
 
 public class Show {
-
+	private String userId;
 	private int id;
 	private String movieGenre;
 	private String movieName;
@@ -11,6 +11,14 @@ public class Show {
 	private String membership;
 	private String movieGrade;
 	private String status;
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
 
 	public int getId() {
 		return id;
@@ -111,6 +119,21 @@ public class Show {
 		this.movieGrade = movieGrade;
 		this.status = movieStatus;
 
+	}
+
+	public Show(String userId, int id, String movieGenre, String movieName, int movieYear, String movieLanguage,
+			String movieCategory, String membership, String movieGrade, String status) {
+		super();
+		this.userId = userId;
+		this.id = id;
+		this.movieGenre = movieGenre;
+		this.movieName = movieName;
+		this.movieYear = movieYear;
+		this.movieLanguage = movieLanguage;
+		this.movieCategory = movieCategory;
+		this.membership = membership;
+		this.movieGrade = movieGrade;
+		this.status = status;
 	}
 
 	@Override
