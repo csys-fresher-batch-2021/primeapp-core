@@ -9,6 +9,7 @@ import in.venkat.exceptions.EmptyFieldException;
 import in.venkat.exceptions.InvalidDetailsException;
 import in.venkat.exceptions.InvalidMovieIdException;
 import in.venkat.exceptions.InvalidNameException;
+import in.venkat.exceptions.InvalidUserIdException;
 import in.venkat.exceptions.MovieAlreadyExistsException;
 import in.venkat.model.Show;
 import in.venkat.util.IdValidationUtil;
@@ -297,8 +298,9 @@ public class ShowService {
 	 * @param movieId
 	 * @return
 	 * @throws DbException
+	 * @throws InvalidMovieIdException
 	 */
-	public static boolean isMovieIdPresent(int movieId) throws DbException {
+	public static boolean isMovieIdPresent(int movieId) throws DbException, InvalidMovieIdException {
 		boolean present = false;
 
 		List<Show> show = ShowListDao.getShowDetails();
@@ -306,6 +308,9 @@ public class ShowService {
 			if (showId.getId() == movieId) {
 				present = true;
 			}
+		}
+		if (!present) {
+			throw new InvalidMovieIdException("movie Id does not exists");
 		}
 		return present;
 	}
@@ -334,4 +339,108 @@ public class ShowService {
 		return status;
 
 	}
+
+	/**
+	 * This method is used to check whether the movie is already added by the user
+	 * 
+	 * @param movieId
+	 * @param userId
+	 * @return
+	 * @throws DbException
+	 * @throws InvalidMovieIdException
+	 */
+	public static boolean isFavoriteMovieExixts(int movieId, String userId)
+			throws DbException, InvalidMovieIdException {
+		boolean isExists = false;
+		List<Show> favorites = ShowListDao.getFavoriteMovie(userId);
+		for (Show favorite : favorites) {
+			if (favorite.getId() == movieId) {
+				isExists = true;
+			}
+		}
+		if (isExists) {
+			throw new InvalidMovieIdException("movie already added to favorites");
+		}
+
+		return isExists;
+
+	}
+
+	/**
+	 * This method is used to add movie to favorites list
+	 * 
+	 * @param userId
+	 * @param movieId
+	 * @return
+	 * @throws DbException
+	 * @throws InvalidUserIdException
+	 * @throws InvalidMovieIdException
+	 */
+	public static boolean addToFavorites(String userId, int movieId)
+			throws DbException, InvalidUserIdException, InvalidMovieIdException {
+		boolean isAdded = false;
+		boolean validUser = UserService.isValidUser(userId);
+		boolean validMovieId = isMovieIdPresent(movieId);
+		boolean isAlreadyExists = isFavoriteMovieExixts(movieId, userId);
+		if (validMovieId && validUser && !isAlreadyExists) {
+			List<Show> favorite = getFavorites(userId, movieId);
+			for (Show favorites : favorite) {
+				ShowListDao.addFavoriteMovies(favorites);
+				isAdded = true;
+			}
+		}
+
+		return isAdded;
+	}
+
+	/**
+	 * This method is used to get the favorite movie list
+	 * 
+	 * @param userId
+	 * @param movieId
+	 * @return
+	 * @throws DbException
+	 */
+	public static List<Show> getFavorites(String userId, int movieId) throws DbException {
+		List<Show> favorites = new ArrayList<>();
+		List<Show> show = ShowListDao.getShowDetails();
+
+		for (Show showDetail : show) {
+			if (showDetail.getId() == movieId) {
+				String genre = showDetail.getMovieGenre();
+				String name = showDetail.getMovieName();
+				int year = showDetail.getMovieYear();
+				String language = showDetail.getMovieLanguage();
+				String category = showDetail.getMovieCategory();
+				String membership = showDetail.getMembership();
+				String grade = showDetail.getMovieGrade();
+				String status = showDetail.getStatus();
+
+				favorites.add(
+						new Show(userId, movieId, genre, name, year, language, category, membership, grade, status));
+			}
+		}
+		return favorites;
+
+	}
+
+	/**
+	 * This method is used to view favorite movies of the user
+	 * 
+	 * @param userId
+	 * @return
+	 * @throws DbException
+	 * @throws InvalidUserIdException
+	 */
+	public static List<Show> viewFavoriteMovies(String userId) throws DbException, InvalidUserIdException {
+		boolean validUser = UserService.isValidUser(userId);
+		List<Show> favorites = new ArrayList<>();
+		if (validUser) {
+			favorites = ShowListDao.getFavoriteMovie(userId);
+
+		}
+		return favorites;
+
+	}
+
 }

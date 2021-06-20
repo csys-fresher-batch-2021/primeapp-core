@@ -13,7 +13,7 @@ public class AddMoviesTest {
 	public static void main(String[] args) {
 		String genre = "action";
 		String name = "ted";
-		int year = 2016;
+		int year = 2018;
 		String language = "english";
 		String category = "movie";
 		String membership = "prime";

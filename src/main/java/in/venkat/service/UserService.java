@@ -10,6 +10,7 @@ import in.venkat.exceptions.InvalidNameException;
 import in.venkat.exceptions.InvalidNumberException;
 import in.venkat.exceptions.InvalidPasswordException;
 import in.venkat.exceptions.InvalidPhoneNumberException;
+import in.venkat.exceptions.InvalidUserIdException;
 import in.venkat.exceptions.PasswordMismatchException;
 import in.venkat.exceptions.UserIdPasswordMismatchException;
 import in.venkat.model.User;
@@ -141,6 +142,29 @@ public class UserService {
 		}
 
 		return isLoggedIn;
+
+	}
+
+	/**
+	 * This method is used to check whether the user already exists
+	 * 
+	 * @param userId
+	 * @return
+	 * @throws DbException
+	 * @throws InvalidUserIdException
+	 */
+	public static boolean isValidUser(String userId) throws DbException, InvalidUserIdException {
+		boolean isValid = false;
+		List<User> user = UserDao.getAllRegisteredUserId();
+		for (User users : user) {
+			if (users.getUserId().equals(userId)) {
+				isValid = true;
+			}
+		}
+		if (!isValid) {
+			throw new InvalidUserIdException("invalid user ");
+		}
+		return isValid;
 
 	}
 
