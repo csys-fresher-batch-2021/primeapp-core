@@ -136,6 +136,10 @@ public class Show {
 		this.status = status;
 	}
 
+	public Show(int movieId) {
+		this.id = movieId;
+	}
+
 	@Override
 	public String toString() {
 		return "Show [id=" + id + ", movieGenre=" + movieGenre + ", movieName=" + movieName + ", movieYear=" + movieYear
