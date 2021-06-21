@@ -442,7 +442,12 @@ public class ShowService {
 		return favorites;
 
 	}
-
+	/**
+	 * This method is used to get the trending movies id
+	 * @param movieId
+	 * @return
+	 * @throws DbException
+	 */
 	public static List<Show> getTrendingMovies(int movieId) throws DbException {
 		List<Show> favorites = new ArrayList<>();
 		List<Show> trending = ShowListDao.getShowDetails();
