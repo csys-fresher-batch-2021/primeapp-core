@@ -442,5 +442,31 @@ public class ShowService {
 		return favorites;
 
 	}
+	/**
+	 * This method is used to get the trending movies id
+	 * @param movieId
+	 * @return
+	 * @throws DbException
+	 */
+	public static List<Show> getTrendingMovies(int movieId) throws DbException {
+		List<Show> favorites = new ArrayList<>();
+		List<Show> trending = ShowListDao.getShowDetails();
 
+		for (Show showDetail : trending) {
+			if (showDetail.getId() == movieId) {
+				String genre = showDetail.getMovieGenre();
+				String name = showDetail.getMovieName();
+				int year = showDetail.getMovieYear();
+				String language = showDetail.getMovieLanguage();
+				String category = showDetail.getMovieCategory();
+				String membership = showDetail.getMembership();
+				String grade = showDetail.getMovieGrade();
+				String status = showDetail.getStatus();
+
+				favorites.add(new Show(movieId, genre, name, year, language, category, membership, grade, status));
+			}
+		}
+		return favorites;
+
+	}
 }

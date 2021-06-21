@@ -243,4 +243,39 @@ public class ShowListDao {
 
 	}
 
+	/**
+	 * This method is used to get the trending movies
+	 * 
+	 * @return
+	 * @throws DbException
+	 */
+	public static List<Show> getTrendingMovies() throws DbException {
+		List<Show> trending = new ArrayList<>();
+		Connection connection = null;
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+
+		try {
+			connection = ConnectionUtil.getConnection();
+			String sql = "SELECT movie_id FROM( SELECT movie_id, RANK() OVER (PARTITION BY movie_id ORDER BY COUNT(*) DESC) AS rnk FROM favorites GROUP BY movie_id ) as fg WHERE rnk = 1 ;";
+			pst = connection.prepareStatement(sql);
+			rs = pst.executeQuery();
+			while (rs.next()) {
+				int movieId = rs.getInt("movie_id");
+				trending.add(new Show(movieId));
+
+			}
+
+		} catch (SQLException e) {
+			Logger.exception(e);
+			throw new DbException(e, DB_ERROR_STATUS);
+
+		} finally {
+			ConnectionUtil.close(rs, pst, connection);
+
+		}
+		return trending;
+
+	}
+
 }
