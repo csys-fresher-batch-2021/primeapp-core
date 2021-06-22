@@ -13,7 +13,7 @@ public class SearchByMovieNameTest {
 
 	public static void main(String[] args) {
 
-		String movieName = "bigil";
+		String movieName = "d";
 		findByMovieName(movieName);
 	}
 

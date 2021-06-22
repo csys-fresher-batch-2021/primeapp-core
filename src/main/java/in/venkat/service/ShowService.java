@@ -488,7 +488,7 @@ public class ShowService {
 		List<Show> searchResults = null;
 		if (valid) {
 			String finalMovieName = movieName.toLowerCase();
-			searchResults = (List<Show>) ShowListDao.getShowDetails().stream()
+			searchResults = ShowListDao.getShowDetails().stream()
 					.filter(movie -> movie.getMovieName().toLowerCase().contains(finalMovieName))
 					.collect(Collectors.toList());
 
