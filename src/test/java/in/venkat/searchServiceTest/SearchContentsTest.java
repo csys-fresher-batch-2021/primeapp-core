@@ -119,4 +119,5 @@ public class SearchContentsTest {
 			Logger.exception(e);
 		}
 	}
+
 }

@@ -2,6 +2,7 @@ package in.venkat.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import in.venkat.dao.ShowListDao;
 import in.venkat.exceptions.DbException;
@@ -442,8 +443,10 @@ public class ShowService {
 		return favorites;
 
 	}
+
 	/**
 	 * This method is used to get the trending movies id
+	 * 
 	 * @param movieId
 	 * @return
 	 * @throws DbException
@@ -469,4 +472,29 @@ public class ShowService {
 		return favorites;
 
 	}
+
+	/**
+	 * This method is used to search movies in the movie list
+	 * 
+	 * @param movieName
+	 * @return
+	 * @throws DbException
+	 * @throws InvalidNameException
+	 * @throws EmptyFieldException
+	 */
+	public static List<Show> searchByMovieName(String movieName)
+			throws DbException, EmptyFieldException, InvalidNameException {
+		boolean valid = NameValidationUtil.validateName(movieName);
+		List<Show> searchResults = null;
+		if (valid) {
+			String finalMovieName = movieName.toLowerCase();
+			searchResults = (List<Show>) ShowListDao.getShowDetails().stream()
+					.filter(movie -> movie.getMovieName().toLowerCase().contains(finalMovieName))
+					.collect(Collectors.toList());
+
+		}
+		return searchResults;
+
+	}
+
 }
