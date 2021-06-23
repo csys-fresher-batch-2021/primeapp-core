@@ -1,4 +1,4 @@
-package in.venkat.searchServiceTest;
+package in.venkat.serviceTest;
 
 import in.venkat.service.UserService;
 import in.venkat.util.Logger;
