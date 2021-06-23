@@ -1,4 +1,4 @@
-package in.venkat.searchServiceTest;
+package in.venkat.serviceTest;
 
 import in.venkat.service.UserService;
 import in.venkat.util.Logger;
@@ -7,8 +7,8 @@ public class UserLoginTest {
 
 	public static void main(String[] args) {
 
-		String userId = "karthika9898989898";
-		String userPassword = "Ragul@19";
+		String userId = "venkat9790430272";
+		String userPassword = "Venkat@19";
 
 		userLoginTest(userId, userPassword);
 

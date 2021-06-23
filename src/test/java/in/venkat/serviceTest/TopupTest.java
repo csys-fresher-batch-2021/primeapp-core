@@ -1,4 +1,4 @@
-package in.venkat.searchServiceTest;
+package in.venkat.serviceTest;
 
 import java.sql.SQLException;
 
