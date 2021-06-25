@@ -14,7 +14,7 @@ public class AddMoviesTest {
 		String genre = "action";
 		String name = "ko";
 		int year = 2018;
-		String language = "english";
+		String language = "tamil";
 		String category = "movie";
 		String membership = "prime";
 		String grade = "A";

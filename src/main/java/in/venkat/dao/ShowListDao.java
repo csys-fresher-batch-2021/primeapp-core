@@ -22,6 +22,15 @@ public class ShowListDao {
 	}
 
 	private static final String DB_ERROR_STATUS = "unable to connect to data base";
+	private static final String YEAR = "year";
+	private static final String ID = "id";
+	private static final String GENRE = "genre";
+	private static final String NAME = "name";
+	private static final String LANGUAGE = "language";
+	private static final String CATEGORY = "category";
+	private static final String MEMBERSHIP = "membership";
+	private static final String GRADE = "grade";
+	private static final String STATUS = "status";
 
 	/**
 	 * This method is used to get the details from the table shows
@@ -44,15 +53,15 @@ public class ShowListDao {
 			rs = preparedSt.executeQuery();
 
 			while (rs.next()) {
-				int movieId = rs.getInt("id");
-				String movieGenre = rs.getString("genre");
-				String movieName = rs.getString("name");
-				int movieYear = rs.getInt("year");
-				String movieLanguage = rs.getString("language");
-				String movieCategory = rs.getString("category");
-				String membership = rs.getString("membership");
-				String movieGrade = rs.getString("grade");
-				String movieStatus = rs.getString("status");
+				int movieId = rs.getInt(ID);
+				String movieGenre = rs.getString(GENRE);
+				String movieName = rs.getString(NAME);
+				int movieYear = rs.getInt(YEAR);
+				String movieLanguage = rs.getString(LANGUAGE);
+				String movieCategory = rs.getString(CATEGORY);
+				String membership = rs.getString(MEMBERSHIP);
+				String movieGrade = rs.getString(GRADE);
+				String movieStatus = rs.getString(STATUS);
 				movieList.add(new Show(movieId, movieGenre, movieName, movieYear, movieLanguage, movieCategory,
 						membership, movieGrade, movieStatus));
 
@@ -184,14 +193,14 @@ public class ShowListDao {
 			while (rs.next()) {
 				String id = rs.getString("user_id");
 				int movieId = rs.getInt("movie_id");
-				String movieGenre = rs.getString("genre");
-				String movieName = rs.getString("name");
-				int movieYear = rs.getInt("year");
-				String movieLanguage = rs.getString("language");
-				String movieCategory = rs.getString("category");
-				String membership = rs.getString("membership");
-				String movieGrade = rs.getString("grade");
-				String movieStatus = rs.getString("status");
+				String movieGenre = rs.getString(GENRE);
+				String movieName = rs.getString(NAME);
+				int movieYear = rs.getInt(YEAR);
+				String movieLanguage = rs.getString(LANGUAGE);
+				String movieCategory = rs.getString(CATEGORY);
+				String membership = rs.getString(MEMBERSHIP);
+				String movieGrade = rs.getString(GRADE);
+				String movieStatus = rs.getString(STATUS);
 				favorite.add(new Show(id, movieId, movieGenre, movieName, movieYear, movieLanguage, movieCategory,
 						membership, movieGrade, movieStatus));
 
@@ -262,18 +271,19 @@ public class ShowListDao {
 			pst = connection.prepareStatement(sql);
 			rs = pst.executeQuery();
 			while (rs.next()) {
-				int movieId = rs.getInt("id");
-				String genre = rs.getString("genre");
-				String name = rs.getString("name");
-				int year = rs.getInt("year");
-				String language = rs.getString("language");
-				String category = rs.getString("category");
-				String membership = rs.getString("membership");
-				String grade = rs.getString("grade");
-				String status = rs.getString("status");
+				int movieId = rs.getInt(ID);
+				String genre = rs.getString(GENRE);
+				String name = rs.getString(NAME);
+				int year = rs.getInt(YEAR);
+				String language = rs.getString(LANGUAGE);
+				String category = rs.getString(CATEGORY);
+				String membership = rs.getString(MEMBERSHIP);
+				String grade = rs.getString(GRADE);
+				String status = rs.getString(STATUS);
 				int likes = rs.getInt("likes");
 
-				trending.add(new Show(movieId, genre, name, year, language, category, membership, grade, status,likes));
+				trending.add(
+						new Show(movieId, genre, name, year, language, category, membership, grade, status, likes));
 
 			}
 
