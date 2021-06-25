@@ -8,7 +8,7 @@ import in.venkat.util.Logger;
 public class UpdatePrimeStatusTest {
 
 	public static void main(String[] args) {
-		int movieId = 100;
+		int movieId = 70;
 
 		primeStatusUpdate(movieId);
 

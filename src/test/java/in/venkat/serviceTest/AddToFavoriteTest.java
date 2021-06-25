@@ -9,8 +9,8 @@ import in.venkat.util.Logger;
 public class AddToFavoriteTest {
 
 	public static void main(String[] args) {
-		String userId = "radha8767898790";
-		int movieId = 63;
+		String userId = "venkat9790430272";
+		int movieId = 73;
 		addToFavoriteTest(userId, movieId);
 
 	}

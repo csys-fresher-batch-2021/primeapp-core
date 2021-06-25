@@ -12,7 +12,7 @@ public class AddMoviesTest {
 
 	public static void main(String[] args) {
 		String genre = "action";
-		String name = "ted";
+		String name = "ko";
 		int year = 2018;
 		String language = "english";
 		String category = "movie";

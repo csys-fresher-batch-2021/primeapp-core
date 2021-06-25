@@ -81,7 +81,7 @@ public class ShowListDao {
 
 		try {
 			connection = ConnectionUtil.getConnection();
-			String sql = "INSERT INTO shows (genre,name,year,language,category,membership,grade,status) values (?,?,?,?,?,?,?,?)";
+			String sql = "INSERT INTO shows (genre,name,year,language,category,membership,grade,status,likes) values (?,?,?,?,?,?,?,?,?)";
 			pst = connection.prepareStatement(sql);
 			pst.setString(1, show.getMovieGenre());
 			pst.setString(2, show.getMovieName());
@@ -91,6 +91,7 @@ public class ShowListDao {
 			pst.setString(6, show.getMembership());
 			pst.setString(7, show.getMovieGrade());
 			pst.setString(8, show.getStatus());
+			pst.setInt(9, show.getLikes());
 
 			pst.executeUpdate();
 		} catch (SQLException e) {
@@ -257,12 +258,22 @@ public class ShowListDao {
 
 		try {
 			connection = ConnectionUtil.getConnection();
-			String sql = "SELECT movie_id FROM( SELECT movie_id, RANK() OVER (PARTITION BY movie_id ORDER BY COUNT(*) DESC) AS rnk FROM favorites GROUP BY movie_id ) as fg WHERE rnk = 1 ;";
+			String sql = "SELECT id,genre,name,year,language,category,membership,grade,status,likes FROM shows ORDER BY likes DESC";
 			pst = connection.prepareStatement(sql);
 			rs = pst.executeQuery();
 			while (rs.next()) {
-				int movieId = rs.getInt("movie_id");
-				trending.add(new Show(movieId));
+				int movieId = rs.getInt("id");
+				String genre = rs.getString("genre");
+				String name = rs.getString("name");
+				int year = rs.getInt("year");
+				String language = rs.getString("language");
+				String category = rs.getString("category");
+				String membership = rs.getString("membership");
+				String grade = rs.getString("grade");
+				String status = rs.getString("status");
+				int likes = rs.getInt("likes");
+
+				trending.add(new Show(movieId, genre, name, year, language, category, membership, grade, status,likes));
 
 			}
 
@@ -276,6 +287,25 @@ public class ShowListDao {
 		}
 		return trending;
 
+	}
+
+	public static void updateLikes(int movieId) throws DbException {
+		Connection connection = null;
+		PreparedStatement pst = null;
+		try {
+			connection = ConnectionUtil.getConnection();
+			String sql = "update shows set likes = likes+1 where id = ?";
+			pst = connection.prepareStatement(sql);
+			pst.setInt(1, movieId);
+			pst.executeUpdate();
+		} catch (SQLException e) {
+			Logger.exception(e);
+			throw new DbException(e, DB_ERROR_STATUS);
+
+		} finally {
+			ConnectionUtil.close(pst, connection);
+
+		}
 	}
 
 }
