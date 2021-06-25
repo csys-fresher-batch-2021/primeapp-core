@@ -46,7 +46,6 @@ public class ShowService {
 		if (isValid) {
 			search = searchMoviesByLanguageAndGenre(filmGenre, filmLanguage);
 		}
-
 		return search;
 	}
 
@@ -59,7 +58,6 @@ public class ShowService {
 					&& show.getMovieLanguage().equalsIgnoreCase(filmLanguage.trim()))
 				filteredMovieList.add(show);
 		}
-
 		return filteredMovieList;
 
 	}
@@ -87,7 +85,6 @@ public class ShowService {
 				Logger.log(show);
 			}
 		}
-
 		return filteredMovieList;
 
 	}
@@ -201,16 +198,16 @@ public class ShowService {
 		boolean memberShipValid = ShowDetailsValidationUtil.validateMembership(membership);
 		boolean gradeValid = ShowDetailsValidationUtil.gradeValidation(grade);
 		boolean statusValid = ShowDetailsValidationUtil.statusValidation(status);
+		int likes = 0;
 		boolean isMoviePresent = isMoviePresent(name, year, language);
 		if (genreValid && nameValid && yearValid && languagevalid && categoryValid && memberShipValid && gradeValid
 				&& statusValid && !isMoviePresent) {
-			Show show = new Show(genre, name, year, language, category, membership, grade, status);
+			Show show = new Show(genre, name, year, language, category, membership, grade, status, likes);
 			ShowListDao.addMovies(show);
 			added = true;
 		} else {
 			throw new MovieAlreadyExistsException("movie already exists");
 		}
-
 		return added;
 
 	}
@@ -229,7 +226,6 @@ public class ShowService {
 
 			}
 		}
-
 		return present;
 
 	}
@@ -260,7 +256,6 @@ public class ShowService {
 		if (!deleted) {
 			throw new InvalidMovieIdException("movie id does not exists");
 		}
-
 		return deleted;
 	}
 
@@ -288,7 +283,6 @@ public class ShowService {
 		} else {
 			throw new InvalidMovieIdException("movie id does no exists");
 		}
-
 		return updated;
 
 	}
@@ -336,7 +330,6 @@ public class ShowService {
 		if (!present) {
 			throw new NullPointerException("Id does not exists");
 		}
-
 		return status;
 
 	}
@@ -362,7 +355,6 @@ public class ShowService {
 		if (isExists) {
 			throw new InvalidMovieIdException("movie already added to favorites");
 		}
-
 		return isExists;
 
 	}
@@ -387,10 +379,10 @@ public class ShowService {
 			List<Show> favorite = getFavorites(userId, movieId);
 			for (Show favorites : favorite) {
 				ShowListDao.addFavoriteMovies(favorites);
+				ShowListDao.updateLikes(movieId);
 				isAdded = true;
 			}
 		}
-
 		return isAdded;
 	}
 
@@ -445,31 +437,21 @@ public class ShowService {
 	}
 
 	/**
-	 * This method is used to get the trending movies id
+	 * This method is used to get the trending movies
 	 * 
 	 * @param movieId
 	 * @return
 	 * @throws DbException
 	 */
-	public static List<Show> getTrendingMovies(int movieId) throws DbException {
-		List<Show> favorites = new ArrayList<>();
-		List<Show> trending = ShowListDao.getShowDetails();
-
-		for (Show showDetail : trending) {
-			if (showDetail.getId() == movieId) {
-				String genre = showDetail.getMovieGenre();
-				String name = showDetail.getMovieName();
-				int year = showDetail.getMovieYear();
-				String language = showDetail.getMovieLanguage();
-				String category = showDetail.getMovieCategory();
-				String membership = showDetail.getMembership();
-				String grade = showDetail.getMovieGrade();
-				String status = showDetail.getStatus();
-
-				favorites.add(new Show(movieId, genre, name, year, language, category, membership, grade, status));
+	public static List<Show> getTrendingMovies() throws DbException {
+		List<Show> trendingMovies = new ArrayList<>();
+		for (Show trending : ShowListDao.getTrendingMovies()) {
+			if (trending.getLikes() != 0) {
+				trendingMovies.add(trending);
 			}
 		}
-		return favorites;
+
+		return trendingMovies;
 
 	}
 
@@ -494,6 +476,34 @@ public class ShowService {
 
 		}
 		return searchResults;
+
+	}
+
+	/**
+	 * This method is used to set the preferences and displays only the preferred
+	 * language movies
+	 * 
+	 * @param preferredLanguage
+	 * @return
+	 * @throws DbException
+	 * @throws InvalidDetailsException
+	 */
+	public static List<Show> getPreferredMoviesByLanguage(String preferredLanguage)
+			throws DbException, InvalidDetailsException {
+		List<Show> preferredTrending = new ArrayList<>();
+		List<Show> trendingMovieList = ShowListDao.getTrendingMovies();
+		boolean valid = false;
+		for (Show trending : trendingMovieList) {
+			if (trending.getMovieLanguage().equalsIgnoreCase(preferredLanguage.trim())) {
+				preferredTrending.add(trending);
+				valid = true;
+			}
+		}
+		if (!valid) {
+			throw new InvalidDetailsException("no movies in this preference !");
+		}
+		Logger.log(preferredTrending);
+		return preferredTrending;
 
 	}
 

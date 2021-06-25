@@ -11,6 +11,15 @@ public class Show {
 	private String membership;
 	private String movieGrade;
 	private String status;
+	private int likes;
+
+	public int getLikes() {
+		return likes;
+	}
+
+	public void setLikes(int likes) {
+		this.likes = likes;
+	}
 
 	public String getUserId() {
 		return userId;
@@ -92,10 +101,10 @@ public class Show {
 		this.status = status;
 	}
 
-	public Show(String movieGenre, String movieName, int movieYear, String movieLanguage, String movieCategory,
-			String membership, String movieGrade, String status) {
+	public Show(int movieId, String movieGenre, String movieName, int movieYear, String movieLanguage,
+			String movieCategory, String membership, String movieGrade, String status) {
 		super();
-
+		this.id = movieId;
 		this.movieGenre = movieGenre;
 		this.movieName = movieName;
 		this.movieYear = movieYear;
@@ -104,10 +113,11 @@ public class Show {
 		this.membership = membership;
 		this.movieGrade = movieGrade;
 		this.status = status;
+
 	}
 
 	public Show(int movieId, String movieGenre, String movieName, int movieYear, String movieLanguage,
-			String movieCategory, String membership, String movieGrade, String movieStatus) {
+			String movieCategory, String membership, String movieGrade, String movieStatus, int movieLikes) {
 		super();
 		this.id = movieId;
 		this.movieGenre = movieGenre;
@@ -118,7 +128,7 @@ public class Show {
 		this.membership = membership;
 		this.movieGrade = movieGrade;
 		this.status = movieStatus;
-
+		this.likes = movieLikes;
 	}
 
 	public Show(String userId, int id, String movieGenre, String movieName, int movieYear, String movieLanguage,
@@ -136,8 +146,17 @@ public class Show {
 		this.status = status;
 	}
 
-	public Show(int movieId) {
-		this.id = movieId;
+	public Show(String genre, String name, int year, String language, String category, String membership, String grade,
+			String status, int likes) {
+		this.movieGenre = genre;
+		this.movieName = name;
+		this.movieYear = year;
+		this.movieLanguage = language;
+		this.movieCategory = category;
+		this.membership = membership;
+		this.movieGrade = grade;
+		this.status = status;
+		this.likes = likes;
 	}
 
 	@Override

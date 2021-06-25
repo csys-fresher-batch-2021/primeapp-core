@@ -10,7 +10,7 @@ public class AddToFavoriteTest {
 
 	public static void main(String[] args) {
 		String userId = "radha8767898790";
-		int movieId = 63;
+		int movieId = 70;
 		addToFavoriteTest(userId, movieId);
 
 	}

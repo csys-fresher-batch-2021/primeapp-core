@@ -8,7 +8,7 @@ import in.venkat.util.Logger;
 public class ValidityTest {
 
 	public static void main(String[] args) {
-		String userId = "venkat9790430272";
+		String userId = "karthika9898989898";
 
 		displayPlanValidity(userId);
 	}

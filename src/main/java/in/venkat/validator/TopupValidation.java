@@ -44,7 +44,7 @@ public class TopupValidation {
 	public static boolean choiceValidation(int choice) throws SQLException, InvalidChoiceException {
 		int totalCount = PlansDao.totalPlans();
 		boolean isChoiceValid = false;
-		if (totalCount >= choice) {
+		if (totalCount >= choice && choice > 0) {
 			isChoiceValid = true;
 		} else {
 			throw new InvalidChoiceException("there is no plans existing in this choice");

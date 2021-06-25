@@ -1,8 +1,10 @@
 package in.venkat.service;
 
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.List;
 
+import in.venkat.dao.PrimeTopupDao;
 import in.venkat.dao.UserDao;
 import in.venkat.exceptions.DbException;
 import in.venkat.exceptions.EmptyFieldException;
@@ -13,6 +15,7 @@ import in.venkat.exceptions.InvalidPhoneNumberException;
 import in.venkat.exceptions.InvalidUserIdException;
 import in.venkat.exceptions.PasswordMismatchException;
 import in.venkat.exceptions.UserIdPasswordMismatchException;
+import in.venkat.model.PrimeTopup;
 import in.venkat.model.User;
 import in.venkat.util.Logger;
 import in.venkat.validator.ValidateUserDetails;
@@ -166,6 +169,24 @@ public class UserService {
 		}
 		return isValid;
 
+	}
+
+	/**
+	 * This method is used to find the user is recharged or not
+	 * 
+	 * @param userId
+	 * @return
+	 * @throws DbException
+	 */
+	public static boolean isUserRecharged(String userId) throws DbException {
+		boolean isValid = false;
+		List<PrimeTopup> recharge = PrimeTopupDao.getExpiryDate();
+		for (PrimeTopup recharged : recharge) {
+			if (recharged.getUserId().equals(userId) && recharged.getExpiryDate().isBefore(LocalDate.now())) {
+				isValid = true;
+			}
+		}
+		return isValid;
 	}
 
 }

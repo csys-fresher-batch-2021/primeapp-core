@@ -22,6 +22,15 @@ public class ShowListDao {
 	}
 
 	private static final String DB_ERROR_STATUS = "unable to connect to data base";
+	private static final String YEAR = "year";
+	private static final String ID = "id";
+	private static final String GENRE = "genre";
+	private static final String NAME = "name";
+	private static final String LANGUAGE = "language";
+	private static final String CATEGORY = "category";
+	private static final String MEMBERSHIP = "membership";
+	private static final String GRADE = "grade";
+	private static final String STATUS = "status";
 
 	/**
 	 * This method is used to get the details from the table shows
@@ -44,15 +53,15 @@ public class ShowListDao {
 			rs = preparedSt.executeQuery();
 
 			while (rs.next()) {
-				int movieId = rs.getInt("id");
-				String movieGenre = rs.getString("genre");
-				String movieName = rs.getString("name");
-				int movieYear = rs.getInt("year");
-				String movieLanguage = rs.getString("language");
-				String movieCategory = rs.getString("category");
-				String membership = rs.getString("membership");
-				String movieGrade = rs.getString("grade");
-				String movieStatus = rs.getString("status");
+				int movieId = rs.getInt(ID);
+				String movieGenre = rs.getString(GENRE);
+				String movieName = rs.getString(NAME);
+				int movieYear = rs.getInt(YEAR);
+				String movieLanguage = rs.getString(LANGUAGE);
+				String movieCategory = rs.getString(CATEGORY);
+				String membership = rs.getString(MEMBERSHIP);
+				String movieGrade = rs.getString(GRADE);
+				String movieStatus = rs.getString(STATUS);
 				movieList.add(new Show(movieId, movieGenre, movieName, movieYear, movieLanguage, movieCategory,
 						membership, movieGrade, movieStatus));
 
@@ -81,7 +90,7 @@ public class ShowListDao {
 
 		try {
 			connection = ConnectionUtil.getConnection();
-			String sql = "INSERT INTO shows (genre,name,year,language,category,membership,grade,status) values (?,?,?,?,?,?,?,?)";
+			String sql = "INSERT INTO shows (genre,name,year,language,category,membership,grade,status,likes) values (?,?,?,?,?,?,?,?,?)";
 			pst = connection.prepareStatement(sql);
 			pst.setString(1, show.getMovieGenre());
 			pst.setString(2, show.getMovieName());
@@ -91,6 +100,7 @@ public class ShowListDao {
 			pst.setString(6, show.getMembership());
 			pst.setString(7, show.getMovieGrade());
 			pst.setString(8, show.getStatus());
+			pst.setInt(9, show.getLikes());
 
 			pst.executeUpdate();
 		} catch (SQLException e) {
@@ -183,14 +193,14 @@ public class ShowListDao {
 			while (rs.next()) {
 				String id = rs.getString("user_id");
 				int movieId = rs.getInt("movie_id");
-				String movieGenre = rs.getString("genre");
-				String movieName = rs.getString("name");
-				int movieYear = rs.getInt("year");
-				String movieLanguage = rs.getString("language");
-				String movieCategory = rs.getString("category");
-				String membership = rs.getString("membership");
-				String movieGrade = rs.getString("grade");
-				String movieStatus = rs.getString("status");
+				String movieGenre = rs.getString(GENRE);
+				String movieName = rs.getString(NAME);
+				int movieYear = rs.getInt(YEAR);
+				String movieLanguage = rs.getString(LANGUAGE);
+				String movieCategory = rs.getString(CATEGORY);
+				String membership = rs.getString(MEMBERSHIP);
+				String movieGrade = rs.getString(GRADE);
+				String movieStatus = rs.getString(STATUS);
 				favorite.add(new Show(id, movieId, movieGenre, movieName, movieYear, movieLanguage, movieCategory,
 						membership, movieGrade, movieStatus));
 
@@ -257,12 +267,23 @@ public class ShowListDao {
 
 		try {
 			connection = ConnectionUtil.getConnection();
-			String sql = "SELECT movie_id FROM( SELECT movie_id, RANK() OVER (PARTITION BY movie_id ORDER BY COUNT(*) DESC) AS rnk FROM favorites GROUP BY movie_id ) as fg WHERE rnk = 1 ;";
+			String sql = "SELECT id,genre,name,year,language,category,membership,grade,status,likes FROM shows ORDER BY likes DESC";
 			pst = connection.prepareStatement(sql);
 			rs = pst.executeQuery();
 			while (rs.next()) {
-				int movieId = rs.getInt("movie_id");
-				trending.add(new Show(movieId));
+				int movieId = rs.getInt(ID);
+				String genre = rs.getString(GENRE);
+				String name = rs.getString(NAME);
+				int year = rs.getInt(YEAR);
+				String language = rs.getString(LANGUAGE);
+				String category = rs.getString(CATEGORY);
+				String membership = rs.getString(MEMBERSHIP);
+				String grade = rs.getString(GRADE);
+				String status = rs.getString(STATUS);
+				int likes = rs.getInt("likes");
+
+				trending.add(
+						new Show(movieId, genre, name, year, language, category, membership, grade, status, likes));
 
 			}
 
@@ -276,6 +297,25 @@ public class ShowListDao {
 		}
 		return trending;
 
+	}
+
+	public static void updateLikes(int movieId) throws DbException {
+		Connection connection = null;
+		PreparedStatement pst = null;
+		try {
+			connection = ConnectionUtil.getConnection();
+			String sql = "update shows set likes = likes+1 where id = ?";
+			pst = connection.prepareStatement(sql);
+			pst.setInt(1, movieId);
+			pst.executeUpdate();
+		} catch (SQLException e) {
+			Logger.exception(e);
+			throw new DbException(e, DB_ERROR_STATUS);
+
+		} finally {
+			ConnectionUtil.close(pst, connection);
+
+		}
 	}
 
 }

@@ -91,7 +91,7 @@ public class PlansService {
 		LocalDate now = LocalDate.now();
 		LocalDate expire = getExpiryDateById(userId);
 		validity = (int) ChronoUnit.DAYS.between(now, expire);
-		Logger.log(expire);
+		Logger.log(validity);
 		return validity;
 
 	}
