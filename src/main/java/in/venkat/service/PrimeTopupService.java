@@ -64,7 +64,7 @@ public class PrimeTopupService {
 	 * @throws DbException
 	 * @throws PlanNotExpiredException
 	 */
-	private static boolean checkValidTopup(String userId) throws DbException, PlanNotExpiredException {
+	public static boolean checkValidTopup(String userId) throws DbException, PlanNotExpiredException {
 		boolean checkNewTopup = isNewTopup(userId);
 		boolean isValid = false;
 		if (checkNewTopup) {

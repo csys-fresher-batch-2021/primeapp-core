@@ -172,13 +172,13 @@ public class UserService {
 	}
 
 	/**
-	 * This method is used to find the user is recharged or not
+	 * This method is used to find the user re-charge is expired or not
 	 * 
 	 * @param userId
 	 * @return
 	 * @throws DbException
 	 */
-	public static boolean isUserRecharged(String userId) throws DbException {
+	public static boolean isRechargeNotExpired(String userId) throws DbException {
 		boolean isValid = false;
 		List<PrimeTopup> recharge = PrimeTopupDao.getExpiryDate();
 		for (PrimeTopup recharged : recharge) {
