@@ -507,4 +507,49 @@ public class ShowService {
 
 	}
 
+	/**
+	 * This method is used to switch to kids zone
+	 * 
+	 * @param userId
+	 * @param zone
+	 * @return
+	 * @throws DbException
+	 * @throws InvalidUserIdException
+	 * @throws InvalidDetailsException
+	 */
+	public static List<Show> switchToKidsZone(String userId, String zone)
+			throws DbException, InvalidUserIdException, InvalidDetailsException {
+		List<Show> kidsMovies = new ArrayList<>();
+		List<Show> shows = ShowListDao.getShowDetails();
+		boolean validUser = UserService.isValidUser(userId);
+		boolean isRechargedExpired = UserService.isRechargeNotExpired(userId);
+		if (validUser && !isRechargedExpired) {
+			if (zone.equalsIgnoreCase("kids")) {
+				for (Show kids : shows) {
+					if (kids.getMovieGenre().equalsIgnoreCase("comedy")
+							|| kids.getMovieGenre().equalsIgnoreCase("adventure")
+							|| kids.getMovieGenre().equalsIgnoreCase("kids")
+							|| kids.getMovieGrade().equalsIgnoreCase("u")
+							|| kids.getMovieGrade().equalsIgnoreCase("v")) {
+						int movieId = kids.getId();
+						String genre = kids.getMovieGenre();
+						String name = kids.getMovieName();
+						int year = kids.getMovieYear();
+						String language = kids.getMovieLanguage();
+						String category = kids.getMovieCategory();
+						String membership = kids.getMembership();
+						String grade = kids.getMovieGrade();
+						String status = kids.getStatus();
+
+						kidsMovies.add(
+								new Show(movieId, genre, name, year, language, category, membership, grade, status));
+					}
+				}
+			} else {
+				throw new InvalidDetailsException("invalid details");
+			}
+		}
+		Logger.log(kidsMovies);
+		return kidsMovies;
+	}
 }

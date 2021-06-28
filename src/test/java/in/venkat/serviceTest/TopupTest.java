@@ -14,7 +14,7 @@ public class TopupTest {
 	public static void main(String[] args) {
 
 		try {
-			String userId = "karthika9898989898";
+			String userId = "venkat9790430272";
 			int choice = 2;
 			PrimeTopupService.primeTopup(choice, userId);
 		} catch (DbException | InvalidUserIdException | PlanNotExpiredException | SQLException
