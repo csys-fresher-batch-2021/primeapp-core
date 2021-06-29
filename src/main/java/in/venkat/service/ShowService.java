@@ -13,14 +13,12 @@ import in.venkat.exceptions.InvalidMovieIdException;
 import in.venkat.exceptions.InvalidNameException;
 import in.venkat.exceptions.InvalidUserIdException;
 import in.venkat.exceptions.MovieAlreadyExistsException;
-import in.venkat.exceptions.PlanNotExpiredException;
 import in.venkat.model.Show;
 import in.venkat.util.IdValidationUtil;
 import in.venkat.util.Logger;
 import in.venkat.util.NameValidationUtil;
 import in.venkat.util.ShowDetailsValidationUtil;
 import in.venkat.validator.DownloadValidator;
-import in.venkat.validator.TopupValidation;
 import in.venkat.validator.ValidateSearchDetails;
 
 public class ShowService {
@@ -573,7 +571,7 @@ public class ShowService {
 		boolean valid = false;
 		boolean validUser = UserService.isValidUser(userId);
 		boolean validMovieId = isMovieIdPresent(movieId);
-		boolean validDownload = isAreadyDownload(userId, movieId);
+		boolean validDownload = isAreadyDownload(movieId);
 		if (validUser && validMovieId && validDownload) {
 			List<Show> download = getDownloads(userId, movieId);
 			for (Show downloads : download) {
@@ -593,7 +591,7 @@ public class ShowService {
 	 * @throws DbException
 	 * @throws MovieAlreadyExistsException
 	 */
-	public static boolean isAreadyDownload(String userId, int movieId) throws DbException, MovieAlreadyExistsException {
+	public static boolean isAreadyDownload(int movieId) throws DbException, MovieAlreadyExistsException {
 		boolean valid = false;
 		List<Show> downloads = ShowListDao.getDownloads();
 		for (Show expire : downloads) {
@@ -605,13 +603,15 @@ public class ShowService {
 		}
 		return valid;
 	}
-/**
- * This method is used to get the download movies 
- * @param userId
- * @param movieId
- * @return
- * @throws DbException
- */
+
+	/**
+	 * This method is used to get the download movies
+	 * 
+	 * @param userId
+	 * @param movieId
+	 * @return
+	 * @throws DbException
+	 */
 	public static List<Show> getDownloads(String userId, int movieId) throws DbException {
 		List<Show> download = new ArrayList<>();
 		List<Show> show = ShowListDao.getShowDetails();

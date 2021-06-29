@@ -5,6 +5,13 @@ import java.time.LocalDate;
 import in.venkat.exceptions.MovieAlreadyExistsException;
 
 public class DownloadValidator {
+	private DownloadValidator() {
+		/**
+		 * Adding private constructor
+		 */
+
+	}
+
 	/**
 	 * This method is used to check whether the movie is expired or not
 	 * 
