@@ -1,5 +1,6 @@
 package in.venkat.service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,6 +18,7 @@ import in.venkat.util.IdValidationUtil;
 import in.venkat.util.Logger;
 import in.venkat.util.NameValidationUtil;
 import in.venkat.util.ShowDetailsValidationUtil;
+import in.venkat.validator.DownloadValidator;
 import in.venkat.validator.ValidateSearchDetails;
 
 public class ShowService {
@@ -552,4 +554,85 @@ public class ShowService {
 		Logger.log(kidsMovies);
 		return kidsMovies;
 	}
+
+	/**
+	 * This method is used to add downloads by user
+	 * 
+	 * @param userId
+	 * @param movieId
+	 * @return
+	 * @throws DbException
+	 * @throws InvalidUserIdException
+	 * @throws InvalidMovieIdException
+	 * @throws MovieAlreadyExistsException
+	 */
+	public static boolean addToDownloads(String userId, int movieId)
+			throws DbException, InvalidUserIdException, InvalidMovieIdException, MovieAlreadyExistsException {
+		boolean valid = false;
+		boolean validUser = UserService.isValidUser(userId);
+		boolean validMovieId = isMovieIdPresent(movieId);
+		boolean validDownload = isAreadyDownload(movieId);
+		if (validUser && validMovieId && validDownload) {
+			List<Show> download = getDownloads(userId, movieId);
+			for (Show downloads : download) {
+				ShowListDao.saveDownload(downloads);
+				valid = true;
+			}
+		}
+		return valid;
+	}
+
+	/**
+	 * This method is used to check the movie already download
+	 * 
+	 * @param userId
+	 * @param movieId
+	 * @return
+	 * @throws DbException
+	 * @throws MovieAlreadyExistsException
+	 */
+	public static boolean isAreadyDownload(int movieId) throws DbException, MovieAlreadyExistsException {
+		boolean valid = false;
+		List<Show> downloads = ShowListDao.getDownloads();
+		for (Show expire : downloads) {
+			if (expire.getId() == movieId) {
+				valid = DownloadValidator.isDownloadedMoviesExpired(expire.getExpireDate());
+			} else {
+				valid = true;
+			}
+		}
+		return valid;
+	}
+
+	/**
+	 * This method is used to get the download movies
+	 * 
+	 * @param userId
+	 * @param movieId
+	 * @return
+	 * @throws DbException
+	 */
+	public static List<Show> getDownloads(String userId, int movieId) throws DbException {
+		List<Show> download = new ArrayList<>();
+		List<Show> show = ShowListDao.getShowDetails();
+		for (Show movie : show) {
+			if (movie.getId() == movieId) {
+				String genre = movie.getMovieGenre();
+				String name = movie.getMovieName();
+				int year = movie.getMovieYear();
+				String language = movie.getMovieLanguage();
+				String category = movie.getMovieCategory();
+				String membership = movie.getMembership();
+				String grade = movie.getMovieGrade();
+				String status = movie.getStatus();
+				LocalDate downloadDate = LocalDate.now();
+				LocalDate expiryDate = downloadDate.plusDays(3);
+
+				download.add(new Show(userId, movieId, genre, name, year, language, category, membership, grade, status,
+						downloadDate, expiryDate));
+			}
+		}
+		return download;
+	}
+
 }

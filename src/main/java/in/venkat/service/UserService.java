@@ -1,5 +1,6 @@
 package in.venkat.service;
 
+import java.lang.module.ModuleDescriptor.Builder;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
@@ -165,7 +166,7 @@ public class UserService {
 			}
 		}
 		if (!isValid) {
-			throw new InvalidUserIdException("invalid user ");
+			throw new InvalidUserIdException("invalid user");
 		}
 		return isValid;
 
@@ -188,5 +189,6 @@ public class UserService {
 		}
 		return isValid;
 	}
+
 
 }

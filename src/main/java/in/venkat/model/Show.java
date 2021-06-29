@@ -1,5 +1,7 @@
 package in.venkat.model;
 
+import java.time.LocalDate;
+
 public class Show {
 	private String userId;
 	private int id;
@@ -12,6 +14,24 @@ public class Show {
 	private String movieGrade;
 	private String status;
 	private int likes;
+	private LocalDate downloadDate;
+	private LocalDate expireDate;
+
+	public LocalDate getDownloadDate() {
+		return downloadDate;
+	}
+
+	public void setDownloadDate(LocalDate downloadDate) {
+		this.downloadDate = downloadDate;
+	}
+
+	public LocalDate getExpireDate() {
+		return expireDate;
+	}
+
+	public void setExpireDate(LocalDate expireDate) {
+		this.expireDate = expireDate;
+	}
 
 	public int getLikes() {
 		return likes;
@@ -159,11 +179,30 @@ public class Show {
 		this.likes = likes;
 	}
 
+	public Show(String userId, int id, String movieGenre, String movieName, int movieYear, String movieLanguage,
+			String movieCategory, String membership, String movieGrade, String status, LocalDate downloadDate,
+			LocalDate expireDate) {
+		super();
+		this.userId = userId;
+		this.id = id;
+		this.movieGenre = movieGenre;
+		this.movieName = movieName;
+		this.movieYear = movieYear;
+		this.movieLanguage = movieLanguage;
+		this.movieCategory = movieCategory;
+		this.membership = membership;
+		this.movieGrade = movieGrade;
+		this.status = status;
+		this.downloadDate = downloadDate;
+		this.expireDate = expireDate;
+	}
+
 	@Override
 	public String toString() {
-		return "Show [id=" + id + ", movieGenre=" + movieGenre + ", movieName=" + movieName + ", movieYear=" + movieYear
-				+ ", movieLanguage=" + movieLanguage + ", movieCategory=" + movieCategory + ", membership=" + membership
-				+ ", movieGrade=" + movieGrade + ", status=" + status + "]";
+		return "Show [userId=" + userId + ", id=" + id + ", movieGenre=" + movieGenre + ", movieName=" + movieName
+				+ ", movieYear=" + movieYear + ", movieLanguage=" + movieLanguage + ", movieCategory=" + movieCategory
+				+ ", membership=" + membership + ", movieGrade=" + movieGrade + ", status=" + status + ", likes="
+				+ likes + ", downloadDate=" + downloadDate + ", expireDate=" + expireDate + "]";
 	}
 
 }

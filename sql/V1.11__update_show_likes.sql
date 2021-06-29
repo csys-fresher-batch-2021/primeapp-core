@@ -1,0 +1,1 @@
+update shows set membership = ? where id = ?

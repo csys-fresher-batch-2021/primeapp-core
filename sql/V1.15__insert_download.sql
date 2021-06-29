@@ -1,0 +1,1 @@
+INSERT INTO download (user_id,movie_id,genre,name,year,language,category,membership,grade,status,download_on,expire_on) values ('venkat970430272',72,'kids','dora',2020,'english','movie','prime','V','active','2021-06-29','2021-07-02')
