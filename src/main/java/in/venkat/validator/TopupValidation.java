@@ -5,7 +5,9 @@ import java.time.LocalDate;
 
 import in.venkat.dao.PlansDao;
 import in.venkat.exceptions.InvalidChoiceException;
+import in.venkat.exceptions.MovieAlreadyExistsException;
 import in.venkat.exceptions.PlanNotExpiredException;
+import in.venkat.util.Logger;
 
 public class TopupValidation {
 	private TopupValidation() {
@@ -51,4 +53,5 @@ public class TopupValidation {
 		}
 		return isChoiceValid;
 	}
+
 }

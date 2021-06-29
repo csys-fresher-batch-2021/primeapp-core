@@ -1,0 +1,1 @@
+INSERT INTO favorites (user_id,movie_id,genre,name,year,language,category,membership,grade,status) values ('venkat970430272',63,'kids','dora',2020,'english','movie','prime','V','active')

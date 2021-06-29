@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +23,8 @@ public class ShowListDao {
 	}
 
 	private static final String DB_ERROR_STATUS = "unable to connect to data base";
+	private static final String USER_ID = "user_id";
+	private static final String MOVIE_ID = "movie_id";
 	private static final String YEAR = "year";
 	private static final String ID = "id";
 	private static final String GENRE = "genre";
@@ -31,6 +34,8 @@ public class ShowListDao {
 	private static final String MEMBERSHIP = "membership";
 	private static final String GRADE = "grade";
 	private static final String STATUS = "status";
+	private static final String DOWNLOAD_ON = "download_on";
+	private static final String EXPIRE_ON = "expire_on";
 
 	/**
 	 * This method is used to get the details from the table shows
@@ -73,7 +78,6 @@ public class ShowListDao {
 
 		} finally {
 			ConnectionUtil.close(rs, preparedSt, connection);
-
 		}
 		return movieList;
 	}
@@ -108,7 +112,6 @@ public class ShowListDao {
 			throw new DbException(e, DB_ERROR_STATUS);
 		} finally {
 			ConnectionUtil.close(pst, connection);
-
 		}
 
 	}
@@ -191,8 +194,8 @@ public class ShowListDao {
 			rs = preparedSt.executeQuery();
 
 			while (rs.next()) {
-				String id = rs.getString("user_id");
-				int movieId = rs.getInt("movie_id");
+				String id = rs.getString(USER_ID);
+				int movieId = rs.getInt(MOVIE_ID);
 				String movieGenre = rs.getString(GENRE);
 				String movieName = rs.getString(NAME);
 				int movieYear = rs.getInt(YEAR);
@@ -212,7 +215,6 @@ public class ShowListDao {
 
 		} finally {
 			ConnectionUtil.close(rs, preparedSt, connection);
-
 		}
 		return favorite;
 	}
@@ -248,7 +250,6 @@ public class ShowListDao {
 			throw new DbException(e, DB_ERROR_STATUS);
 		} finally {
 			ConnectionUtil.close(pst, connection);
-
 		}
 
 	}
@@ -293,12 +294,17 @@ public class ShowListDao {
 
 		} finally {
 			ConnectionUtil.close(rs, pst, connection);
-
 		}
 		return trending;
 
 	}
 
+	/**
+	 * This method is used to update the like when user add a movie to favorites
+	 * 
+	 * @param movieId
+	 * @throws DbException
+	 */
 	public static void updateLikes(int movieId) throws DbException {
 		Connection connection = null;
 		PreparedStatement pst = null;
@@ -314,8 +320,85 @@ public class ShowListDao {
 
 		} finally {
 			ConnectionUtil.close(pst, connection);
-
 		}
 	}
 
+	/**
+	 * This method is used to download movies
+	 * 
+	 * @param show
+	 * @throws DbException
+	 */
+	public static void saveDownload(Show show) throws DbException {
+		Connection connection = null;
+		PreparedStatement pst = null;
+		try {
+			connection = ConnectionUtil.getConnection();
+			String sql = "insert into download (user_id,movie_id,genre,name,year,language,category,membership,grade,status,download_on,expire_on) values(?,?,?,?,?,?,?,?,?,?,?,?)";
+			pst = connection.prepareStatement(sql);
+			pst.setString(1, show.getUserId());
+			pst.setInt(2, show.getId());
+			pst.setString(3, show.getMovieGenre());
+			pst.setString(4, show.getMovieName());
+			pst.setInt(5, show.getMovieYear());
+			pst.setString(6, show.getMovieLanguage());
+			pst.setString(7, show.getMovieCategory());
+			pst.setString(8, show.getMembership());
+			pst.setString(9, show.getMovieGrade());
+			pst.setString(10, show.getStatus());
+			pst.setObject(11, show.getDownloadDate());
+			pst.setObject(12, show.getExpireDate());
+			pst.executeUpdate();
+
+		} catch (SQLException e) {
+			Logger.exception(e);
+			throw new DbException(e, DB_ERROR_STATUS);
+		} finally {
+			ConnectionUtil.close(pst, connection);
+		}
+	}
+
+	/**
+	 * This method is used to get the downloaded movies
+	 * 
+	 * @return
+	 * @throws DbException
+	 */
+	public static List<Show> getDownloads() throws DbException {
+		List<Show> download = new ArrayList<>();
+		Connection connection = null;
+		PreparedStatement preparedSt = null;
+		ResultSet rs = null;
+		try {
+			connection = ConnectionUtil.getConnection();
+			String sql = "select user_id,movie_id,genre,name,year,language,category,membership,grade,status,download_on,expire_on from download ";
+			preparedSt = connection.prepareStatement(sql);
+			rs = preparedSt.executeQuery();
+
+			while (rs.next()) {
+				String id = rs.getString(USER_ID);
+				int movieId = rs.getInt(MOVIE_ID);
+				String movieGenre = rs.getString(GENRE);
+				String movieName = rs.getString(NAME);
+				int movieYear = rs.getInt(YEAR);
+				String movieLanguage = rs.getString(LANGUAGE);
+				String movieCategory = rs.getString(CATEGORY);
+				String membership = rs.getString(MEMBERSHIP);
+				String movieGrade = rs.getString(GRADE);
+				String movieStatus = rs.getString(STATUS);
+				LocalDate downloadDate = LocalDate.parse(rs.getString(DOWNLOAD_ON));
+				LocalDate expireDate = LocalDate.parse(rs.getString(EXPIRE_ON));
+				download.add(new Show(id, movieId, movieGenre, movieName, movieYear, movieLanguage, movieCategory,
+						membership, movieGrade, movieStatus, downloadDate, expireDate));
+			}
+
+		} catch (SQLException e) {
+			Logger.exception(e);
+			throw new DbException(e, DB_ERROR_STATUS);
+
+		} finally {
+			ConnectionUtil.close(rs, preparedSt, connection);
+		}
+		return download;
+	}
 }
