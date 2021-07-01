@@ -14,7 +14,6 @@ import in.venkat.exceptions.LoginLimitReachedException;
 import in.venkat.exceptions.PlanNotExpiredException;
 import in.venkat.model.Plans;
 import in.venkat.model.PrimeTopup;
-import in.venkat.util.Logger;
 import in.venkat.validator.TopupValidation;
 import in.venkat.validator.ValidateUserDetails;
 
