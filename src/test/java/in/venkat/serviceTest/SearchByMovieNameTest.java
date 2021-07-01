@@ -26,7 +26,6 @@ public class SearchByMovieNameTest {
 			} else {
 				throw new EmptyFieldException("no movies with this name");
 			}
-
 		} catch (DbException | EmptyFieldException | InvalidNameException e) {
 			Logger.exception(e);
 		}

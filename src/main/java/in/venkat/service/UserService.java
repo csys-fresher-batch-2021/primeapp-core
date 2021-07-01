@@ -1,6 +1,5 @@
 package in.venkat.service;
 
-import java.lang.module.ModuleDescriptor.Builder;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
@@ -181,7 +180,7 @@ public class UserService {
 	 */
 	public static boolean isRechargeNotExpired(String userId) throws DbException {
 		boolean isValid = false;
-		List<PrimeTopup> recharge = PrimeTopupDao.getExpiryDate();
+		List<PrimeTopup> recharge = PrimeTopupDao.getTopupDetails();
 		for (PrimeTopup recharged : recharge) {
 			if (recharged.getUserId().equals(userId) && recharged.getExpiryDate().isBefore(LocalDate.now())) {
 				isValid = true;
@@ -189,6 +188,5 @@ public class UserService {
 		}
 		return isValid;
 	}
-
 
 }

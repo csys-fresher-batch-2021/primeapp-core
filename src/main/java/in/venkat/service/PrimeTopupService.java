@@ -8,7 +8,9 @@ import in.venkat.dao.PlansDao;
 import in.venkat.dao.PrimeTopupDao;
 import in.venkat.exceptions.DbException;
 import in.venkat.exceptions.InvalidChoiceException;
+import in.venkat.exceptions.InvalidPlanException;
 import in.venkat.exceptions.InvalidUserIdException;
+import in.venkat.exceptions.LoginLimitReachedException;
 import in.venkat.exceptions.PlanNotExpiredException;
 import in.venkat.model.Plans;
 import in.venkat.model.PrimeTopup;
@@ -40,16 +42,19 @@ public class PrimeTopupService {
 		boolean validTopup = PrimeTopupService.checkValidTopup(userId);
 		boolean validUserId = ValidateUserDetails.checkUserId(userId);
 		boolean isChoiceValid = TopupValidation.choiceValidation(choice);
+		int id = getValidId(userId);
 		List<Plans> plans = PlansDao.getPrimePlans();
 		int plan = 0;
 		int validity = 0;
+		int screen = 0;
 		for (Plans primePlans : plans) {
-			if (choice == primePlans.getPlanId() && validTopup && validUserId && isChoiceValid) {
+			if (choice == primePlans.getPlanId() && validTopup && validUserId && isChoiceValid && id == 0) {
 				plan = primePlans.getPrimePlans();
 				validity = primePlans.getPlanValidity();
+				screen = primePlans.getMovieScreens();
 				LocalDate today = LocalDate.now();
 				LocalDate expiryDate = today.plusDays(validity);
-				PrimeTopup primePlan = new PrimeTopup(userId, plan, today, validity, expiryDate);
+				PrimeTopup primePlan = new PrimeTopup(userId, plan, today, validity, screen, expiryDate);
 				PrimeTopupDao.saveTopupDetails(primePlan);
 			}
 		}
@@ -87,7 +92,7 @@ public class PrimeTopupService {
 	 */
 	public static LocalDate getExpiryDate(String userId) throws DbException {
 		LocalDate expiryDate = null;
-		List<PrimeTopup> topupExpiryDate = PrimeTopupDao.getExpiryDate();
+		List<PrimeTopup> topupExpiryDate = PrimeTopupDao.getTopupDetails();
 		for (PrimeTopup expiryCheck : topupExpiryDate) {
 			if (expiryCheck.getUserId().equals(userId)) {
 				expiryDate = expiryCheck.getExpiryDate();
@@ -106,13 +111,127 @@ public class PrimeTopupService {
 	 */
 	public static boolean isNewTopup(String userId) throws DbException {
 		boolean checkUser = false;
-		List<PrimeTopup> newTopup = PrimeTopupDao.getExpiryDate();
+		List<PrimeTopup> newTopup = PrimeTopupDao.getTopupDetails();
 		for (PrimeTopup userIdCheck : newTopup) {
 			if (userIdCheck.getUserId().equals(userId)) {
 				checkUser = true;
 			}
-
 		}
 		return checkUser;
+	}
+
+	/**
+	 * This method is for login when a new sign in occurs it will reduce the screen
+	 * count .
+	 * 
+	 * @param userId
+	 * @return
+	 * @throws DbException
+	 * @throws LoginLimitReachedException
+	 */
+	public static boolean loginService(String userId) throws DbException, LoginLimitReachedException {
+		boolean valid = false;
+		int id = getValidId(userId);
+		int count = 0;
+		double planCost = getPlanById(id);
+		count = getScreenCount(id);
+		if (planCost == 399 && count == 1 && id > 0) {
+			count--;
+			PrimeTopupDao.updateScreenStatus(id, count);
+		} else if (planCost == 699 && count > 0 && count <= 2 && id > 0) {
+			count--;
+			PrimeTopupDao.updateScreenStatus(id, count);
+		} else {
+			throw new LoginLimitReachedException("Your id has reached maximum no of screens");
+		}
+
+		return valid;
+	}
+
+	/**
+	 * This method is used when any user logged out it will increase the screen
+	 * count
+	 * 
+	 * @param userId
+	 * @return
+	 * @throws DbException
+	 * @throws InvalidPlanException
+	 */
+	public static boolean logoutService(String userId) throws DbException, InvalidPlanException {
+		boolean valid = false;
+		int id = getValidId(userId);
+		int count = 0;
+		double planCost = getPlanById(id);
+		count = getScreenCount(id);
+		if (planCost == 399 && count == 0 && id > 0) {
+			count++;
+			PrimeTopupDao.updateScreenStatus(id, count);
+		} else if (planCost == 699 && count >= 0 && count < 2 && id > 0) {
+			count++;
+			PrimeTopupDao.updateScreenStatus(id, count);
+		} else {
+			throw new InvalidPlanException("there is no active plan recharge your account");
+		}
+		return valid;
+	}
+
+	/**
+	 * This method is used to get the valid id whether it has active plans or not
+	 * 
+	 * @param userId
+	 * @return
+	 * @throws DbException
+	 */
+	public static int getValidId(String userId) throws DbException {
+		int id = 0;
+		boolean validDate = false;
+		List<PrimeTopup> topup = PrimeTopupDao.getTopupDetails();
+		for (PrimeTopup userTopup : topup) {
+			if (userTopup.getUserId().equals(userId)) {
+				validDate = TopupValidation.isValidExpirydate(userTopup.getExpiryDate());
+				if (!validDate) {
+					id = userTopup.getTopupId();
+					break;
+				}
+			}
+		}
+		return id;
+	}
+
+	/**
+	 * This method is used to get the screen count from the user
+	 * 
+	 * @param id
+	 * @return
+	 * @throws DbException
+	 */
+	public static int getScreenCount(int id) throws DbException {
+		int count = 0;
+		List<PrimeTopup> countScreen = PrimeTopupDao.getTopupDetails();
+		for (PrimeTopup plan : countScreen) {
+			if (plan.getTopupId() == id) {
+				count = plan.getScreen();
+			}
+		}
+		return count;
+
+	}
+
+	/**
+	 * This method is used to get the plans by recharged id
+	 * 
+	 * @param id
+	 * @return
+	 * @throws DbException
+	 */
+	public static double getPlanById(int id) throws DbException {
+		double planCost = 0;
+		List<PrimeTopup> plans = PrimeTopupDao.getTopupDetails();
+		for (PrimeTopup plan : plans) {
+			if (plan.getTopupId() == id) {
+				planCost = plan.getCost();
+			}
+		}
+		return planCost;
 	}
 }

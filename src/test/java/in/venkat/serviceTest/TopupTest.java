@@ -14,13 +14,12 @@ public class TopupTest {
 	public static void main(String[] args) {
 
 		try {
-			String userId = "venkat9790430272";
-			int choice = 2;
+			String userId = "kumar8767898770";
+			int choice = 1;
 			PrimeTopupService.primeTopup(choice, userId);
 		} catch (DbException | InvalidUserIdException | PlanNotExpiredException | SQLException
 				| InvalidChoiceException e) {
 			Logger.exception(e);
 		}
-
 	}
 }

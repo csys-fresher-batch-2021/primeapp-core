@@ -16,7 +16,6 @@ public class PreferenceTest {
 	}
 
 	private static void preference(String preferredLanguage) {
-
 		try {
 			if (NameValidationUtil.validateName(preferredLanguage)) {
 				ShowService.getPreferredMoviesByLanguage(preferredLanguage);
