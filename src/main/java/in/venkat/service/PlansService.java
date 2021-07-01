@@ -62,7 +62,7 @@ public class PlansService {
 	 */
 	public static LocalDate getExpiryDateById(String userId) throws DbException, InvalidUserIdException {
 		LocalDate expiryDate = null;
-		List<PrimeTopup> topupDetails = PrimeTopupDao.getExpiryDate();
+		List<PrimeTopup> topupDetails = PrimeTopupDao.getTopupDetails();
 		boolean validUser = false;
 		for (PrimeTopup topup : topupDetails) {
 			if (topup.getUserId().equals(userId)) {
