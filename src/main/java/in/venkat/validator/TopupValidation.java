@@ -52,4 +52,17 @@ public class TopupValidation {
 		return isChoiceValid;
 	}
 
+	/**
+	 * This method is used to check whether the expire date is valid
+	 * 
+	 * @param expiryDate
+	 * @return
+	 */
+	public static boolean isValidExpirydate(LocalDate expiryDate) {
+		boolean valid = false;
+		if (LocalDate.now().isAfter(expiryDate) || (expiryDate.equals(LocalDate.now()))) {
+			valid = true;
+		}
+		return valid;
+	}
 }
