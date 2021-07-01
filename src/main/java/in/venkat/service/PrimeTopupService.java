@@ -134,19 +134,18 @@ public class PrimeTopupService {
 		boolean valid = false;
 		int id = getValidId(userId);
 		int count = 0;
-		if (id > 0) {
-			double planCost = getPlanById(id);
-			count = getScreenCount(id);
-			if (planCost == 399 && count == 1) {
-				count--;
-				PrimeTopupDao.updateScreenStatus(id, count);
-			} else if (planCost == 699 && count > 0 && count <= 2) {
-				count--;
-				PrimeTopupDao.updateScreenStatus(id, count);
-			} else {
-				throw new LoginLimitReachedException("Your id has reached maximum no of screens");
-			}
+		double planCost = getPlanById(id);
+		count = getScreenCount(id);
+		if (planCost == 399 && count == 1 && id > 0) {
+			count--;
+			PrimeTopupDao.updateScreenStatus(id, count);
+		} else if (planCost == 699 && count > 0 && count <= 2 && id > 0) {
+			count--;
+			PrimeTopupDao.updateScreenStatus(id, count);
+		} else {
+			throw new LoginLimitReachedException("Your id has reached maximum no of screens");
 		}
+
 		return valid;
 	}
 
@@ -162,21 +161,15 @@ public class PrimeTopupService {
 	public static boolean logoutService(String userId) throws DbException, InvalidPlanException {
 		boolean valid = false;
 		int id = getValidId(userId);
-		Logger.log(id);
 		int count = 0;
-		if (id > 0) {
-			double planCost = getPlanById(id);
-			count = getScreenCount(id);
-			Logger.log(count);
-			if (planCost == 399 && count == 0) {
-				count++;
-				Logger.log(count);
-				PrimeTopupDao.updateScreenStatus(id, count);
-			} else if (planCost == 699 && count >= 0 && count < 2) {
-				count++;
-				Logger.log(count);
-				PrimeTopupDao.updateScreenStatus(id, count);
-			}
+		double planCost = getPlanById(id);
+		count = getScreenCount(id);
+		if (planCost == 399 && count == 0 && id > 0) {
+			count++;
+			PrimeTopupDao.updateScreenStatus(id, count);
+		} else if (planCost == 699 && count >= 0 && count < 2 && id > 0) {
+			count++;
+			PrimeTopupDao.updateScreenStatus(id, count);
 		} else {
 			throw new InvalidPlanException("there is no active plan recharge your account");
 		}
